@@ -4,5 +4,7 @@ public class Cistern extends Node{
    @Override
    public void ForwardWater(Element elem){}
     @Override
-    public Pump GetItem(){return new Pump();}
+    public Pump GetItem(){
+        	return new Pump();
+    }
 }

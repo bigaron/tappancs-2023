@@ -16,4 +16,7 @@ public abstract class Element implements Steppable{
     public Pump GetItem(){ return new Pump();}
     public void Split(Pump pump){}
     public void ChangeElementMode(boolean mode){}
+    public void SetNeighbor(Element elem){}
+    public void SetPlayer(Player player){}
+    public void RemoveNeighbor(Element elem){}
 }

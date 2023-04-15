@@ -13,4 +13,10 @@ public class Pipe extends Element{
     public void ChangeElementMode(boolean mode){}
     @Override
     public boolean TakeoffPipe(Pipe pipe){return false;}
+    @Override
+    public void SetNeighbor(Element elem){
+        if(neighbours[0] == null) neighbours[0] = (Pump)elem;
+        else neighbours[1] = (Pump)elem;
+    }
+    public void SetDetached(boolean detached){}
 }
