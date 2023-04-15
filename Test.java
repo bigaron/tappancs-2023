@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Test {
     public static boolean bar(int a){
         return false;
@@ -12,5 +15,9 @@ public class Test {
         IO.funcCalled("bar(true)");
         foo(true);
         IO.returnCalled("void");
+
+        List<Tester> ts = new ArrayList<>();
+        ts.add(new TakeoffPipeTest());
+
     }
 }
