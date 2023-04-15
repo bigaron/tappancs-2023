@@ -3,5 +3,16 @@ public class Plumber extends Player{
     private Pump pump;
     public void RepairElement(){}
     public void PlaceDown(){}
-    public Pump PickUp(){return new Pump();}
+    public Pump PickupPump(){
+        IO.funcCalled("GetPump()");
+        Pump result = elem.GetPump();
+        IO.returnCalled("pump");
+        return result;
+    }
+    public void SetPipe(Pipe pipe) {
+        this.pipe = pipe;
+    }
+    public void SetPump(Pump pump) {
+        this.pump = pump;
+    }
 }

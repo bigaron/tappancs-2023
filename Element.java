@@ -13,7 +13,7 @@ public abstract class Element implements Steppable{
     public boolean TakeoffPipe(Pipe pipe){return true;}
     public void AttachPipe(Pipe pipe){}
     public void Step(){}
-    public Pump GetItem(){ return new Pump();}
+    public Pump GetPump(){ return null;}
     public void Split(Pump pump){}
     public void ChangeElementMode(boolean mode){}
     public void SetNeighbor(Element elem){}

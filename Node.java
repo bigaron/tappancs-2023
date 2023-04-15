@@ -11,4 +11,8 @@ public abstract class Node extends Element {
     public void SetNeighbor(Element elem){
         neighbours.add((Pipe)elem);
     }
+    @Override
+    public void RemoveNeighbor(Element elem) {
+        neighbours.remove(elem);
+    }
 }

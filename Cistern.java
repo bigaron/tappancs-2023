@@ -4,7 +4,18 @@ public class Cistern extends Node{
    @Override
    public void ForwardWater(Element elem){}
     @Override
-    public Pump GetItem(){
-        	return new Pump();
+    public Pump GetPump(){
+       if(!IO.input.get(0)) {
+           IO.funcCalled("RequestPump()");
+           Pump pump = generator.RequestPump();
+           IO.returnCalled("pump");
+           return pump;
+       } else {
+           return null;
+       }
+    }
+
+    public void SetGenerator(Generator g) {
+       generator = g;
     }
 }

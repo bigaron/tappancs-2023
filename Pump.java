@@ -8,7 +8,19 @@ public class Pump extends Node{
         IO.returnCalled("pipe");
     }
     @Override
-    public void ForwardWater(Element elem){}
+    public void ForwardWater(Element elem){
+        if(!IO.input.get(0)) {
+            return;
+        } else if(IO.input.get(1)) {
+            return;
+        } else if(IO.input.get(2)) {
+            return;
+        } else {
+            IO.funcCalled("ForwardWater(this)");
+            output.ForwardWater(this);
+            IO.returnCalled("void");
+        }
+    }
     @Override
     public void Step(){}
     @Override
@@ -26,4 +38,8 @@ public class Pump extends Node{
     }
     @Override
     public void ChangeElementMode(boolean mode){};
+
+    public void SetOutputPipe(Pipe pipe) {
+        output = pipe;
+    }
 }

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Test {
     public static boolean bar(int a){
@@ -12,11 +13,41 @@ public class Test {
     }
 
     public static void main(String args[]){
-        IO.funcCalled("bar(true)");
-        foo(true);
-        IO.returnCalled("void");
 
         List<Tester> ts = new ArrayList<>();
+        ts.add(new AttachPipeTest());
+        ts.add(new ChangePumpTest());
+        ts.add(new CisternForwardwaterTest());
+        ts.add(new PickupPumpTest());
+        ts.add(new PumpForwardwaterTest());
+        ts.add(new PlacedownPlumpTest());
+        ts.add(new PumpBreakTest());
+        ts.add(new PipeForwardwaterTest());
+        ts.add(new RepairPipeTest());
+        ts.add(new SabotagePipeTest());
+        ts.add(new SourceForwardwaterTest());
+        ts.add(new SteponPumpTest());
+        ts.add(new SteponPipeSuccessTest());
+        ts.add(new SteponPipeFailTest());
         ts.add(new TakeoffPipeTest());
+        ts.add(new GenerateElementTest());
+
+        Scanner scanner = new Scanner(System.in);
+
+        while(true) {
+            for(int i = 0; i < ts.size(); ++i) {
+                System.out.println((i + 1) + ". test: " + ts.get(i).toString());
+            }
+            System.out.println((ts.size() + 1) + ". exit");
+            String in = scanner.nextLine();
+            int testNumber = Integer.parseInt(in) - 1;
+
+            if(testNumber != ts.size()) {
+                ts.get(testNumber).initializeTest();
+                ts.get(testNumber).executeTest();
+            } else {
+                return;
+            }
+        }
     }
 }

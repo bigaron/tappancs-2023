@@ -1,10 +1,14 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  * Az IO osztály írja ki a függvényhívásokat. 
  * A függvényneveket, a mélységet, a paramétereket, valamint a visszatérési értéket 
  */
 public class IO{
     /**
-     * A depth a mélységet reprezentálja, azaz, hogy hány függvényt hívtunk meg egymásban..
+     * A depth a mélységet reprezentálja, azaz, hogy hány függvényt hívtunk meg egymásban.
      */
     private static int depth = -1;
     /**
@@ -15,6 +19,46 @@ public class IO{
      * A lastCalled azt mutatja, hogy a legutoljára hívott függvénynek mi volt a cntr-e.
      */
     private static long lastCalled;
+
+    /**
+     * A teszthez szükséges bemeneti értékek.
+     */
+    public static ArrayList<Boolean> input = new ArrayList<>();
+
+    /**
+     * A teszt lefutásához szükséges inputok lekérdezéséhez használt kimenetek.
+     */
+    public static ArrayList<String> output = new ArrayList<>();
+
+
+    /**
+     * Az input és az output inicializálása a megfelelő teszthez.
+     */
+    public static void initializeTest(ArrayList<String> defaultOutput) {
+        depth = -1;
+        cntr = 0;
+        lastCalled = 0;
+        output.clear();
+        if(defaultOutput != null)
+            output = defaultOutput;
+        input.clear();
+    }
+
+    /**
+     * A megadott kérdéseket felteszi a tesztelőnek és ezek alapján elkészíti az inputot.
+     */
+    public static void getInput() {
+        Scanner scanner = new Scanner(System.in);
+        for(int i = 0; i < output.size(); ++i) {
+            System.out.println(output.get(i));
+            int in = Integer.parseInt(scanner.nextLine());
+            if(in == 1) {
+                input.add(true);
+            } else if(in == 0) {
+                input.add(false);
+            }
+        }
+    }
 
     /**
      * A paraméterként megkapott Stringet írja ki, ami elé fűzi, hogy a program futása során

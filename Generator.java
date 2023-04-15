@@ -7,4 +7,5 @@ public class Generator implements Steppable{
     public Element GenerateElem(){return new Cistern();}
     public void Step(){}
     public Pump RequestPump(){return new Pump();}
+    public void SetCistern(Cistern c) { cistern = c; }
 }
