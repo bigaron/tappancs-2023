@@ -4,7 +4,7 @@
  */
 public class IO{
     /**
-     * A depth a mélységet reprezentálja, azaz, hogy hány függvényt hívtunk meg egymásban.
+     * A depth a mélységet reprezentálja, azaz, hogy hány függvényt hívtunk meg egymásban..
      */
     private static int depth = -1;
     /**

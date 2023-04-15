@@ -18,6 +18,5 @@ public class Test {
 
         List<Tester> ts = new ArrayList<>();
         ts.add(new TakeoffPipeTest());
-
     }
 }
