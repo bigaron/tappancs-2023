@@ -6,9 +6,29 @@ public class Pipe extends Element{
     @Override
     public void ForwardWater(Element elem){
         if(neighbours[1] == null) return;
+        if(IO.input.get(0)) {
+            return;
+        }
+        else if(IO.input.get(1)) {
+            return;
+        }
+        else if(IO.input.get(2)) {
+            return;
+        }
+        else {
+            IO.funcCalled("pump2.ForwardWater(this)");
+            neighbours[1].ForwardWater(this);
+            IO.returnCalled("void");
+        }
     }
     @Override
-    public Element GetNeighbor(int dir){return new Pipe();}
+    public void SabotagePipe() {
+        IO.funcCalled("this.ChangeElementMode(false)");
+        this.ChangeElementMode(false);
+        IO.returnCalled("void");
+    }
+    @Override
+    public Element GetNeighbor(int dir){return neighbours[dir]; }
     @Override
     public void Split(Pump pump3){
         Pump pump1 = (Pump) neighbours[0];

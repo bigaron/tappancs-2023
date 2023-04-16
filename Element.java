@@ -7,7 +7,12 @@ public abstract class Element implements Steppable{
     public abstract boolean AcceptPlayer(Player p);
     public void RemovePlayer(Player p){System.out.print("");}
     public abstract Element GetNeighbor(int dir);
-    public void Repair(){}
+    public void Repair(){
+        IO.funcCalled("this.ChangeElementMode(true)");
+        this.ChangeElementMode(true);
+        IO.returnCalled("void");
+    }
+    public void SabotagePipe() {}
     public void ChangeDirection(int outgoingPipe){}
     public abstract void ForwardWater(Element elem);
     public boolean TakeoffPipe(Pipe pipe){return true;}

@@ -22,7 +22,13 @@ public class Pump extends Node{
         }
     }
     @Override
-    public void Step(){}
+    public void Step(){
+        if(IO.input.get(0)) {
+            IO.funcCalled("this.ChangeElementMode(false)");
+            this.ChangeElementMode(false);
+            IO.returnCalled("void");
+        }
+    }
     @Override
     public boolean TakeoffPipe(Pipe pipe){return true;}
     @Override
