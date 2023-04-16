@@ -28,22 +28,6 @@ public abstract class Element implements Steppable{
     public void ChangeDirection(int outgoingPipe){}
     public abstract void ForwardWater(Element elem);
     public boolean TakeoffPipe(Pipe pipe){
-        // IO.funcCalled("Pipe.TakeoffPipe(pipe)");
-        // boolean ret = pipe.TakeoffPipe(pipe);
-        // IO.returnCalled(Boolean.toString(ret));
-        // if(!ret) return false;
-        
-        // IO.funcCalled("Pump.RemoveNeighbor(pipe)");
-        // RemoveNeighbor(pipe);
-        // IO.returnCalled("void");
-        // IO.funcCalled("Pipe.RemoveNeighbor(this)");
-        // pipe.RemoveNeighbor(this);
-        // IO.returnCalled("void");
-        
-        // if(IO.input.get(3)) return true;
-        // IO.funcCalled("Pump.ChangeElementMode(false)");
-        // ChangeElementMode(false);
-        // IO.returnCalled("void");
          return true;
     }
     public void AttachPipe(Pipe pipe){}
