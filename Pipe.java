@@ -2,7 +2,11 @@ public class Pipe extends Element{
     private Node neighbours[];
     public Pipe(){neighbours = new Node[2];}
     @Override
-    public boolean AcceptPlayer(Player p){return true;}
+    public boolean AcceptPlayer(Player p){
+        if(players.size() == 0)
+            return true;
+        return false;
+    }
     @Override
     public void ForwardWater(Element elem){
         if(neighbours[1] == null) return;

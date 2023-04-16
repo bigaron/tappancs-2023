@@ -1,18 +1,22 @@
 public abstract class Player {
     protected Element elem;
     public void Move(int dir){
-        IO.funcCalled("pipe.GetNeighbor(1)");
-        Pump pump = (Pump)(elem.GetNeighbor(0));
-        IO.returnCalled("pump");
-        IO.funcCalled("pump.AcceptPlayer(this)");
-        pump.AcceptPlayer(this);
-        IO.returnCalled("true");
-        IO.funcCalled("pipe.RemoveNeighbor(this)");
-        elem.RemovePlayer(this);
-        IO.returnCalled("void");
-        IO.funcCalled("this.SetElem(pump)");
-        this.SetElem(pump);
-        IO.returnCalled("void");
+        IO.funcCalled("elem.GetNeighbor(1)");
+        Element neighbor = (elem.GetNeighbor(0));
+        IO.returnCalled("result");
+        IO.funcCalled("result.AcceptPlayer(this)");
+        boolean successful = neighbor.AcceptPlayer(this);
+        if(successful) {
+            IO.returnCalled("true");
+            IO.funcCalled("elem.RemoveNeighbor(this)");
+            elem.RemovePlayer(this);
+            IO.returnCalled("void");
+            IO.funcCalled("this.SetElem(pump)");
+            this.SetElem(neighbor);
+            IO.returnCalled("void");
+        } else {
+            IO.returnCalled("false");
+        }
     }
     public void ChangePumpDirection(int outgoingPipe){
         IO.funcCalled("ChangeDirection(outgoingPipe)");
