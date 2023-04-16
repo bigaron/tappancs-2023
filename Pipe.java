@@ -63,7 +63,13 @@ public class Pipe extends Element{
     @Override
     public void ChangeElementMode(boolean mode){}
     @Override
-    public boolean TakeoffPipe(Pipe pipe){return false;}
+    public boolean TakeoffPipe(Pipe pipe){
+        if(IO.input.get(1)) return false;
+        IO.funcCalled("Pipe.SetDetached(true)");
+        pipe.SetDetached(true);
+        IO.returnCalled("void");
+        return true;
+    }
     @Override
     public void SetNeighbor(Element elem){
         if(neighbours[0] == null) neighbours[0] = (Node)elem;

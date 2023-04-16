@@ -69,7 +69,7 @@ public class IO{
         depth++;
         IDStack.add(ID);
         for(int i = 0; i < depth; ++i) System.out.print("\t");
-        System.out.println("Függvényhívás" + ID + ":" + param);
+        System.out.println("Függvényhívás" + ID + ": " + param);
     }
 
     /**
@@ -80,6 +80,6 @@ public class IO{
     public static void returnCalled(String param){
         for(int i = 0; i < depth; ++i) System.out.print("\t");
         depth--;
-        System.out.println("return" + IDStack.get() + ":" + param);
+        System.out.println("return" + IDStack.get() + ": " + param);
     }
 }

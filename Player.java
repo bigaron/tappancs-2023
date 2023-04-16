@@ -19,7 +19,14 @@ public abstract class Player {
         elem.ChangeDirection(outgoingPipe);
         IO.returnCalled("void");
     }
-    public void RemovePipe(Pipe pipe){}
+    public void RemovePipe(Pipe pipe){
+        if(IO.input.get(0)) return;
+        else{
+            IO.funcCalled("Pump.TakeoffPipe(pipe)");
+            boolean ret = elem.TakeoffPipe(pipe);
+            IO.returnCalled(Boolean.toString(ret));
+        }
+    }
     public void AddPipe(Pipe pipe){
         IO.funcCalled("AttachPipe(pipe)");
         elem.AttachPipe(pipe);

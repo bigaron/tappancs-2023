@@ -30,7 +30,25 @@ public class Pump extends Node{
         }
     }
     @Override
-    public boolean TakeoffPipe(Pipe pipe){return true;}
+    public boolean TakeoffPipe(Pipe pipe){ 
+        IO.funcCalled("Pipe.TakeoffPipe(pipe)");
+        boolean ret = pipe.TakeoffPipe(pipe);
+        IO.returnCalled(Boolean.toString(ret));
+        if(!ret) return false;
+        
+        IO.funcCalled("Pump.RemoveNeighbor(pipe)");
+        RemoveNeighbor(pipe);
+        IO.returnCalled("void");
+        IO.funcCalled("Pipe.RemoveNeighbor(this)");
+        pipe.RemoveNeighbor(this);
+        IO.returnCalled("void");
+        
+        if(!IO.input.get(2)) return true;
+        IO.funcCalled("Pump.ChangeElementMode(false)");
+        ChangeElementMode(false);
+        IO.returnCalled("void");
+        return true;
+    }
     @Override
     public void AttachPipe(Pipe pipe){
         output = pipe;
