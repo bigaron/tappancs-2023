@@ -12,7 +12,7 @@ public class SabotagePipeTest extends Tester{
 
     @Override
     public void executeTest() {
-        IO.funcCalled("pipe.SabotagePipe()");
+        IO.funcCalled("Pipe.SabotagePipe()");
         pipe.SabotagePipe();
         IO.returnCalled("void");
     }

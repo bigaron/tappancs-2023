@@ -16,7 +16,7 @@ public class SteponPipeSuccessTest extends Tester{
 
     @Override
     public void executeTest() {
-        IO.funcCalled("s.Move(1)");
+        IO.funcCalled("Saboteur.Move(1)");
         s.Move(0);
         IO.returnCalled("void");
     }

@@ -13,7 +13,7 @@ public class PumpBreakTest extends Tester{
 
     @Override
     public void executeTest() {
-        IO.funcCalled("pump.Step()");
+        IO.funcCalled("Pump.Step()");
         pump.Step();
         IO.returnCalled("void");
     }

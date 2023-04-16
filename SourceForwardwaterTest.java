@@ -16,7 +16,7 @@ public class SourceForwardwaterTest extends Tester{
 
     @Override
     public void executeTest() {
-        IO.funcCalled("s.Step()");
+        IO.funcCalled("Source.Step()");
         s.Step();
         IO.returnCalled("void");
     }

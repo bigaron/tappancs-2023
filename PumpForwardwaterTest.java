@@ -28,7 +28,7 @@ public class PumpForwardwaterTest extends Tester{
 
     @Override
     public void executeTest() {
-        IO.funcCalled("ForwardWater(inputPipe)");
+        IO.funcCalled("Pump.ForwardWater(inputPipe)");
         p.ForwardWater(inputPipe);
         IO.returnCalled("void");
     }

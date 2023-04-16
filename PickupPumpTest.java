@@ -14,14 +14,14 @@ public class PickupPumpTest extends Tester{
         cistern.SetGenerator(g);
         g.SetCistern(cistern);
         ArrayList<String> out = new ArrayList<>();
-        out.add(new String("Van a játékosnál pumpa vagy cső?"));
+        out.add(new String("Van a játékosnál pumpa vagy cső? (0: nem, 1: igen)"));
         IO.initializeTest(out);
         IO.getInput();
     }
 
     @Override
     public void executeTest() {
-        IO.funcCalled("PickupPump()");
+        IO.funcCalled("Plumber.PickupPump()");
         plumber.PickupPump();
         IO.returnCalled("void");
     }

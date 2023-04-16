@@ -23,7 +23,7 @@ public class PlacedownPlumpTest extends Tester{
 
     @Override
     public void executeTest() {
-        IO.funcCalled("Split(pump)");
+        IO.funcCalled("Pipe.Split(pump3)");
         pipe.Split(pump3);
         IO.returnCalled("void");
     }

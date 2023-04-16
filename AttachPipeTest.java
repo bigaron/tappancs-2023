@@ -18,7 +18,7 @@ public class AttachPipeTest extends Tester{
     @Override
     public void executeTest() {
         initializeTest();
-        IO.funcCalled("AddPipe(pipe)");
+        IO.funcCalled("Plumber.AddPipe(pipe)");
         plumber.AddPipe(pipe);
         IO.returnCalled("void");
     }

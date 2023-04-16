@@ -12,7 +12,7 @@ public class RepairPipeTest extends Tester{
 
     @Override
     public void executeTest() {
-        IO.funcCalled("pipe.Repair()");
+        IO.funcCalled("Pipe.Repair()");
         pipe.Repair();
         IO.returnCalled("void");
     }

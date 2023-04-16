@@ -16,7 +16,7 @@ public class ChangePumpTest extends Tester{
 
     @Override
     public void executeTest() {
-        IO.funcCalled("ChangePumpDirection(1)");
+        IO.funcCalled("Plumber.ChangePumpDirection(1)");
         plumber.ChangePumpDirection(0);
         IO.returnCalled("void");
     }

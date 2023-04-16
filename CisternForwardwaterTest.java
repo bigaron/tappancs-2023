@@ -12,7 +12,7 @@ public class CisternForwardwaterTest extends Tester{
 
     @Override
     public void executeTest() {
-        IO.funcCalled("ForwardWater(pipe)");
+        IO.funcCalled("Cistern.ForwardWater(pipe)");
         c.ForwardWater(pipe);
         IO.returnCalled("void");
     }
