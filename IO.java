@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -12,13 +11,13 @@ public class IO{
      */
     private static int depth = -1;
     /**
-     * A cntr azt számlálja, hogy hány függvényhívás volt végrehajtva.
+     * Az ID azt számlálja, hogy hány függvényhívás volt végrehajtva.
      */
-    private static long cntr = 0;
+    private static long ID = 0;
     /**
-     * A lastCalled azt mutatja, hogy a legutoljára hívott függvénynek mi volt a cntr-e.
+     * Saját adatstruktúra, amely egy stacket reprezentál. Ebben tároljuk a függvények sorszámait.  
      */
-    private static long lastCalled;
+    private static FILO IDStack = new FILO();
 
     /**
      * A teszthez szükséges bemeneti értékek.
@@ -36,8 +35,8 @@ public class IO{
      */
     public static void initializeTest(ArrayList<String> defaultOutput) {
         depth = -1;
-        cntr = 0;
-        lastCalled = 0;
+        ID = 0;
+        IDStack = new FILO();
         output.clear();
         if(defaultOutput != null)
             output = defaultOutput;
@@ -66,10 +65,11 @@ public class IO{
      * @param param - A formátum, ami szerint meg kell adni a függvényt: függvénynév([param1, param2, ...])
      */
     public static void funcCalled(String param){
-        lastCalled = ++cntr;
+        ID++;
         depth++;
+        IDStack.add(ID);
         for(int i = 0; i < depth; ++i) System.out.print("\t");
-        System.out.println("Függvényhívás" + cntr + ":" + param);
+        System.out.println("Függvényhívás" + ID + ":" + param);
     }
 
     /**
@@ -80,7 +80,6 @@ public class IO{
     public static void returnCalled(String param){
         for(int i = 0; i < depth; ++i) System.out.print("\t");
         depth--;
-        System.out.println("return" + lastCalled + ":" + param);
-        lastCalled--;
+        System.out.println("return" + IDStack.get() + ":" + param);
     }
 }
