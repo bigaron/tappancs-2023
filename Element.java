@@ -8,7 +8,7 @@ public abstract class Element implements Steppable{
     public void RemovePlayer(Player p){System.out.print("");}
     public abstract Element GetNeighbor(int dir);
     public void Repair(){
-        IO.funcCalled("this.ChangeElementMode(true)");
+        IO.funcCalled("Pipe.ChangeElementMode(true)");
         this.ChangeElementMode(true);
         IO.returnCalled("void");
     }

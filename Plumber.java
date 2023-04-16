@@ -4,7 +4,7 @@ public class Plumber extends Player{
     public void RepairElement(){}
     public void PlaceDown(){}
     public Pump PickupPump(){
-        IO.funcCalled("GetPump()");
+        IO.funcCalled("Element.GetPump()");
         Pump result = elem.GetPump();
         IO.returnCalled("pump");
         return result;

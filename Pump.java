@@ -3,7 +3,7 @@ public class Pump extends Node{
 
     @Override
     public void ChangeDirection(int outgoingPipe){
-        IO.funcCalled("GetNeighbor(outgoingPipe)");
+        IO.funcCalled("Pump.GetNeighbor(outgoingPipe)");
         output = (Pipe)GetNeighbor(outgoingPipe);
         IO.returnCalled("pipe");
     }
@@ -16,7 +16,7 @@ public class Pump extends Node{
         } else if(IO.input.get(2)) {
             return;
         } else {
-            IO.funcCalled("ForwardWater(this)");
+            IO.funcCalled("Pipe.ForwardWater(this)");
             output.ForwardWater(this);
             IO.returnCalled("void");
         }
@@ -24,7 +24,7 @@ public class Pump extends Node{
     @Override
     public void Step(){
         if(IO.input.get(0)) {
-            IO.funcCalled("this.ChangeElementMode(false)");
+            IO.funcCalled("Pump.ChangeElementMode(false)");
             this.ChangeElementMode(false);
             IO.returnCalled("void");
         }
@@ -52,11 +52,11 @@ public class Pump extends Node{
     @Override
     public void AttachPipe(Pipe pipe){
         output = pipe;
-        IO.funcCalled("SetNeighbor(this)");
+        IO.funcCalled("Pipe.SetNeighbor(this)");
         output.SetNeighbor(this);
         IO.returnCalled("void");
 
-        IO.funcCalled("SetNeighbor(pipe)");
+        IO.funcCalled("Pump.SetNeighbor(pipe)");
         SetNeighbor(pipe);
         IO.returnCalled("void");
     }

@@ -6,7 +6,7 @@ public class Cistern extends Node{
     @Override
     public Pump GetPump(){
        if(!IO.input.get(0)) {
-           IO.funcCalled("RequestPump()");
+           IO.funcCalled("Generator.RequestPump()");
            Pump pump = generator.RequestPump();
            IO.returnCalled("pump");
            return pump;

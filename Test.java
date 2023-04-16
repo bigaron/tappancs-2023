@@ -45,6 +45,14 @@ public class Test {
             if(testNumber != ts.size()) {
                 ts.get(testNumber).initializeTest();
                 ts.get(testNumber).executeTest();
+                while(true) {
+                    System.out.println("");
+                    System.out.println("1. menu");
+                    in = scanner.nextLine();
+                    if(Integer.parseInt(in) == 1)
+                        break;
+                }
+
             } else {
                 return;
             }

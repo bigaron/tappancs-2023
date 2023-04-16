@@ -20,7 +20,7 @@ public class Pipe extends Element{
             return;
         }
         else {
-            IO.funcCalled("pump2.ForwardWater(this)");
+            IO.funcCalled("Pump.ForwardWater(this)");
             neighbours[1].ForwardWater(this);
             IO.returnCalled("void");
         }
@@ -39,28 +39,28 @@ public class Pipe extends Element{
         IO.funcCalled("<<create>> newPipe");
         Pipe newPipe = new Pipe();
         IO.returnCalled("void");
-        IO.funcCalled("RemoveNeighbor(this)");
+        IO.funcCalled("Pump.RemoveNeighbor(this)");
         neighbours[0].RemoveNeighbor(this);
         IO.returnCalled("void");
-        IO.funcCalled("RemoveNeighbor(pump1)");
+        IO.funcCalled("Pipe.RemoveNeighbor(pump1)");
         this.RemoveNeighbor(neighbours[0]);
         IO.returnCalled("void");
-        IO.funcCalled("SetNeighbor(this)");
+        IO.funcCalled("Pump.SetNeighbor(this)");
         pump3.SetNeighbor(this);
         IO.returnCalled("void");
-        IO.funcCalled("SetNeighbor(pump3)");
+        IO.funcCalled("Pipe.SetNeighbor(pump3)");
         this.SetNeighbor(pump3);
         IO.returnCalled("void");
-        IO.funcCalled("SetNeighbor(pump3)");
+        IO.funcCalled("Pipe.SetNeighbor(pump3)");
         newPipe.SetNeighbor(pump3);
         IO.returnCalled("void");
-        IO.funcCalled("SetNeighbor(newPipe)");
+        IO.funcCalled("Pump.SetNeighbor(newPipe)");
         pump3.SetNeighbor(newPipe);
         IO.returnCalled("void");
-        IO.funcCalled("SetNeighbor(pump1)");
+        IO.funcCalled("Pipe.SetNeighbor(pump1)");
         newPipe.SetNeighbor(pump1);
         IO.returnCalled("void");
-        IO.funcCalled("SetNeighbor(newPipe)");
+        IO.funcCalled("Pump.SetNeighbor(newPipe)");
         pump1.SetNeighbor(newPipe);
         IO.returnCalled("void");
     }
