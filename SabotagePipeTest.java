@@ -1,3 +1,6 @@
+/**
+ * A cső szabotálását vizsgáló teszt.
+ */
 public class SabotagePipeTest extends Tester{
     Saboteur s;
     Pipe pipe;

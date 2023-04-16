@@ -1,3 +1,6 @@
+/**
+ * A tesztesetek ősosztálya.
+ */
 public abstract class Tester {
 
     public abstract void initializeTest();

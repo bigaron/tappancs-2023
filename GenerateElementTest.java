@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * A generátor elemgenerálásához tartoszó teszt.
+ */
 public class GenerateElementTest extends Tester{
     Generator g;
     @Override

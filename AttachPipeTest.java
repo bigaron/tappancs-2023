@@ -1,3 +1,6 @@
+/**
+ *A cső csatlakoztatásához létrehozott teszt.
+ */
 public class AttachPipeTest extends Tester{
 
     Plumber plumber;

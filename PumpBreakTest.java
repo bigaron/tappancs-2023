@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * A pumpa elromlását vizsgáló teszt.
+ */
 public class PumpBreakTest extends Tester{
     Pump pump;
     @Override

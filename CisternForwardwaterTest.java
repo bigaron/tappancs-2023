@@ -1,3 +1,6 @@
+/**
+ * A ciszterna víztovábbításához létrehozott teszt.
+ */
 public class CisternForwardwaterTest extends Tester{
     Pipe pipe;
     Cistern c;

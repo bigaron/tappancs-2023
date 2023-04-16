@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * Egy ciszternától való pumpa felvételét vizsgáló teszt.
+ */
 public class PickupPumpTest extends Tester{
     Plumber plumber;
     Cistern cistern;

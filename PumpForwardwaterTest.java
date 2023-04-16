@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * A pumpa víztovábbítását vizsgáló teszt.
+ */
 public class PumpForwardwaterTest extends Tester{
     Pipe inputPipe;
     Pipe outputPipe;

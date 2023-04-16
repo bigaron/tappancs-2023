@@ -1,3 +1,6 @@
+/**
+ * A pumpa bemenetének és kimenetének megváltosztatásához létrehozott teszt.
+ */
 public class ChangePumpTest extends Tester{
     Plumber plumber;
     Pump pump;

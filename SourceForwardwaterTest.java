@@ -1,3 +1,6 @@
+/**
+ * A forrás víztovábbítását vizsgáló teszt.
+ */
 public class SourceForwardwaterTest extends Tester{
     Source s;
     Pipe pipe1;

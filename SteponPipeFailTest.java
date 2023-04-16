@@ -1,3 +1,6 @@
+/**
+ * A meghiúsúlt "csőre lépés" műveletet vizsgáló teszt.
+ */
 public class SteponPipeFailTest extends Tester{
     Saboteur s;
     Pump pump;

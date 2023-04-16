@@ -1,3 +1,6 @@
+/**
+ * A cső megjavítását vizsgáló teszt.
+ */
 public class RepairPipeTest extends Tester{
     Plumber plumber;
     Pipe pipe;

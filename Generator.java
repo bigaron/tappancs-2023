@@ -1,9 +1,17 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A generátort reprezentáló osztály.
+ */
 public class Generator implements Steppable{
     private Cistern cistern;
     private List<Pump> pumps = new ArrayList<Pump>();
+
+    /**
+     * Elemet generál, vagy pumpát vagy csövet.
+     * @return a generált elem.
+     */
     public Element GenerateElem(){
         Element result;
         if(!IO.input.get(1)) {
@@ -18,6 +26,10 @@ public class Generator implements Steppable{
 
         return result;
     }
+
+    /**
+     * A Steppable interface függvényének implementálása, ez váltja ki az elemgenerálást.
+     */
     public void Step(){
         if(!IO.input.get(0))
             return;
@@ -30,12 +42,31 @@ public class Generator implements Steppable{
                 IO.returnCalled("pipe");
         }
     }
+
+    /**
+     * Visszaad egy pumpát ha már van legenerálva a generátorban.
+     * @return egy pumpa ha van
+     */
     public Pump RequestPump(){return new Pump();}
+
+    /**
+     * Beállítja a hozzá tartozó ciszternát.
+     * @param c a hozzá tartozó ciszterna
+     */
     public void SetCistern(Cistern c) { cistern = c; }
+
+    /**
+     * Generál egy új pumpát.
+     * @return az új pumpa
+     */
     public Pump GeneratePump() {
         return new Pump();
     }
 
+    /**
+     * Generál egy új csövet.
+     * @return az új cső
+     */
     public Pipe GeneratePipe() {
         return new Pipe();
     }

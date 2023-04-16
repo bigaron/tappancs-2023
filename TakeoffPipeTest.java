@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * A cső lecsatolását vizsgáló teszt.
+ */
 public class TakeoffPipeTest extends Tester{
     private Plumber plumb;
     private Pump pump;

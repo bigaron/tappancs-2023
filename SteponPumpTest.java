@@ -1,3 +1,6 @@
+/**
+ * A pumpára lépést vizsgáló teszt.
+ */
 public class SteponPumpTest extends Tester{
     Saboteur s;
     Pipe pipe;

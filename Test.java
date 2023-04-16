@@ -20,7 +20,7 @@ public class Test {
         ts.add(new CisternForwardwaterTest());
         ts.add(new PickupPumpTest());
         ts.add(new PumpForwardwaterTest());
-        ts.add(new PlacedownPlumpTest());
+        ts.add(new PlacedownPumpTest());
         ts.add(new PumpBreakTest());
         ts.add(new PipeForwardwaterTest());
         ts.add(new RepairPipeTest());

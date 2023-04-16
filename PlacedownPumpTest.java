@@ -1,4 +1,7 @@
-public class PlacedownPlumpTest extends Tester{
+/**
+ * A pumpa lerakását vizsgáló teszt.
+ */
+public class PlacedownPumpTest extends Tester{
     Plumber plumber;
     Pump pump1;
     Pump pump2;
