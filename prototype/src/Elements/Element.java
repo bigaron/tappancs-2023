@@ -1,41 +1,51 @@
 package prototype.src.Elements;
+
 import java.util.ArrayList;
 import java.util.List;
+import prototype.src.Players.*;
+import prototype.src.*;
 
 /**
  * A pumpa, cső, ciszterna és forrás ősosztálya.
  */
 public abstract class Element implements Steppable{
-    List<Player> players = new ArrayList<Player>();
-    public abstract boolean AcceptPlayer(Player p);
+    private List<Player> players = new ArrayList<Player>();
+    private boolean working;
 
+    public Element(){
+        working = true;
+    }
+
+    public abstract boolean AcceptPlayer(Player p);
     /**
-     * A játékos lelép az elemről.
+     * We remove the player from the list of players standing on this element
      * @param p a játékos
      */
-    public void RemovePlayer(Player p){System.out.print("");}
+    public void RemovePlayer(Player p){
+        players.remove(p);
+    }
     public abstract Element GetNeighbor(int dir);
 
     /**
-     * Az elem megjavítása.
+     * Fixes the element.
      */
     public void Repair(){
-        IO.funcCalled("Pipe.ChangeElementMode(true)");
         this.ChangeElementMode(true);
-        IO.returnCalled("void");
     }
 
-    public void SabotagePipe() {}
     public void ChangeDirection(int outgoingPipe){}
     public abstract void ForwardWater(Element elem);
-    public boolean TakeoffPipe(Pipe pipe){
-         return true;
-    }
+    public boolean TakeoffPipe(Pipe pipe){ return true; }
     public void AttachPipe(Pipe pipe){}
+    public void SabotagePipe() {}
     public void Step(){}
     public Pump GetPump(){ return null;}
     public void Split(Pump pump){}
-    public void ChangeElementMode(boolean mode){}
+    /**
+     * Changes the working private field
+     * @param mode - the value it is changed to
+     */
+    public void ChangeElementMode(boolean mode){working = mode;}
     public void SetNeighbor(Element elem){}
 
     /**
