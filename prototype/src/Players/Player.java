@@ -8,6 +8,7 @@ public class Player {
     private Pipe pipe;
 
     public void Move(int dir){
-        elem.GetNeighbor(dir);
+        Element neighbour = elem.GetNeighbor(dir);
+        
     }
 }
