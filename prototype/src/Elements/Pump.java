@@ -121,8 +121,7 @@ public class Pump extends Node{
         }
     }
 
-    public void Read(String line){
-        String[] parsed = line.split("+");
+    public void Read(String[] parsed){
         if(parsed[0] != "pump") return;
         ID = parsed[1];
         working = Boolean.parseBoolean(parsed[2]);

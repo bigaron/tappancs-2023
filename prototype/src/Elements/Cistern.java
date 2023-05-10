@@ -65,4 +65,10 @@ public class Cistern extends Node{
             e.printStackTrace();
         }
     }
+
+    public void Read(String[] parsed){
+        if(parsed[0] != "cistern") return;
+        ID = parsed[1];
+        working = Boolean.parseBoolean(parsed[2]);    
+    }
 }

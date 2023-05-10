@@ -11,7 +11,7 @@ import static prototype.src.Modifier.Slippery;
 public class Saboteur extends Player{
     private static int counter = 0;
 
-    Saboteur() {
+    public Saboteur() {
         ++counter;
         ID = "saboteur" + counter;
     }
@@ -30,5 +30,10 @@ public class Saboteur extends Player{
 
     public void MakeSlippery() {
         elem.ChangeSurface(Slippery);
+    }
+
+    public void Read(String[] parsed){
+        if(parsed[0] != "plumber") return;
+        ID = parsed[1];
     }
 }

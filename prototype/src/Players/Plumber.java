@@ -13,7 +13,7 @@ public class Plumber extends Player {
     private static int counter = 0;
     private Pump pump;
 
-    Plumber() {
+    public Plumber() {
         ++counter;
         ID = "plumber" + counter;
     }
@@ -65,5 +65,10 @@ public class Plumber extends Player {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void Read(String[] parsed){
+        if(parsed[0] != "plumber") return;
+        ID = parsed[1];
     }
 }

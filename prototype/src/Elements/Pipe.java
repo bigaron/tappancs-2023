@@ -182,8 +182,7 @@ public class Pipe extends Element{
         }
     }
 
-    public void Read(String line){
-        String[] parsed = line.split("+");
+    public void Read(String[] parsed){
         if(parsed[0] != "pipe") return;
         ID = parsed[1];
         working = Boolean.parseBoolean(parsed[2]);
@@ -191,5 +190,13 @@ public class Pipe extends Element{
         detached = Boolean.parseBoolean(parsed[4]);
         sabotageable = Integer.parseInt(parsed[5]);
         modifiedState = Integer.parseInt(parsed[6]);
+    }
+    /**
+     * Returns true if the paramater ID is already in the neighbours list, false otherwise
+     */
+    @Override
+    public boolean containsNeighbour(String ID){
+        for(Node p: neighbours) if(p.getID() == ID) return true;
+        return false;
     }
 }

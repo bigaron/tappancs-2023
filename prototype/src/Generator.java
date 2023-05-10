@@ -12,7 +12,13 @@ import prototype.src.Elements.*;
 public class Generator implements Steppable{
     private Cistern cistern;
     private List<Pump> pumps = new ArrayList<Pump>();
+    private String ID;
+    private static long counter = 0;
 
+    public String getID(){ return ID; }
+    public Generator(){
+        ID = "generator" + ++counter;
+    }
     /**
      * Elemet generál, vagy pumpát vagy csövet.
      * @return a generált elem.
@@ -73,5 +79,10 @@ public class Generator implements Steppable{
      */
     public Pipe GeneratePipe() {
         return new Pipe();
+    }
+
+    public void Read(String[] parsed){
+        if(parsed[0] != "generator") return;
+        ID = parsed[1];
     }
 }

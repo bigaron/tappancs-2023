@@ -72,4 +72,13 @@ public abstract class Node extends Element {
     public void SetNeighbor(Element elem){
         neighbours.add((Pipe)elem);
     }
+
+    /**
+     * Returns true if the paramater ID is already in the neighbours list, false otherwise
+     */
+    @Override
+    public boolean containsNeighbour(String ID){
+        for(Pipe p: neighbours) if(p.getID() == ID) return true;
+        return false;
+    }
 }

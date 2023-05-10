@@ -54,4 +54,10 @@ public class Source extends Node{
             e.printStackTrace();
         }
     }
+
+    public void Read(String[] parsed){
+        if(parsed[0] != "source") return;
+        ID = parsed[1];
+        working = Boolean.parseBoolean(parsed[2]); 
+    }
 }

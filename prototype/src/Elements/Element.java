@@ -42,6 +42,7 @@ public abstract class Element implements Steppable{
         working = true;
     }
 
+    public abstract boolean containsNeighbour(String id);
     public void ChangeDirection(int outgoingPipe){}
     public abstract void ForwardWater(Element elem);
     public int TakeoffPipe(Pipe pipe){ return 0; }
