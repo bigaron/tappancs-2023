@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import prototype.src.Elements.*;
 import prototype.src.Players.*;
+import prototype.src.Game;
 import prototype.src.Modifier;
 /**
  * A csövet reprezentáló osztály, az elem leszármazottja.
@@ -152,4 +153,15 @@ public class Pipe extends Element{
     public void RemoveNeighbor(Element elem) {
         neighbours.remove(elem);
     }
+
+    public void Read(String line){
+        String[] parsed = line.split("+");
+        if(parsed[0] != "pipe") return;
+        ID = parsed[1];
+        working = Boolean.parseBoolean(parsed[2]);
+        state = Game.parseModifier(parsed[3]);
+        detached = Boolean.parseBoolean(parsed[4]);
+        sabotageable = Integer.parseInt(parsed[5]);
+        modifiedState = Integer.parseInt(parsed[6]);
+    } 
 }

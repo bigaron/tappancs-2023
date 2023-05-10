@@ -38,4 +38,11 @@ public class Cistern extends Node{
     public void SetGenerator(Generator g) {
        generator = g;
     }
+
+    public void Read(String line){
+        String[] parsed = line.split("+");
+        if(parsed[0] != "cistern") return;
+        ID = parsed[1];
+        working = Boolean.parseBoolean(parsed[2]);
+    }
 }

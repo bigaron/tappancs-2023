@@ -85,4 +85,12 @@ public class Pump extends Node{
         RemoveNeighbor(pipe);   
         return true;
     }
+
+    public void Read(String line){
+        String[] parsed = line.split("+");
+        if(parsed[0] != "pump") return;
+        ID = parsed[1];
+        working = Boolean.parseBoolean(parsed[2]);
+        buffer = Boolean.parseBoolean(parsed[3]);
+    }
 }
