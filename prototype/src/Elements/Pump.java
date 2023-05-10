@@ -5,6 +5,7 @@ import prototype.src.Players.Player;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Random;
 
 /**
  * A pumpát reprezentáló osztály, a Node leszármazottja.
@@ -39,12 +40,17 @@ public class Pump extends Node{
     /**
      * A Steppable függvényének implementálása, a pumpa random elromlik.
      * 
-     *  TODO: ertekek megadasa
+     *  TODO: ertekek megadasa SOLVED
      */
     @Override
     public void Step(){
         if(Game.random){
-
+            Random random = new Random();
+            if(random.nextInt() % 15 == 0) working = false;
+        } else {
+            if(Game.actionCounter == 7) {
+                working = false;
+            }
         }
     }
 
