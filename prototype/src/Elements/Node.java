@@ -1,12 +1,14 @@
 package prototype.src.Elements;
+
 import java.util.ArrayList;
 import java.util.List;
+import prototype.src.Players.*;
 
 /**
  * Az Elementből származik, a pumpa, a forrás, és a ciszterna ősosztálya.
  */
 public abstract class Node extends Element {
-    protected List<Pipe> neighbours = new ArrayList<Pipe>();
+    private List<Pipe> neighbours = new ArrayList<Pipe>();
 
     /**
      * A játékos rálép a Node-ra.
@@ -14,24 +16,44 @@ public abstract class Node extends Element {
      * @return a művelet sikeressége.
      */
     @Override
-    public boolean AcceptPlayer(Player p){return true;}
+    public boolean AcceptPlayer(Player p){
+        return super.AcceptPlayer(p);
+    }
     /**
      * A szomszédos elem lekérdezése.
      * @param dir megadjuk melyik szomszédját kérjük
-     * @return a kért szomszéd
+     * @return a kért szomszéd, vagy null, ha tul nagy szamot adott a felhasznalo
      */
     @Override
-    public Element GetNeighbor(int dir){return neighbours.get(dir);}
-
-    /**
-     *A szomszédos elem beállítása.
-     * @param elem a beállítandó elem
-     */
-    @Override
-    public void SetNeighbor(Element elem){
-        neighbours.add((Pipe)elem);
+    public Element GetNeighbor(int dir){
+        if(dir >= neighbours.size()) return null;
+        return neighbours.get(dir);
     }
 
+    @Override
+    public boolean GetPipe(Pipe pipe){
+        if(!pipe.TakeoffPipe(pipe)) return false;
+        pipe.PickedUp();
+        return true;
+    }
+
+    @Override
+    public void AttachPipe(Pipe pipe){
+        pipe.SetNeighbor(this);
+        SetNeighbor(pipe);
+    }
+
+    @Override
+    public int TakeoffPipe(Pipe pipe){
+        int ret = pipe.TakeoffPipe(pipe);
+        if(ret == -1) return  0;
+        if(ret == 1) return 0;
+        if(ret == 2) {
+            pipe.RemoveNeighbor(this);
+            RemoveNeighbor(pipe);
+        }
+    }
+    
     /**
      * A szomszédos elem eltávolítása.
      * @param elem az eltávolítandó elem.
@@ -39,5 +61,13 @@ public abstract class Node extends Element {
     @Override
     public void RemoveNeighbor(Element elem) {
         neighbours.remove(elem);
+    }
+    /**
+     *A szomszédos elem beállítása.
+     * @param elem a beállítandó elem
+     */
+    @Override
+    public void SetNeighbor(Element elem){
+        neighbours.add((Pipe)elem);
     }
 }

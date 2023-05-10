@@ -16,7 +16,10 @@ public abstract class Element implements Steppable{
         working = true;
     }
 
-    public abstract boolean AcceptPlayer(Player p);
+    public boolean AcceptPlayer(Player p){
+        players.add(p);
+        return true;
+    }
     /**
      * We remove the player from the list of players standing on this element
      * @param p a játékos
@@ -30,30 +33,22 @@ public abstract class Element implements Steppable{
      * Fixes the element.
      */
     public void Repair(){
-        this.ChangeElementMode(true);
+        working = true;
     }
 
     public void ChangeDirection(int outgoingPipe){}
     public abstract void ForwardWater(Element elem);
-    public boolean TakeoffPipe(Pipe pipe){ return true; }
+    public int TakeoffPipe(Pipe pipe){ return 0; }
     public void AttachPipe(Pipe pipe){}
     public void SabotagePipe() {}
     public void Step(){}
     public Pump GetPump(){ return null;}
+    public boolean GetPipe(Pipe pipe){return true;}
     public void Split(Pump pump){}
-    /**
-     * Changes the working private field
-     * @param mode - the value it is changed to
-     */
-    public void ChangeElementMode(boolean mode){working = mode;}
-    public void SetNeighbor(Element elem){}
-
-    /**
-     * Az elemen álló játékost beállító függvény.
-     * @param player a beállítandó játékos
-     */
-    public void SetPlayer(Player player){
-        players.add(player);
-    }
-    public void RemoveNeighbor(Element elem){}
+    public void ChangeElementMode(boolean mode){ working = mode; }
+    public void SetNeighbor(Element elem){}  
+    public void SetPlayer(Player player){}
+    public abstract void RemoveNeighbor(Element elem);
+    public void ChangeSurface(Modifier m){}
+    protected boolean getWorking(){ return working; }
 }

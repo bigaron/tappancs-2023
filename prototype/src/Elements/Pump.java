@@ -1,19 +1,19 @@
 package prototype.src.Elements;
+
+import prototype.src.*;
 /**
  * A pumpát reprezentáló osztály, a Node leszármazottja.
  */
 public class Pump extends Node{
     private Pipe output;
-
+    private boolean buffer;
     /**
      * Megváltoztatja a pumpa folyásirányát.
      * @param outgoingPipe a kimeneti cső
      */
     @Override
     public void ChangeDirection(int outgoingPipe){
-        IO.funcCalled("Pump.GetNeighbor(outgoingPipe)");
         output = (Pipe)GetNeighbor(outgoingPipe);
-        IO.returnCalled("pipe");
     }
 
     /**
@@ -22,29 +22,29 @@ public class Pump extends Node{
      */
     @Override
     public void ForwardWater(Element elem){
-        if(!IO.input.get(0)) {
-            return;
-        } else if(IO.input.get(1)) {
-            return;
-        } else if(IO.input.get(2)) {
-            return;
-        } else {
-            IO.funcCalled("Pipe.ForwardWater(this)");
-            output.ForwardWater(this);
-            IO.returnCalled("void");
-        }
+        if(buffer || !getWorking() || elem == output) return;
+        output.ForwardWater(elem);
     }
 
     /**
      * A Steppable függvényének implementálása, a pumpa random elromlik.
+     * 
+     *  TODO: ertekek megadasa
      */
     @Override
     public void Step(){
-        if(IO.input.get(0)) {
-            IO.funcCalled("Pump.ChangeElementMode(false)");
-            this.ChangeElementMode(false);
-            IO.returnCalled("void");
+        if(Game.random){
+
         }
+    }
+
+    /**
+     * A pumpa mode-ját megváltoztató függvény
+     * @param mode az új mode
+     */
+    @Override
+    public void ChangeElementMode(boolean mode){
+        buffer = mode;
     }
 
     /**
@@ -53,26 +53,24 @@ public class Pump extends Node{
      * @return művelet sikeressége.
      */
     @Override
-    public boolean TakeoffPipe(Pipe pipe){ 
-        IO.funcCalled("Pipe.TakeoffPipe(pipe)");
-        boolean ret = pipe.TakeoffPipe(pipe);
-        IO.returnCalled(Boolean.toString(ret));
-        if(!ret) return false;
-        
-        IO.funcCalled("Pump.RemoveNeighbor(pipe)");
-        RemoveNeighbor(pipe);
-        IO.returnCalled("void");
-        IO.funcCalled("Pipe.RemoveNeighbor(this)");
-        pipe.RemoveNeighbor(this);
-        IO.returnCalled("void");
-        
-        if(!IO.input.get(2)) return true;
-        IO.funcCalled("Pump.ChangeElementMode(false)");
-        ChangeElementMode(false);
-        IO.returnCalled("void");
-        return true;
+    public int TakeoffPipe(Pipe pipe){ 
+        int ret = pipe.TakeoffPipe(this);
+        if(ret == -1) return 0;
+        if(ret == 1) return 0;
+        if(ret == 2){
+            pipe.RemoveNeighbor(this);
+            if(pipe == output) super.ChangeElementMode(false); 
+            RemoveNeighbor(pipe);
+            return 1;
+        }
     }
-
+    /**
+     * A kimeneti cső beállítása.
+     * @param pipe a beállítandó cső
+     */
+    public void SetOutputPipe(Pipe pipe) {
+        output = pipe;
+    }
     /**
      * A pumpához egy cső hozzácsatolása.
      * @param pipe a hozzácsatolandó cső
@@ -89,18 +87,4 @@ public class Pump extends Node{
         IO.returnCalled("void");
     }
 
-    /**
-     * A pumpa mode-ját megváltoztató függvény
-     * @param mode az új mode
-     */
-    @Override
-    public void ChangeElementMode(boolean mode){};
-
-    /**
-     * A kimeneti cső beállítása.
-     * @param pipe a beállítandó cső
-     */
-    public void SetOutputPipe(Pipe pipe) {
-        output = pipe;
-    }
 }
