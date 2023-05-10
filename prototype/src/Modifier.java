@@ -1,5 +1,5 @@
 package prototype.src;
 
-public class Modifier {
-    
+public enum Modifier{
+    Slippery, Sticky, Plain
 }

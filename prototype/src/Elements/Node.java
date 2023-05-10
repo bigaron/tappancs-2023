@@ -32,7 +32,8 @@ public abstract class Node extends Element {
 
     @Override
     public boolean GetPipe(Pipe pipe){
-        if(!pipe.TakeoffPipe(pipe)) return false;
+        int res = pipe.TakeoffPipe(pipe);
+        if(res == -1) return false;
         pipe.PickedUp();
         return true;
     }
@@ -52,6 +53,7 @@ public abstract class Node extends Element {
             pipe.RemoveNeighbor(this);
             RemoveNeighbor(pipe);
         }
+        return 1;
     }
     
     /**

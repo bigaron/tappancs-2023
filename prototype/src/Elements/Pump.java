@@ -54,15 +54,15 @@ public class Pump extends Node{
      */
     @Override
     public int TakeoffPipe(Pipe pipe){ 
-        int ret = pipe.TakeoffPipe(this);
+        int ret = pipe.TakeoffPipe(pipe);
         if(ret == -1) return 0;
         if(ret == 1) return 0;
         if(ret == 2){
             pipe.RemoveNeighbor(this);
             if(pipe == output) super.ChangeElementMode(false); 
             RemoveNeighbor(pipe);
-            return 1;
         }
+        return 1;
     }
     /**
      * A kimeneti cső beállítása.
@@ -71,20 +71,13 @@ public class Pump extends Node{
     public void SetOutputPipe(Pipe pipe) {
         output = pipe;
     }
-    /**
-     * A pumpához egy cső hozzácsatolása.
-     * @param pipe a hozzácsatolandó cső
-     */
-    @Override
-    public void AttachPipe(Pipe pipe){
-        output = pipe;
-        IO.funcCalled("Pipe.SetNeighbor(this)");
-        output.SetNeighbor(this);
-        IO.returnCalled("void");
 
-        IO.funcCalled("Pump.SetNeighbor(pipe)");
-        SetNeighbor(pipe);
-        IO.returnCalled("void");
+    public boolean GetPipe(Pipe pipe){
+        int ret = pipe.TakeoffPipe(pipe);
+        if(ret == -1) return false;
+        if(pipe == output) super.ChangeElementMode(false);
+        pipe.PickedUp();
+        RemoveNeighbor(pipe);   
+        return true;
     }
-
 }

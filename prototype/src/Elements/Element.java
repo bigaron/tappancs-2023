@@ -24,8 +24,9 @@ public abstract class Element implements Steppable{
      * We remove the player from the list of players standing on this element
      * @param p a játékos
      */
-    public void RemovePlayer(Player p){
+    public boolean RemovePlayer(Player p){
         players.remove(p);
+        return true;
     }
     public abstract Element GetNeighbor(int dir);
 
@@ -51,4 +52,5 @@ public abstract class Element implements Steppable{
     public abstract void RemoveNeighbor(Element elem);
     public void ChangeSurface(Modifier m){}
     protected boolean getWorking(){ return working; }
+    protected List<Player> getPlayers(){ return players; }
 }
