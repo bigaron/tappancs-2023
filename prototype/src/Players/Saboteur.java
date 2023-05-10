@@ -3,6 +3,8 @@ package prototype.src.Players;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import static prototype.src.Modifier.Slippery;
+
 /**
  * A szabotőrt reprezentáló osztály, a játékos leszármazottja.
  */
@@ -27,6 +29,6 @@ public class Saboteur extends Player{
     }
 
     public void MakeSlippery() {
-        elem.ChangeSurface(slippery);
+        elem.ChangeSurface(Slippery);
     }
 }

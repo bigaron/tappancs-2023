@@ -4,6 +4,8 @@ import prototype.src.Elements.Element;
 import prototype.src.Elements.Node;
 import prototype.src.Elements.Pipe;
 
+import static prototype.src.Modifier.Sticky;
+
 public class Player {
     protected String ID;
     protected Element elem;
@@ -52,7 +54,7 @@ public class Player {
     }
 
     public void MakeSticky() {
-        elem.ChangeSurface(sticky);
+        elem.ChangeSurface(Sticky);
     }
 
     public void Slipped(Node n) {
