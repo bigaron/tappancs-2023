@@ -4,6 +4,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Random;
+
 import prototype.src.Elements.*;
 import prototype.src.Game;
 import prototype.src.Players.*;
@@ -31,16 +33,34 @@ public class Pipe extends Element{
      * A játékos rálép a csőre.
      * @param p a játékos
      * @return művelet sikeressége
-     * TODO: random ertek itt is
+     * TODO: random ertek itt is SOLVED?
      */
     @Override
     public boolean AcceptPlayer(Player p){
         if(players.size() != 0 || detached) return false;
         if(state != Modifier.Slippery) {
-            AcceptPlayer(p);
+            players.add(p);
             return true;
         }
-        if(state == Modifier.Slippery) p.Slipped();
+        if(state == Modifier.Slippery) {
+            if(Game.random) {
+                if(neighbours.size() == 2) {
+                    Random random = new Random();
+                    p.Slipped(neighbours.get(random.nextInt(0, 1)));
+                } else {
+                    if(neighbours.get(0) != null) {
+                        p.Slipped(neighbours.get(0));
+                    } else {
+                        p.Slipped(neighbours.get(1));
+                    }
+                }
+            } else {
+                if(neighbours.get(0) != null) p.Slipped(neighbours.get(0));
+                else {
+                    p.Slipped(neighbours.get(1));
+                }
+            }
+        }
 
         return true;
     }
@@ -51,9 +71,11 @@ public class Pipe extends Element{
      */
     @Override
     public void ForwardWater(Element elem){
-        if(detached) return;
-        //TODO: pont adas a szabotoroknek
-        if(!working){}
+        //TODO: pont adas a szabotoroknek 0-as csapat a szabotor SOLVED
+        if(detached || !working) {
+            Game.increasePoints(0);
+            return;
+        }
         if(elem != GetNeighbor(0)){
             GetNeighbor(0).ForwardWater(this);
             return;
@@ -105,7 +127,7 @@ public class Pipe extends Element{
         this.detached = detached;
     }
 
-    //TODO: mit csinal ez a fuggveny?
+    //TODO: mit csinal ez a fuggveny? SOLVED
     public void PickedUp(){
         super.ChangeElementMode(false);
         detached = true;

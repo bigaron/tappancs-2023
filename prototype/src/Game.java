@@ -20,13 +20,21 @@ public class Game {
     private ArrayList<Saboteur> saboteurs = new ArrayList<>();
     private ArrayList<Plumber> plumbers = new ArrayList<>();
     private ArrayList<Generator> generators = new ArrayList<>();
-    private int sPoints = 0;
-    private int pPoints = 0;
+    private static int sPoints = 0;
+    private static int pPoints = 0;
     private Mode mode;
     public static boolean random = true;
 
     public Game(){
         mode = Mode.config;
+    }
+
+    public static void increasePoints(int team) {
+        if(team == 0) {
+            ++sPoints;
+        } else {
+            ++pPoints;
+        }
     }
 
     public static Modifier parseModifier(String line){

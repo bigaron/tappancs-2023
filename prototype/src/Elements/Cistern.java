@@ -1,5 +1,6 @@
 package prototype.src.Elements;
 
+import prototype.src.Game;
 import prototype.src.Generator;
 import prototype.src.Players.Player;
 
@@ -21,10 +22,12 @@ public class Cistern extends Node{
     /**
      * A víz továbbítását végző függvény. A víz útja itt ér véget, már nem hív tovább semmit.
      * @param elem
-     * TODO: pontadas a szereloknek
+     * TODO: pontadas a szereloknek SOLVED
      */
    @Override
-   public void ForwardWater(Element elem){}
+   public void ForwardWater(Element elem){
+       Game.increasePoints(1); //1-es csapat plumbers
+   }
 
     /**
      * A ciszternához tartozó generátorból felvesz egy pumpát.
