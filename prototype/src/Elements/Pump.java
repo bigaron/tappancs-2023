@@ -1,6 +1,11 @@
 package prototype.src.Elements;
 
 import prototype.src.*;
+import prototype.src.Players.Player;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  * A pumpát reprezentáló osztály, a Node leszármazottja.
  */
@@ -84,5 +89,35 @@ public class Pump extends Node{
         pipe.PickedUp();
         RemoveNeighbor(pipe);   
         return true;
+    }
+
+    @Override
+    public void Save(FileWriter writer, boolean objectState) {
+        try {
+            if(objectState) {
+                writer.write("pump+" + ID + "+" + working + "+" + buffer + "\n");
+            } else {
+                writer.write("pump+" + ID);
+                for(Player player : players) {
+                    writer.write("+" + player.getID());
+                }
+                if(players.size() == 0) {
+                    writer.write("+null");
+                }
+                for(Pipe pipe : neighbours) {
+                    writer.write("+" + pipe.getID());
+                }
+                if(neighbours.size() == 0) {
+                    writer.write("+null");
+                }
+                if(output != null) {
+                    writer.write("+" + output.getID() + "\n");
+                } else {
+                    writer.write("+null\n");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

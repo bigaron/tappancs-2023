@@ -1,5 +1,6 @@
 package prototype.src.Elements;
 
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import prototype.src.Players.*;
@@ -31,6 +32,8 @@ public abstract class Element implements Steppable{
         return true;
     }
     public abstract Element GetNeighbor(int dir);
+
+    public abstract void Save(FileWriter writer, boolean objectState);
 
     /**
      * Fixes the element.

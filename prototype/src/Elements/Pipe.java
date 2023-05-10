@@ -1,5 +1,7 @@
 package prototype.src.Elements;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import prototype.src.Elements.*;
@@ -151,5 +153,31 @@ public class Pipe extends Element{
     @Override
     public void RemoveNeighbor(Element elem) {
         neighbours.remove(elem);
+    }
+
+    @Override
+    public void Save(FileWriter writer, boolean objectState) {
+        try {
+            if(objectState) {
+                writer.write("pipe+" + ID + "+" + working + "+" + state + "+" + detached + "+" + sabotageable + "+" + modifiedState + "\n");
+            } else {
+                writer.write("pipe+" + ID);
+                for(Player player : players) {
+                    writer.write("+" + player.getID());
+                }
+                if(neighbours.get(0) == null) {
+                    writer.write("+null,");
+                } else {
+                    writer.write("+" + neighbours.get(0).getID() + ",");
+                }
+                if(neighbours.get(1) == null) {
+                    writer.write("null");
+                } else {
+                    writer.write(neighbours.get(1).getID() + "\n");
+                }
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 }
