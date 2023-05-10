@@ -1,5 +1,7 @@
 package prototype.src;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -10,26 +12,41 @@ import prototype.src.Elements.*;
  * A generátort reprezentáló osztály.
  */
 public class Generator implements Steppable{
+    private static int counter = 0;
+    private String ID;
     private Cistern cistern;
     private List<Pump> pumps = new ArrayList<Pump>();
+
+    Generator() {
+        ++counter;
+        ID = "generator" + counter;
+    }
+
+    public String getID() {
+        return ID;
+    }
 
     /**
      * Elemet generál, vagy pumpát vagy csövet.
      * @return a generált elem.
      */
-    public Element GenerateElem(){
+    public void GenerateElem(){
         Element result;
-        if(!IO.input.get(1)) {
-            IO.funcCalled("Generator.GeneratePipe()");
-            result = this.GeneratePipe();
-            IO.returnCalled("pipe");
+        if(Game.random) {
+            Random randomGenerator = new Random();
+            int randomNumber = randomGenerator.nextInt();
+            if(randomNumber % 5 == 0) {
+                GeneratePump();
+            } else if(randomNumber % 6 == 0) {
+                GeneratePipe();
+            }
         } else {
-            IO.funcCalled("Generator.GeneratePump()");
-            result = this.GeneratePump();
-            IO.returnCalled("pump");
+            if(Game.actionCounter % 2 == 0) {
+                GeneratePump();
+            } else {
+                GeneratePipe();
+            }
         }
-
-        return result;
     }
 
     /**
@@ -51,7 +68,12 @@ public class Generator implements Steppable{
      * Visszaad egy pumpát ha már van legenerálva a generátorban.
      * @return egy pumpa ha van
      */
-    public Pump RequestPump(){return new Pump();}
+    public Pump RequestPump(){
+        if(pumps.size() != 0) {
+            return pumps.get(0);
+        }
+        return null;
+    }
 
     /**
      * Beállítja a hozzá tartozó ciszternát.
@@ -64,7 +86,9 @@ public class Generator implements Steppable{
      * @return az új pumpa
      */
     public Pump GeneratePump() {
-        return new Pump();
+        Pump result = new Pump();
+        pumps.add((Pump)result);
+        return result;
     }
 
     /**
@@ -72,6 +96,28 @@ public class Generator implements Steppable{
      * @return az új cső
      */
     public Pipe GeneratePipe() {
-        return new Pipe();
+        Pipe result = new Pipe();
+        cistern.SetNeighbor(result);
+        result.SetNeighbor(cistern);
+        return result;
+    }
+
+    public void Save(FileWriter writer, boolean objectState) {
+        try {
+            if(objectState) {
+                writer.write("generator+" + ID + "\n");
+            } else {
+                writer.write("generator+" + ID);
+                for(Pump pump : pumps) {
+                    writer.write("+" + pump.getID());
+                }
+                if(pumps.size() == 0) {
+                    writer.write("+null");
+                }
+                writer.write("+" + cistern.getID() + "\n");
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 }
