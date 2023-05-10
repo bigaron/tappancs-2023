@@ -2,6 +2,8 @@ package prototype.src;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import prototype.src.Elements.*;
 
 /**
@@ -34,15 +36,14 @@ public class Generator implements Steppable{
      * A Steppable interface függvényének implementálása, ez váltja ki az elemgenerálást.
      */
     public void Step(){
-        if(!IO.input.get(0))
-            return;
-        else {
-            IO.funcCalled("Generator.GenerateElem()");
-            this.GenerateElem();
-            if(IO.input.get(1))
-                IO.returnCalled("pump");
-            else
-                IO.returnCalled("pipe");
+        if(Game.random) {
+            GenerateElem();
+        } else {
+            Random randomGenerator = new Random();
+            int randomNumber = randomGenerator.nextInt();
+            if(randomNumber % 5 == 0) {
+                GenerateElem();
+            }
         }
     }
 
