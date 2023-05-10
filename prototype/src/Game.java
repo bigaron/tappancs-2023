@@ -70,6 +70,10 @@ public class Game {
                 else insertPlayerToElem(findElem(parsed[1]), saboteurs.get(findSabo(s)));
             }
         }
+        String[] neighbours = parsed[3].split(",");
+        for(String s: neighbours){
+            desert.get(findElem(parsed[1])).SetNeighbor(desert.get(findElem(s)));
+        }
     }
 
     private void readInSelectedObject(String line, boolean relations){
