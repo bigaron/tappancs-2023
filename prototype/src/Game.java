@@ -10,6 +10,7 @@ public class Game {
             default: return Modifier.Plain;
         }
     }
+    public static int actionCounter = 0;
     public static void main(String[] args){
     }   
 }
