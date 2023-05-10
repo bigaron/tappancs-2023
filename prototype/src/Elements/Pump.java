@@ -7,6 +7,11 @@ import prototype.src.*;
 public class Pump extends Node{
     private Pipe output;
     private boolean buffer;
+    private static long counter = 0;
+
+    public Pump(){
+        ID = "pump" + ++counter;
+    }
     /**
      * Megváltoztatja a pumpa folyásirányát.
      * @param outgoingPipe a kimeneti cső
@@ -22,7 +27,7 @@ public class Pump extends Node{
      */
     @Override
     public void ForwardWater(Element elem){
-        if(buffer || !getWorking() || elem == output) return;
+        if(buffer || !working || elem == output) return;
         output.ForwardWater(elem);
     }
 

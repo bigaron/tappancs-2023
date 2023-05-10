@@ -9,11 +9,13 @@ import prototype.src.*;
  * A pumpa, cső, ciszterna és forrás ősosztálya.
  */
 public abstract class Element implements Steppable{
-    private List<Player> players = new ArrayList<Player>();
-    private boolean working;
+    protected List<Player> players = new ArrayList<Player>();
+    protected boolean working;
+    protected String ID;
 
     public Element(){
         working = true;
+        ID = "";
     }
 
     public boolean AcceptPlayer(Player p){
@@ -51,6 +53,5 @@ public abstract class Element implements Steppable{
     public void SetPlayer(Player player){}
     public abstract void RemoveNeighbor(Element elem);
     public void ChangeSurface(Modifier m){}
-    protected boolean getWorking(){ return working; }
-    protected List<Player> getPlayers(){ return players; }
+    public String getID(){ return ID; }
 }

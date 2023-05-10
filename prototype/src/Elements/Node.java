@@ -8,7 +8,7 @@ import prototype.src.Players.*;
  * Az Elementből származik, a pumpa, a forrás, és a ciszterna ősosztálya.
  */
 public abstract class Node extends Element {
-    private List<Pipe> neighbours = new ArrayList<Pipe>();
+    protected List<Pipe> neighbours = new ArrayList<Pipe>();
 
     /**
      * A játékos rálép a Node-ra.

@@ -3,6 +3,10 @@ package prototype.src.Elements;
  * A forrást reprezentáló osztály, a Node leszármazottja.
  */
 public class Source extends Node{
+    private static long counter = 0;
+    public Source(){
+        ID = "source" + ++counter;
+    }
     /**
      * A Steppable interface függvényét valósítja meg, ez "indítja" a víz folyását.
      */

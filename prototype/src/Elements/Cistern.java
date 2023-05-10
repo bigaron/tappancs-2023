@@ -7,7 +7,12 @@ import prototype.src.Generator;
  */
 
 public class Cistern extends Node{
-   private Generator generator;
+    private Generator generator;
+    private static long counter = 0;
+
+    public Cistern(){
+        ID = "cistern" + ++counter;
+    }
 
     /**
      * A víz továbbítását végző függvény. A víz útja itt ér véget, már nem hív tovább semmit.

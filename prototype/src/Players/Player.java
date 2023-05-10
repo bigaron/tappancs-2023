@@ -3,8 +3,7 @@ package prototype.src.Players;
 import prototype.src.Elements.Element;
 import prototype.src.Elements.Node;
 import prototype.src.Elements.Pipe;
-
-import static prototype.src.Modifier.Sticky;
+import prototype.src.Modifier;
 
 public class Player {
     protected String ID;
@@ -54,7 +53,7 @@ public class Player {
     }
 
     public void MakeSticky() {
-        elem.ChangeSurface(Sticky);
+        elem.ChangeSurface(Modifier.Sticky);
     }
 
     public void Slipped(Node n) {

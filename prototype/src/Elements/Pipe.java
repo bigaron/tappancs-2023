@@ -14,12 +14,14 @@ public class Pipe extends Element{
     private boolean detached;
     private int sabotageable;
     private int modifiedState;
+    private static long counter = 0;
 
     public Pipe(){
         neighbours = new ArrayList<>();
         sabotageable = 0;
         modifiedState = 0;
         state = Modifier.Plain;
+        ID = "pipe" + ++counter;
     }
 
     /**
@@ -30,7 +32,7 @@ public class Pipe extends Element{
      */
     @Override
     public boolean AcceptPlayer(Player p){
-        if(getPlayers().size() != 0 || detached) return false;
+        if(players.size() != 0 || detached) return false;
         if(state != Modifier.Slippery) {
             AcceptPlayer(p);
             return true;
@@ -48,7 +50,7 @@ public class Pipe extends Element{
     public void ForwardWater(Element elem){
         if(detached) return;
         //TODO: pont adas a szabotoroknek
-        if(!getWorking()){}
+        if(!working){}
         if(elem != GetNeighbor(0)){
             GetNeighbor(0).ForwardWater(this);
             return;
@@ -91,7 +93,7 @@ public class Pipe extends Element{
 
     @Override
     public int TakeoffPipe(Pipe pipe){
-        if(getPlayers().size() > 0) return -1;
+        if(players.size() > 0) return -1;
         if(neighbours.size() == 1) return 1;
         return 2;
     }
