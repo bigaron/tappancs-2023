@@ -1,4 +1,7 @@
 package prototype.src.Elements;
+
+import prototype.src.Generator;
+
 /**
  * A ciszternát reprezentáló osztály.
  */
@@ -9,6 +12,7 @@ public class Cistern extends Node{
     /**
      * A víz továbbítását végző függvény. A víz útja itt ér véget, már nem hív tovább semmit.
      * @param elem
+     * TODO: pontadas a szereloknek
      */
    @Override
    public void ForwardWater(Element elem){}
@@ -19,14 +23,7 @@ public class Cistern extends Node{
      */
     @Override
     public Pump GetPump(){
-       if(!IO.input.get(0)) {
-           IO.funcCalled("Generator.RequestPump()");
-           Pump pump = generator.RequestPump();
-           IO.returnCalled("pump");
-           return pump;
-       } else {
-           return null;
-       }
+       return generator.GeneratePump();
     }
 
     /**
