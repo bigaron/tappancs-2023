@@ -24,6 +24,7 @@ public class Pump extends Node{
      */
     @Override
     public void ChangeDirection(int outgoingPipe){
+        if(neighbours.size() < outgoingPipe) return;
         output = (Pipe)GetNeighbor(outgoingPipe);
     }
 

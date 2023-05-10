@@ -29,15 +29,17 @@ public class Player {
         elem.ChangeDirection(outgoingPipe);
     }
 
-    public void RemovePipe(Pipe pipe) {
-        if(this.pipe != null) return;
+    public void RemovePipe(int dir) {
+        Element e = elem.GetNeighbor(dir);
+        if(e.getID().indexOf("pipe") != -1) return;
+        if(this.pipe != null || e == null) return;
         int result = elem.TakeoffPipe(pipe);
         if(result == 1) {
-            this.pipe = pipe;
+            this.pipe = (Pipe)e;
         }
     }
 
-    public void AddPipe(Pipe pipe) {
+    public void AddPipe() {
         if(this.pipe != null) {
             elem.AttachPipe(pipe);
             pipe = null;
@@ -59,5 +61,13 @@ public class Player {
     public void Slipped(Node n) {
         n.AcceptPlayer(this);
         elem = n;
+    }
+    
+    /**
+     * Beállítja a felvett csövet az "inventory"-jában.
+     * @param pipe a felvett cső
+     */
+    public void SetPipe(Pipe pipe) {
+        this.pipe = pipe;
     }
 }

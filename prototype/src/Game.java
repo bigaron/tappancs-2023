@@ -20,6 +20,8 @@ public class Game {
     private ArrayList<Saboteur> saboteurs = new ArrayList<>();
     private ArrayList<Plumber> plumbers = new ArrayList<>();
     private ArrayList<Generator> generators = new ArrayList<>();
+    private Player activePlayer;
+    private boolean plumbersTurn;
     private static int sPoints = 0;
     private static int pPoints = 0;
     private Mode mode;
@@ -27,6 +29,7 @@ public class Game {
 
     public Game(){
         mode = Mode.config;
+        plumbersTurn = false;
     }
 
     public static void increasePoints(int team) {
@@ -130,14 +133,14 @@ public class Game {
         int sIDX = findSabo(parsed[1]);
         saboteurs.get(sIDX).SetElem(desert.get(findElem(parsed[2])));
         if(parsed[3] == "null") return;
-        saboteurs.get(sIDX).AddPipe((Pipe)desert.get(findElem(parsed[3])));
+        saboteurs.get(sIDX).SetPipe((Pipe)desert.get(findElem(parsed[3])));
     }
 
     private void plumberRelations(String[] parsed){
         int pIDX = findPlumb(parsed[1]);
         plumbers.get(pIDX).SetElem(desert.get(findElem(parsed[2])));
         if(parsed[3] == "null") return;
-        plumbers.get(pIDX).AddPipe((Pipe)desert.get(findElem(parsed[3])));
+        plumbers.get(pIDX).SetPipe((Pipe)desert.get(findElem(parsed[3])));
         if(parsed[4] == "null") return;
         plumbers.get(pIDX).SetPump((Pump)desert.get(findElem(parsed[4])));
     }
@@ -249,6 +252,7 @@ public class Game {
     }
 
     public void Save(String filename) {
+        if(mode != Mode.config) return;
         try {
             File file = new File("output", filename);
             FileWriter writer = new FileWriter(file);
@@ -279,5 +283,64 @@ public class Game {
         } catch(IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setRandom(boolean value){ if(mode == Mode.config) random = value; }
+    public void Move(int direction){
+        if(mode == Mode.config) return;
+        activePlayer.Move(direction);
+    }
+    public void leakPipe(){
+        if(mode == Mode.config || plumbersTurn || findSabo(activePlayer.getID()) == -1) return;
+        activePlayer.SabotagePipe();
+    }
+    public void repair(){
+        if(mode == Mode.config || !plumbersTurn || findPlumb(activePlayer.getID()) == -1) return;
+        Plumber p = (Plumber)activePlayer;
+        p.RepairElement();
+    }
+    public void changePumpDir(int direction){
+        if(mode == Mode.config) return;
+        activePlayer.changePumpDirection(direction);
+    }
+    public void changeSurface(Modifier mod){
+        if(mode == Mode.config) return;
+        if(mod == Modifier.Slippery){
+            if(plumbersTurn) return;
+            Saboteur s = (Saboteur)activePlayer;
+            s.MakeSticky();
+        }
+        activePlayer.MakeSticky();
+    }
+
+    public void addPipe(){
+        if(mode == Mode.config || !plumbersTurn) return;
+        Plumber p = (Plumber) activePlayer;
+        p.AddPipe();
+    }
+     
+    public void removePipe(int number){
+        if(mode == Mode.config || !plumbersTurn) return;
+        Plumber p = (Plumber)activePlayer;
+        
+        p.RemovePipe(number);
+    }
+
+    public void placePump(){
+        if(mode == Mode.config || !plumbersTurn) return;
+        Plumber p = (Plumber)activePlayer;
+        p.PlaceDown();
+    }
+
+    public void pickUpPump(){
+        if(mode == Mode.config || !plumbersTurn) return;
+        Plumber p = (Plumber)activePlayer;
+        p.PickupPump();
+    }
+
+    public void pickUpPipe(int num){
+        if(mode == Mode.config || !plumbersTurn) return;
+        Plumber p = (Plumber)activePlayer;
+        p.PickUpPipe(num);
     }
 }

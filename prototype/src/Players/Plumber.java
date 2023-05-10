@@ -27,24 +27,18 @@ public class Plumber extends Player {
         }
     }
 
-    public void PickUpPipe(Pipe pipe) {
-        boolean successful = elem.GetPipe(pipe);
-        if(successful) this.pipe = pipe;
+    public void PickUpPipe(int dir) {
+        Pipe p = (Pipe)elem.GetNeighbor(dir);
+        boolean successful = elem.GetPipe(p);
+        if(successful) this.pipe = p;
     }
 
     /**
      * Felvesz egy pumpát
      */
     public void PickupPump(){
-        Pump result = elem.GetPump();
-    }
-
-    /**
-     * Beállítja a felvett csövet az "inventory"-jában.
-     * @param pipe a felvett cső
-     */
-    public void SetPipe(Pipe pipe) {
-        this.pipe = pipe;
+        if(pump != null) return;
+        pump = elem.GetPump();
     }
 
     /**
