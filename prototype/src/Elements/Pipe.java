@@ -46,7 +46,7 @@ public class Pipe extends Element{
             if(Game.random) {
                 if(neighbours.size() == 2) {
                     Random random = new Random();
-                    p.Slipped(neighbours.get(random.nextInt(0, 1)));
+                    p.Slipped(neighbours.get(random.nextInt(2)));
                 } else {
                     if(neighbours.get(0) != null) {
                         p.Slipped(neighbours.get(0));

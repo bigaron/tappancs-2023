@@ -65,24 +65,83 @@ public class Game {
         return -1;
     }
 
-    private void insertPlayerToElem(int elemIDX, Player p){
-        desert.get(elemIDX).AcceptPlayer(p);
+    private int findGen(String ID){
+        for(int i = 0; i < generators.size(); ++i) if(generators.get(i).getID() == ID) return i;
+        return -1;
+    }
+
+    private void insertPlayerToElem(int elemIDX, String[] players){
+        for(String s: players){
+            if(findPlumb(s) != -1) desert.get(elemIDX).AcceptPlayer(plumbers.get(findPlumb(s)));
+            else desert.get(elemIDX).AcceptPlayer(plumbers.get(findSabo(s)));
+        }
+    }
+
+    private void insertNeighbourToElem(int elemIDX, String[] neighbours){
+        for(String s: neighbours){
+            desert.get(elemIDX).SetNeighbor(desert.get(findElem(s)));
+        }
+    }
+
+    private void setNeighbourAndPlayers(int index, String[] values){
+        if(values[2] != "null"){ insertPlayerToElem(index, values[2].split(",")); }
+        insertNeighbourToElem(index, values[3].split(","));
     }
 
     private void cisternRelations(String[] parsed){
-        for(Element elem: desert) if(elem.getID() == parsed[1]);
-        if(parsed[2] != "null"){
-            String[] standers = parsed[2].split(",");
-            for(String s: standers){
-                if(findPlumb(s) != -1) insertPlayerToElem(findElem(parsed[1]), plumbers.get(findPlumb(s)));
-                else insertPlayerToElem(findElem(parsed[1]), saboteurs.get(findSabo(s)));
+        int cIDX = findElem(parsed[1]); 
+        setNeighbourAndPlayers(cIDX, parsed);
+        Cistern c = (Cistern)desert.get(cIDX);
+        c.SetGenerator(generators.get(findGen(parsed[4])));
+        desert.set(cIDX, c);
+    }
+
+    private void pipeRelations(String[] parsed){
+        int pIDX = findElem(parsed[1]);
+        setNeighbourAndPlayers(pIDX, parsed);
+    }
+
+    private void pumpRelations(String[] parsed){
+        int pIDX = findElem(parsed[1]);
+        setNeighbourAndPlayers(pIDX, parsed);
+        if(parsed.length == 5){
+            Pump p = (Pump)desert.get(pIDX);
+            if(parsed[4] == "null") {
+                p.SetOutputPipe(null);
+                return;
             }
-        }
-        String[] neighbours = parsed[3].split(",");
-        for(String s: neighbours){
-            desert.get(findElem(parsed[1])).SetNeighbor(desert.get(findElem(s)));
+            p.SetOutputPipe((Pipe)desert.get(findElem(parsed[4])));
         }
     }
+
+    private void sourceRelations(String[] parsed){
+        int sIDX = findElem(parsed[1]);
+        setNeighbourAndPlayers(sIDX, parsed);
+    }
+
+    private void generatorRelations(String[] parsed){
+        int gIDX = findGen(parsed[1]);
+        String[] pumps = parsed[2].split(",");
+        for(String s: pumps) generators.get(gIDX).AddPump((Pump)desert.get(findElem(s)));;
+        generators.get(gIDX).SetCistern((Cistern)desert.get(findElem(parsed[3])));
+    }
+
+    private void saboteurRelations(String[] parsed){
+        int sIDX = findSabo(parsed[1]);
+        saboteurs.get(sIDX).SetElem(desert.get(findElem(parsed[2])));
+        if(parsed[3] == "null") return;
+        saboteurs.get(sIDX).AddPipe((Pipe)desert.get(findElem(parsed[3])));
+    }
+
+    private void plumberRelations(String[] parsed){
+        int pIDX = findPlumb(parsed[1]);
+        plumbers.get(pIDX).SetElem(desert.get(findElem(parsed[2])));
+        if(parsed[3] == "null") return;
+        plumbers.get(pIDX).AddPipe((Pipe)desert.get(findElem(parsed[3])));
+        if(parsed[4] == "null") return;
+        plumbers.get(pIDX).SetPump((Pump)desert.get(findElem(parsed[4])));
+    }
+
 
     private void readInSelectedObject(String line, boolean relations){
         String[] parsed = line.split("+");
@@ -104,7 +163,7 @@ public class Game {
                     g.Read(parsed);
                     generators.add(g);
                 }else{
-                    
+                    generatorRelations(parsed);
                 }
                 break;
             }
@@ -114,7 +173,7 @@ public class Game {
                     s.Read(parsed);
                     desert.add(s);
                 }else{
-                    
+                    sourceRelations(parsed);
                 }
             }
             case "pump": {
@@ -123,7 +182,7 @@ public class Game {
                     p.Read(parsed);
                     desert.add(p);
                 }else{
-                    
+                    pumpRelations(parsed);
                 }
                 break;
             }
@@ -133,7 +192,7 @@ public class Game {
                     p.Read(parsed);
                     desert.add(p);
                 }else{
-                    
+                    pipeRelations(parsed);
                 }
                 break;
             }
@@ -143,7 +202,7 @@ public class Game {
                     p.Read(parsed);
                     saboteurs.add(p);
                 }else{
-                    
+                    saboteurRelations(parsed);
                 }
                 break;
             }
@@ -153,7 +212,7 @@ public class Game {
                     p.Read(parsed);
                     plumbers.add(p);
                 }else{
-                    
+                    plumberRelations(parsed);
                 }
                 break;
             }

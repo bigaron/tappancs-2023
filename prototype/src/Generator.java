@@ -102,6 +102,10 @@ public class Generator implements Steppable{
         return result;
     }
 
+    public void AddPump(Pump pump){
+        pumps.add(pump);
+    }
+
     public void Save(FileWriter writer, boolean objectState) {
         try {
             if(objectState) {
