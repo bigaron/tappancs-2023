@@ -23,11 +23,19 @@ public class Pipe extends Element{
 
     public Pipe(){
         neighbours = new ArrayList<>();
+        neighbours.add(null);
+        neighbours.add(null);
         sabotageable = 0;
         modifiedState = 0;
         state = Modifier.Plain;
         ID = "pipe" + ++counter;
     }
+
+    @Override
+    public void SetNeighbor(Element elem){
+        if(neighbours.get(0) == null) neighbours.set(0, (Node)elem);
+        else neighbours.set(1, (Node)elem);
+    }  
 
     /**
      * A játékos rálép a csőre.

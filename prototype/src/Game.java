@@ -49,45 +49,49 @@ public class Game {
     }
     public static int actionCounter = 0;
     public static void main(String[] args){
+        Game game = new Game();
+        game.generate("F:/EGYETEM/tappancs-2023/prototype/src/testmap.txt");
     }
 
     public void changeState(Mode mode){ this.mode = mode; }
 
     private int findSabo(String ID){
-        for(int i = 0;i < saboteurs.size(); ++i) if(saboteurs.get(i).getID() == ID) return i;
+        for(int i = 0;i < saboteurs.size(); ++i) if(saboteurs.get(i).getID().equals(ID)) return i;
         return -1;
     }
 
     private int findPlumb(String ID){
-        for(int i = 0;i < plumbers.size(); ++i) if(plumbers.get(i).getID() == ID) return i;
+        for(int i = 0;i < plumbers.size(); ++i) if(plumbers.get(i).getID().equals(ID)) return i;
         return -1;
     }
 
     private int findElem(String ID){
-        for(int i = 0; i < desert.size(); ++i) if(desert.get(i).getID() == ID) return i;
+        for(int i = 0; i < desert.size(); ++i) if(desert.get(i).getID().equals(ID)) return i;
         return -1;
     }
 
     private int findGen(String ID){
-        for(int i = 0; i < generators.size(); ++i) if(generators.get(i).getID() == ID) return i;
+        for(int i = 0; i < generators.size(); ++i) if(generators.get(i).getID().equals(ID)) return i;
         return -1;
     }
 
     private void insertPlayerToElem(int elemIDX, String[] players){
         for(String s: players){
             if(findPlumb(s) != -1) desert.get(elemIDX).AcceptPlayer(plumbers.get(findPlumb(s)));
-            else desert.get(elemIDX).AcceptPlayer(plumbers.get(findSabo(s)));
+            else desert.get(elemIDX).AcceptPlayer(saboteurs.get(findSabo(s)));
         }
     }
 
     private void insertNeighbourToElem(int elemIDX, String[] neighbours){
         for(String s: neighbours){
-            desert.get(elemIDX).SetNeighbor(desert.get(findElem(s)));
+            if(!s.equals("null")){
+                desert.get(elemIDX).SetNeighbor(desert.get(findElem(s)));
+            }
         }
     }
 
     private void setNeighbourAndPlayers(int index, String[] values){
-        if(values[2] != "null"){ insertPlayerToElem(index, values[2].split(",")); }
+        if(!values[2].equals("null")){ insertPlayerToElem(index, values[2].split(",")); }
         insertNeighbourToElem(index, values[3].split(","));
     }
 
@@ -109,7 +113,7 @@ public class Game {
         setNeighbourAndPlayers(pIDX, parsed);
         if(parsed.length == 5){
             Pump p = (Pump)desert.get(pIDX);
-            if(parsed[4] == "null") {
+            if(parsed[4].equals("null")) {
                 p.SetOutputPipe(null);
                 return;
             }
@@ -125,29 +129,29 @@ public class Game {
     private void generatorRelations(String[] parsed){
         int gIDX = findGen(parsed[1]);
         String[] pumps = parsed[2].split(",");
-        for(String s: pumps) generators.get(gIDX).AddPump((Pump)desert.get(findElem(s)));;
+        for(String s: pumps) if(!s.equals("null"))generators.get(gIDX).AddPump((Pump)desert.get(findElem(s)));;
         generators.get(gIDX).SetCistern((Cistern)desert.get(findElem(parsed[3])));
     }
 
     private void saboteurRelations(String[] parsed){
         int sIDX = findSabo(parsed[1]);
         saboteurs.get(sIDX).SetElem(desert.get(findElem(parsed[2])));
-        if(parsed[3] == "null") return;
+        if(parsed[3].equals("null")) return;
         saboteurs.get(sIDX).SetPipe((Pipe)desert.get(findElem(parsed[3])));
     }
 
     private void plumberRelations(String[] parsed){
         int pIDX = findPlumb(parsed[1]);
         plumbers.get(pIDX).SetElem(desert.get(findElem(parsed[2])));
-        if(parsed[3] == "null") return;
+        if(parsed[3].equals("null")) return;
         plumbers.get(pIDX).SetPipe((Pipe)desert.get(findElem(parsed[3])));
-        if(parsed[4] == "null") return;
+        if(parsed[3].equals("null")) return;
         plumbers.get(pIDX).SetPump((Pump)desert.get(findElem(parsed[4])));
     }
 
 
     private void readInSelectedObject(String line, boolean relations){
-        String[] parsed = line.split("+");
+        String[] parsed = line.split("\\+");
 
         switch(parsed[0]){
             case "cistern":{
@@ -178,6 +182,7 @@ public class Game {
                 }else{
                     sourceRelations(parsed);
                 }
+                break;
             }
             case "pump": {
                 if(!relations){
