@@ -7,6 +7,7 @@ import prototype.src.Players.Saboteur;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
+import java.util.Objects;
 import java.util.Scanner;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,9 +48,90 @@ public class Game {
             default: return Modifier.Plain;
         }
     }
-    public static int actionCounter = 0;
+    public static int actionCounter = 4; //induljunk négyről és dekrementáljunk
     public static void main(String[] args){
-        Game game = new Game();      
+        Game game = new Game();
+
+        //amíg config módban vagyunk
+        while(game.mode == Mode.config){
+            System.out.println("Várom a parancsot gazdám!");
+            Scanner in = new Scanner(System.in);
+            String input = in.nextLine();
+            String[] splitted = input.split(" ");
+
+            switch (splitted[0]) {
+                case "changeState" -> game.changeState(splitted[1]);
+                case "generate" -> game.generate(splitted[1]);
+                case "save" ->
+                        game.Save(splitted[1]); //itt a dokumentációban van path is írva btw az sztem nem kell, de a függvényben sincs már ott a paraméterek közt
+                case "setRandom" -> game.setRandom(Boolean.parseBoolean(splitted[1])); //ez dob hibát ha nem jó?
+                case "exit" -> System.exit(0); //ide még egy plusz mentés? vagy ez nem olyan rész?
+                default -> System.out.println("Rossz a parancsod drága"); //csinosabb hibakezelés?
+            }
+
+        }
+
+        //itt valahol endgame ->> endgame gamemodeot vált és kiadja a savet, pontszámítás?
+        while(game.mode == Mode.play) { //ugye a flaget ellenőrzik a függvények. akkor itt attól függően h kinek a turnje van, végigmegyünk a dömbökön és mindenki léphet 4et
+
+            // a létrehozásnál már legyen kijelölve egy aktívjátékos ->> a játékosváltás logikája a ciklus végén
+            while (actionCounter != 0) {//4-szer léphet, a végén újra 4re tesszük a cntr-t a kövi játékosnak
+                //beolvasunk switch -case az aktív játékos csinálja a dolgokat
+                System.out.println("Várom a parancsot gazdám!");
+                Scanner in = new Scanner(System.in);
+                String input = in.nextLine();
+                String[] cmd = input.split(" ");
+
+                switch (cmd[0]) { //ezeknél hibakezelés ugye van a meghívott függvényekben?
+                    case "move" -> game.Move(Integer.parseInt(cmd[1]));
+                    case "leakPipe" -> game.leakPipe();
+                    case "repair" -> game.repair();
+                    case "changePumpDir" -> game.changePumpDir(Integer.parseInt(cmd[1]));
+                    case "changeSurface" -> {
+                        if (Objects.equals(cmd[1], "slippery")) game.changeSurface(Modifier.Slippery);
+                        else if (Objects.equals(cmd[1], "sticky")) game.changeSurface(Modifier.Sticky);
+                        else System.out.println("Valami rendes inputot adjál már meg");
+                    }
+                    case "addPipe" -> game.addPipe();
+                    case "removePipe" -> game.removePipe(Integer.parseInt(cmd[1]));
+                    case "placePump" -> game.placePump();
+                    case "pickUpPump" -> game.pickUpPump();
+                    case "pickUpPipe" -> game.pickUpPipe(Integer.parseInt(cmd[1]));
+                    case "endTurn" -> //yupp ez az ami még nincs meg
+                    case "list" -> //meg ezt is
+                    default -> System.out.println("Érvényes parancsot adjál mert nem leszünk jóban.");
+                }
+
+
+                --actionCounter;
+            }
+            actionCounter = 4;
+            //kövi játékosra léptetünk.
+            if (game.plumbersTurn) {
+                int idx = game.plumbers.lastIndexOf((Plumber) game.activePlayer);
+                ++idx;
+                if (idx < game.plumbers.size()) {
+                    game.activePlayer = game.plumbers.get(idx); //finito ha minden ok
+                } else { //ha vége van a tömbnek -->> csapatváltás
+                    game.plumbersTurn = false;
+                    game.activePlayer = game.saboteurs.get(0);  //itt indexelős hibakezelés??
+                }
+            } else { //ua csak másik tömbökkel
+                int idx = game.saboteurs.lastIndexOf((Saboteur) game.activePlayer);
+                ++idx;
+                if (idx < game.saboteurs.size()) {
+                    game.activePlayer = game.saboteurs.get(idx); //finito ha minden ok
+                } else { //ha vége van a tömbnek -->> csapatváltás
+                    game.plumbersTurn = true;
+                    game.activePlayer = game.plumbers.get(0);  //itt indexelős hibakezelés??
+                }
+            }
+
+
+        }
+
+
+        //innentől ami volt, csak nem töröltem ki
         game.generate("D:/Negyedik_felev/Projlab/prot/tappancs-2023/prototype/src/testmap.txt"); //TODO ne égessük bele a path-t
         game.activePlayer = game.saboteurs.get(0);
         game.changeState(Mode.play);
@@ -59,6 +141,18 @@ public class Game {
     }
 
     public void changeState(Mode mode){ this.mode = mode; }
+
+    public void changeState(String str){
+        if(Objects.equals(str, "config")) {
+            this.mode = Mode.config;
+        }
+        else if(Objects.equals(str, "play")) {
+            this.mode = Mode.play;
+        }
+        else {
+            System.out.println("Rossz mod"); //hibakezelés így?
+        }
+    }
 
     private int findSabo(String ID){
         for(int i = 0;i < saboteurs.size(); ++i) if(saboteurs.get(i).getID().equals(ID)) return i;
