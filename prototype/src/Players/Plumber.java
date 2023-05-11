@@ -54,7 +54,17 @@ public class Plumber extends Player {
             if(state) {
                 writer.write("plumber+" + ID + "\n");
             } else {
-                writer.write("plumber+" + ID + "+" + elem.getID() + "+" + pipe.getID() + "+" + pump.getID() + "\n");
+                writer.write("plumber+" + ID + "+" + elem.getID());
+                if(pipe != null) {
+                    writer.write("+" + pipe.getID());
+                } else {
+                    writer.write("+null");
+                }
+                if(pump != null) {
+                    writer.write("+" + pump.getID() + "\n");
+                } else {
+                    writer.write("+null\n");
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

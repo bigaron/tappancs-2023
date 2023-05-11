@@ -50,9 +50,11 @@ public class Game {
     public static int actionCounter = 0;
     public static void main(String[] args){
         Game game = new Game();      
-        game.generate("F:/EGYETEM/tappancs-2023/prototype/src/testmap.txt");
+        game.generate("D:/Negyedik_felev/Projlab/prot/tappancs-2023/prototype/src/testmap.txt"); //TODO ne égessük bele a path-t
         game.activePlayer = game.saboteurs.get(0);
+        game.changeState(Mode.play);
         game.Move(0);
+        game.changeState(Mode.config);
         game.Save("output.txt");
     }
 
@@ -262,22 +264,37 @@ public class Game {
     public void Save(String filename) {
         if(mode != Mode.config) return;
         try {
-            File file = new File("output", filename);
-            FileWriter writer = new FileWriter(file);
+            File file = new File(new File("prototype", "output"), filename);
+            FileWriter writer = new FileWriter(file.getPath());
+
+            writer.write((desert.size() + plumbers.size() + saboteurs.size() + generators.size()) + "\n");
+
             for(Element elem : desert) {
                 elem.Save(writer, true);
             }
+
+            for(Generator generator : generators) {
+                generator.Save(writer, true);
+            }
+
             for(Saboteur s : saboteurs) {
                 s.Save(writer, true);
             }
+
             for(Plumber p : plumbers) {
                 p.Save(writer, true);
             }
+
+
             writer.write(sPoints + "\n");
             writer.write(pPoints + "\n");
 
             for(Element elem : desert) {
                 elem.Save(writer, false);
+            }
+
+            for(Generator generator : generators) {
+                generator.Save(writer, false);
             }
 
             for(Saboteur s : saboteurs) {
@@ -288,6 +305,7 @@ public class Game {
                 p.Save(writer, false);
             }
 
+            writer.close();
         } catch(IOException e) {
             e.printStackTrace();
         }

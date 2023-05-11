@@ -21,6 +21,8 @@ public class Player {
             boolean result = elem.RemovePlayer(this);
             if(!result) {
                 neighbour.RemovePlayer(this);
+            } else {
+                elem = neighbour;
             }
         }
     }

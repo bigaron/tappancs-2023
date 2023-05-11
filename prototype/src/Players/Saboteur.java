@@ -19,9 +19,14 @@ public class Saboteur extends Player{
     public void Save(FileWriter writer, boolean state) {
         try {
             if(state) {
-                writer.write("saboteur+" + ID);
+                writer.write("saboteur+" + ID + "\n");
             } else {
-                writer.write("saboteur+" + ID + "+" + elem.getID() + "+" + pipe.getID() + "\n");
+                writer.write("saboteur+" + ID + "+" + elem.getID());
+                if(pipe != null) {
+                    writer.write("+" + pipe.getID() + "\n");
+                } else {
+                    writer.write("+null\n");
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

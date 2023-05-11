@@ -105,14 +105,28 @@ public class Pump extends Node{
                 writer.write("pump+" + ID + "+" + working + "+" + buffer + "\n");
             } else {
                 writer.write("pump+" + ID);
-                for(Player player : players) {
+                /*for(Player player : players) {
                     writer.write("+" + player.getID());
+                }*/
+                for(int i = 0; i < players.size(); ++i) {
+                    if(i == 0) {
+                        writer.write("+" + players.get(i).getID());
+                    } else {
+                        writer.write("," + players.get(i).getID());
+                    }
                 }
                 if(players.size() == 0) {
                     writer.write("+null");
                 }
-                for(Pipe pipe : neighbours) {
+                /*for(Pipe pipe : neighbours) {
                     writer.write("+" + pipe.getID());
+                }*/
+                for(int i = 0; i < neighbours.size(); ++i) {
+                    if(i == 0) {
+                        writer.write("+" + neighbours.get(i).getID());
+                    } else {
+                        writer.write("," + neighbours.get(i).getID());
+                    }
                 }
                 if(neighbours.size() == 0) {
                     writer.write("+null");

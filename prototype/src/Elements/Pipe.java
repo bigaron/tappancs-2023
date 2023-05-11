@@ -196,15 +196,19 @@ public class Pipe extends Element{
                 for(Player player : players) {
                     writer.write("+" + player.getID());
                 }
-                if(neighbours.get(0) == null) {
-                    writer.write("+null,");
-                } else {
-                    writer.write("+" + neighbours.get(0).getID() + ",");
+                if(players.size() == 0) {
+                    writer.write("+null");
                 }
-                if(neighbours.get(1) == null) {
-                    writer.write("null");
-                } else {
+                if(neighbours.get(0) != null && neighbours.get(1) != null) {
+                    writer.write("+" + neighbours.get(0).getID() + ",");
                     writer.write(neighbours.get(1).getID() + "\n");
+                } else if(neighbours.get(0) != null && neighbours.get(1) == null) {
+                    writer.write("+" + neighbours.get(0).getID() + ",");
+                    writer.write("null\n");
+                } else if(neighbours.get(0) == null && neighbours.get(1) != null) {
+                    writer.write("+null," + neighbours.get(1).getID() + "\n");
+                } else {
+                    writer.write("+null,null\n");
                 }
             }
         } catch(IOException e) {

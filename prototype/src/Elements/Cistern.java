@@ -56,6 +56,9 @@ public class Cistern extends Node{
                 for(Player player : players) {
                     writer.write("+" + player.getID());
                 }
+                if(players.size() == 0) {
+                    writer.write("+null");
+                }
                 for(Pipe pipe : neighbours) {
                     writer.write("+" + pipe.getID());
                 }
@@ -70,7 +73,7 @@ public class Cistern extends Node{
     }
 
     public void Read(String[] parsed){
-        if(parsed[0] != "cistern") return;
+        if(parsed[0].equals("cistern")) return;
         ID = parsed[1];
         working = Boolean.parseBoolean(parsed[2]);    
     }
