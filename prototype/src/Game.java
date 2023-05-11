@@ -17,10 +17,10 @@ enum Mode{
 
 public class Game {
     private ArrayList<Element> desert = new ArrayList<>();
-    private ArrayList<Saboteur> saboteurs = new ArrayList<>();
+    public ArrayList<Saboteur> saboteurs = new ArrayList<>();
     private ArrayList<Plumber> plumbers = new ArrayList<>();
     private ArrayList<Generator> generators = new ArrayList<>();
-    private Player activePlayer;
+    public Player activePlayer;
     private boolean plumbersTurn;
     private static int sPoints = 0;
     private static int pPoints = 0;
@@ -49,8 +49,11 @@ public class Game {
     }
     public static int actionCounter = 0;
     public static void main(String[] args){
-        Game game = new Game();
+        Game game = new Game();      
         game.generate("F:/EGYETEM/tappancs-2023/prototype/src/testmap.txt");
+        game.activePlayer = game.saboteurs.get(0);
+        game.Move(0);
+        game.Save("output.txt");
     }
 
     public void changeState(Mode mode){ this.mode = mode; }
