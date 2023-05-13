@@ -56,7 +56,7 @@ public class Pump extends Node{
             Random random = new Random();
             if(random.nextInt() % 15 == 0) working = false;
         } else {
-            if(Game.actionCounter == 7) {
+            if(Game.globalActionCounter == 7) {
                 working = false;
             }
         }

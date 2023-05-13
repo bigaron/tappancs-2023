@@ -117,7 +117,10 @@ public class Game {
                         default -> System.out.println("Érvényes parancsot adjál mert nem leszünk jóban.");
                     }
                     if (game.mode == Mode.config) break;
-                    if(actionCounter != 0) --actionCounter;
+                    if(actionCounter != 0)  {
+                        --actionCounter;
+                        ++globalActionCounter;
+                    }
                     //step az összesre desert + generators
                     game.desert.forEach(Element::Step);
                     game.generators.forEach(Generator::Step);
@@ -499,5 +502,6 @@ public class Game {
     public void endTurn(){
         if(mode == Mode.config) return;
         actionCounter = 0;
+        globalActionCounter++;
     }
 }

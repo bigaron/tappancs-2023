@@ -41,7 +41,7 @@ public class Generator implements Steppable{
                 GeneratePipe();
             }
         } else {
-            if(Game.actionCounter % 2 == 0) {
+            if(Game.globalActionCounter % 2 == 0) {
                 GeneratePump();
             } else {
                 GeneratePipe();
@@ -128,7 +128,7 @@ public class Generator implements Steppable{
     }
 
     public void Read(String[] parsed){
-        if(parsed[0] != "generator") return;
+        if(!parsed[0].equals("generator")) return;
         ID = parsed[1];
     }
 }
