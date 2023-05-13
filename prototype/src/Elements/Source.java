@@ -9,7 +9,7 @@ import java.io.IOException;
  * A forrást reprezentáló osztály, a Node leszármazottja.
  */
 public class Source extends Node{
-    private static long counter = 0;
+    public static int counter = 0;
     public Source(){
         ID = "source" + ++counter;
     }

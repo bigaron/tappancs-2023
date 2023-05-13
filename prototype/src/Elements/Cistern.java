@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class Cistern extends Node{
     private Generator generator;
-    private static long counter = 0;
+    public static int counter = 0;
 
     public Cistern(){
         ID = "cistern" + ++counter;
@@ -59,8 +59,12 @@ public class Cistern extends Node{
                 if(players.size() == 0) {
                     writer.write("+null");
                 }
-                for(Pipe pipe : neighbours) {
-                    writer.write("+" + pipe.getID());
+                for(int i = 0; i < neighbours.size(); ++i) {
+                    if(i == 0) {
+                        writer.write("+" + neighbours.get(i).getID());
+                    } else {
+                        writer.write("," + neighbours.get(i).getID());
+                    }
                 }
                 if(neighbours.size() == 0) {
                     writer.write("+null");

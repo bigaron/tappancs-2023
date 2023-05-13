@@ -53,7 +53,7 @@ public class Generator implements Steppable{
      * A Steppable interface függvényének implementálása, ez váltja ki az elemgenerálást.
      */
     public void Step(){
-        if(Game.random) {
+        if(!Game.random) {
             GenerateElem();
         } else {
             Random randomGenerator = new Random();
@@ -87,6 +87,7 @@ public class Generator implements Steppable{
      */
     public Pump GeneratePump() {
         Pump result = new Pump();
+        Game.desert.add(Cistern.counter + Source.counter + Pump.counter - 1, result);
         pumps.add((Pump)result);
         return result;
     }
@@ -97,6 +98,7 @@ public class Generator implements Steppable{
      */
     public Pipe GeneratePipe() {
         Pipe result = new Pipe();
+        Game.desert.add( Cistern.counter + Source.counter + Pump.counter + Pipe.counter - 1, result);
         cistern.SetNeighbor(result);
         result.SetNeighbor(cistern);
         return result;

@@ -17,7 +17,7 @@ enum Mode{
 }
 
 public class Game {
-    private ArrayList<Element> desert = new ArrayList<>();
+    public static ArrayList<Element> desert = new ArrayList<>();
     public ArrayList<Saboteur> saboteurs = new ArrayList<>();
     private ArrayList<Plumber> plumbers = new ArrayList<>();
     private ArrayList<Generator> generators = new ArrayList<>();
@@ -26,7 +26,7 @@ public class Game {
     private static int sPoints = 0;
     private static int pPoints = 0;
     private Mode mode;
-    public static boolean random = true;
+    public static boolean random = false;
 
     public Game(){
         mode = Mode.config;
@@ -48,10 +48,27 @@ public class Game {
             default: return Modifier.Plain;
         }
     }
+    public static int globalActionCounter = 0; //a random értékekhez determinizációjához kell kell
     public static int actionCounter = 4; //induljunk négyről és dekrementáljunk
     public static boolean successfulCmd = false;
     public static void main(String[] args){
         Game game = new Game();
+        //TODO slippery, slipped, slippery-re lépés úgy szar ahogy van
+        //TODO test7-ben nincs kiemente az endTurn-nek és nincs kimenete a leakPipe-nak illetve a pipe1 nem szabotálótott
+        //TODO test8 hasonló problémák
+        //TODO test9 sticky modified state nem jó
+        //TODO test10 a cső lecsatolása sikertelen volt mert nem node-on állunk, 2 pumpa és 1 cső keletkezett 2 cső és 1 pumpa helyett
+        //TODO test11 removePipe 2 után nem ír ki semmit
+        //TODO test12 removePipe 2 nem ír ki semmit, generator save "+" rossz, nem kerül a kezünkbe a cső
+        //TODO test13 pickUpPump-ra semmi kimenet, 2 cső 1 pumpa helyett lesz 3 pumpa 1 cső, plumber kezében ott lesz egy pumpa habár nem a legrégebbi
+        //TODO test14 hivatkozik rosszra
+        //TODO test15 pickUpPipe nincs kimenet, nem kerül a szabotőr kezébe a cuccos
+        //TODO test19 pumpák nem romlanak el
+        //TODO test20 jónak tűnik
+        //TODO test22 modified state still nem jó
+        //TODO
+        game.generate("testmap.txt"); //így elég a tesztben(play módban) kiadott parancsokat beírni
+        game.changeState(Mode.play);
 
         while(true) {
             while (game.mode == Mode.config) {
@@ -68,6 +85,7 @@ public class Game {
                     case "exit" -> System.exit(0);
                     default -> System.out.println("Rossz a parancsod drága");
                 }
+
             }
 
             //itt valahol endgame ->> endgame gamemodeot vált

@@ -13,7 +13,7 @@ import java.util.Random;
 public class Pump extends Node{
     private Pipe output;
     private boolean buffer;
-    private static long counter = 0;
+    public static int counter = 0;
 
     public Pump(){
         ID = "pump" + ++counter;
@@ -115,9 +115,6 @@ public class Pump extends Node{
                 writer.write("pump+" + ID + "+" + working + "+" + buffer + "\n");
             } else {
                 writer.write("pump+" + ID);
-                /*for(Player player : players) {
-                    writer.write("+" + player.getID());
-                }*/
                 for(int i = 0; i < players.size(); ++i) {
                     if(i == 0) {
                         writer.write("+" + players.get(i).getID());
@@ -128,9 +125,6 @@ public class Pump extends Node{
                 if(players.size() == 0) {
                     writer.write("+null");
                 }
-                /*for(Pipe pipe : neighbours) {
-                    writer.write("+" + pipe.getID());
-                }*/
                 for(int i = 0; i < neighbours.size(); ++i) {
                     if(i == 0) {
                         writer.write("+" + neighbours.get(i).getID());

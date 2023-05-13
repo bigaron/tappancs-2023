@@ -28,6 +28,7 @@ public class Player {
                 neighbour.RemovePlayer(this);
             } else {
                 String id2 = neighbour.getID();
+                //if(neighbour)
                 elem = neighbour;
                 System.out.println("A játékos sikeresen lemozdult " + dir + " irányba.\n" +
                         "A(z) " + id1 + " elemről sikeresen lelépett.\n" +
@@ -86,7 +87,7 @@ public class Player {
 
     public void Slipped(Node n) {
         n.AcceptPlayer(this);
-        elem = n;
+        //elem = n;
     }
     
     /**

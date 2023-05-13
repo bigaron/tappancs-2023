@@ -19,7 +19,11 @@ public class Pipe extends Element{
     private boolean detached;
     private int sabotageable;
     private int modifiedState;
-    private static long counter = 0;
+    public static int counter = 0;
+
+    public Modifier getState() {
+        return state;
+    }
 
     public Pipe(){
         neighbours = new ArrayList<>();
@@ -136,7 +140,7 @@ public class Pipe extends Element{
         this.detached = detached;
     }
 
-    //TODO: mit csinal ez a fuggveny? SOLVED
+    //TODO: mit csinal ez a fuggveny?
     public void PickedUp(){
         super.ChangeElementMode(false);
         detached = true;
@@ -223,7 +227,7 @@ public class Pipe extends Element{
     }
 
     public void Read(String[] parsed){
-        if(parsed[0] != "pipe") return;
+        if(!parsed[0].equals("pipe")) return;
         ID = parsed[1];
         working = Boolean.parseBoolean(parsed[2]);
         state = Game.parseModifier(parsed[3]);
