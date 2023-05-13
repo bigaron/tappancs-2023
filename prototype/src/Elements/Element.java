@@ -43,19 +43,21 @@ public abstract class Element implements Steppable{
     }
 
     public abstract boolean containsNeighbour(String id);
-    public void ChangeDirection(int outgoingPipe){}
+    public void ChangeDirection(int outgoingPipe){
+        System.out.println("A kimenete nem változott meg, mert nem pumpán állunk.\n"); //ez kimeneti nyelvebn picit más
+    }
     public abstract void ForwardWater(Element elem);
     public int TakeoffPipe(Pipe pipe){ return 0; }
-    public void AttachPipe(Pipe pipe){}
-    public void SabotagePipe() {}
+    public void AttachPipe(Pipe pipe){System.out.println("A cső lehelyezése sikertelen, mert csövön állunk.\n");}
+    public boolean SabotagePipe() {return false;}
     public void Step(){}
     public Pump GetPump(){ return null;}
     public boolean GetPipe(Pipe pipe){return true;}
-    public void Split(Pump pump){}
+    public void Split(Pump pump){System.out.println("A(z) " +pump.getID()+ " lerakása sikertelen, mert nem csövön állunk.\n");}
     public void ChangeElementMode(boolean mode){ working = mode; }
     public void SetNeighbor(Element elem){}  
     public void SetPlayer(Player player){}
     public abstract void RemoveNeighbor(Element elem);
-    public void ChangeSurface(Modifier m){}
+    public void ChangeSurface(Modifier m){ System.out.println("A felület nem változott meg, mert nem csövön állunk\n");}
     public String getID(){ return ID; }
 }

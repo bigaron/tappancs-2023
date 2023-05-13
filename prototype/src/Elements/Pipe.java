@@ -114,7 +114,8 @@ public class Pipe extends Element{
         newPipe.SetNeighbor(newPump);
         newPump.SetNeighbor(newPipe);     
         newPipe.SetNeighbor(pump1);   
-        pump1.SetNeighbor(newPipe);       
+        pump1.SetNeighbor(newPipe);
+        System.out.println("A(z) " + newPump.getID()+ " lerakása sikeres volt.\n");
     }
 
     /**
@@ -147,7 +148,12 @@ public class Pipe extends Element{
 
 
     public void ChangeSurface(Modifier m){
-        if(state == Modifier.Plain) SetSurface(m);
+        if(state == Modifier.Plain) {
+            SetSurface(m);
+            System.out.println("A felület megvltozott" + m + "típusúvá.\n");
+        }else{
+            System.out.println(" A felület nem változott meg, mert a felület nem plain\n");
+        }
     }
 
     @Override
@@ -232,5 +238,16 @@ public class Pipe extends Element{
     public boolean containsNeighbour(String ID){
         for(Node p: neighbours) if(p.getID() == ID) return true;
         return false;
+    }
+
+    public boolean SabotagePipe() {
+        if(sabotageable == 0) {
+            working = false;
+            System.out.println("A(z) " + getID() + " cső kilyukadt.\n");
+        }
+        else{
+            System.out.println("A(z) " + getID() + " cső lyukasztása sikertelen, mivel a(z) " +getID()+ " cső még nem szabotálható.\n");
+        }
+        return true;
     }
 }

@@ -20,11 +20,14 @@ public class Plumber extends Player {
 
     public void RepairElement(){
         elem.Repair();
+        System.out.println("A(z) "+elem.getID()+ " elem újra funkcionál.\n");
     }
     public void PlaceDown(){
         if(pump != null) {
             elem.Split(pump);
-        }
+        }else
+            System.out.println("A pumpa lerakása sikertelen volt mert nincs nálunk pumpa.\n");
+
     }
 
     public void PickUpPipe(int dir) {

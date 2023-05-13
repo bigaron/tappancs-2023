@@ -14,17 +14,30 @@ public class Player {
         return ID;
     }
 
+    //csúszós??
     public void Move(int dir){
+        //dir érbvénytelen?
+        String id1 = elem.getID();
         Element neighbour = elem.GetNeighbor(dir);
         boolean successful = neighbour.AcceptPlayer(this);
         if(successful) {
             boolean result = elem.RemovePlayer(this);
             if(!result) {
+                //ragadós és nem tudott lelépni
+                System.out.println("A játékos nem léphet" + dir + "irányba, mert a cső amin állt, ragacsos volt.\n");
                 neighbour.RemovePlayer(this);
             } else {
+                String id2 = neighbour.getID();
                 elem = neighbour;
+                System.out.println("A játékos sikeresen lemozdult " + dir + " irányba.\n" +
+                        "A(z) " + id1 + " elemről sikeresen lelépett.\n" +
+                        "A(z) " + id2 + " elemre lépett.\n");
             }
+        }else{
+            System.out.println("A játékos nem léphet" + dir + "irányba, mert a csövön, amire lépni akart, már állnak.\n");
+
         }
+        //cső csúszós?
     }
 
     public void changePumpDirection(int outgoingPipe) {
@@ -33,19 +46,28 @@ public class Player {
 
     public void RemovePipe(int dir) {
         Element e = elem.GetNeighbor(dir);
-        if(e.getID().indexOf("pipe") != -1) return;
-        if(this.pipe != null || e == null) return;
+        if(e.getID().indexOf("pipe") != -1) {
+            System.out.println("A cső lecsatolása sikeretelen volt, mert nem Node-on állunk\n"); //TODO ez itt ez az if ugye?
+            return;
+        }
+        if(this.pipe != null || e == null) { //ez az érvénytelen szomszéd ugye?
+            System.out.println("A cső lecsatolása érvéntelen volt, mert érvénytelen input.\n");
+            return;
+        }
         int result = elem.TakeoffPipe(pipe);
         if(result == 1) {
             this.pipe = (Pipe)e;
+            System.out.println("A(z) "+ pipe.getID()+" cső lecsatolása sikeres volt, a(z) " +pipe.getID()+ " cső egyik vége a kezünkbe került.\n");
         }
     }
 
     public void AddPipe() {
         if(this.pipe != null) {
             elem.AttachPipe(pipe);
+            System.out.println("A(z) " + pipe.getID() + " csövet sikeresen lehelyeztük.\n");
             pipe = null;
-        }
+        }else
+            System.out.println("A cső lehelyezése sikertelen, mert nincs a kezünkben cső.\n");
     }
 
     public void SetElem(Element elem) {
@@ -53,7 +75,9 @@ public class Player {
     }
 
     public void SabotagePipe() {
-        elem.SabotagePipe();
+        if(!elem.SabotagePipe()){
+            System.out.println("Az " +elem.getID()+ " cső lyukasztása sikertelen, mivel az "+getID()+ " játékos nem csövön áll.\n");
+        }
     }
 
     public void MakeSticky() {

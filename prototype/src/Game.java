@@ -418,7 +418,8 @@ public class Game {
         activePlayer.SabotagePipe();
     }
     public void repair(){
-        if(mode == Mode.config || !plumbersTurn || findPlumb(activePlayer.getID()) == -1) return;
+        if(mode == Mode.config || !plumbersTurn || findPlumb(activePlayer.getID()) == -1)return;
+        if(!plumbersTurn) System.out.println("A(z) elem nem javult meg, mert az csak szerelő esetén lép érvénybe.\n"); //TODO ez itt picit furi a kimeneti nyelvhe képest de idk hogy kéne máshogy
         Plumber p = (Plumber)activePlayer;
         p.RepairElement();
     }
@@ -429,11 +430,17 @@ public class Game {
     public void changeSurface(Modifier mod){
         if(mode == Mode.config) return;
         if(mod == Modifier.Slippery){
-            if(plumbersTurn) return;
+            if(plumbersTurn) {
+                System.out.println("A felület nem változott meg, mert szerelővl próbáltuk csúszóssá tenni a felületet.\n");
+                return;
+            }
             Saboteur s = (Saboteur)activePlayer;
-            s.MakeSticky();
-        }
-        activePlayer.MakeSticky();
+            s.MakeSlippery();
+        }else if(mod == Modifier.Sticky)
+            activePlayer.MakeSticky();
+        else
+            System.out.println("A felület nem változott meg, mert érvénytelen input.\n");
+
     }
 
     public void addPipe(){
@@ -450,7 +457,11 @@ public class Game {
     }
 
     public void placePump(){
-        if(mode == Mode.config || !plumbersTurn) return;
+        if(mode == Mode.config || !plumbersTurn) {
+            if(!plumbersTurn)
+                System.out.println("A pumpa lerakása sikertelen volt, mert nem szerelővel próbálkoztunk.\n");
+            return;
+        }
         Plumber p = (Plumber)activePlayer;
         p.PlaceDown();
     }

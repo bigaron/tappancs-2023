@@ -24,8 +24,15 @@ public class Pump extends Node{
      */
     @Override
     public void ChangeDirection(int outgoingPipe){
-        if(neighbours.size() < outgoingPipe) return;
+        if(neighbours.size() < outgoingPipe){
+            System.out.println("A(z) " +getID()+ " pumpa kimenete nem változott meg, mert érvénytelen input.\n");
+            return;
+        }
+        String id2 = output.getID();
         output = (Pipe)GetNeighbor(outgoingPipe);
+        String id3 = output.getID();
+        System.out.println("A(z) " +getID()+ " pumpa kimenete megváltozott.\n" +
+                            "A(z) " + id2 + " cső helyett a(z) " + id3 + " cső lett a kimenete.\n");
     }
 
     /**
@@ -72,7 +79,10 @@ public class Pump extends Node{
     @Override
     public int TakeoffPipe(Pipe pipe){ 
         int ret = pipe.TakeoffPipe(pipe);
-        if(ret == -1) return 0;
+        if(ret == -1){
+            System.out.println("A(z) " +pipe.getID()+ " cső lecsatolása sikertelen volt, mert állnak a csövön.\n");
+            return 0;
+        }
         if(ret == 1) return 0;
         if(ret == 2){
             pipe.RemoveNeighbor(this);
