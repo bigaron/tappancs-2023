@@ -49,13 +49,11 @@ public class Game {
         }
     }
     public static int actionCounter = 4; //induljunk négyről és dekrementáljunk
+    public static boolean successfulCmd = false;
     public static void main(String[] args){
         Game game = new Game();
 
         while(true) {
-
-
-            //amíg config módban vagyunk
             while (game.mode == Mode.config) {
                 System.out.println("Várom a parancsot gazdám!");
                 Scanner in = new Scanner(System.in);
@@ -65,23 +63,20 @@ public class Game {
                 switch (splitted[0]) {
                     case "changeState" -> game.changeState(splitted[1]);
                     case "generate" -> game.generate(splitted[1]);
-                    case "save" -> game.Save(splitted[1]); //itt a dokumentációban van path is írva btw az sztem nem kell, de a függvényben sincs már ott a paraméterek közt
-                    case "setRandom" -> game.setRandom(Boolean.parseBoolean(splitted[1])); //ez dob hibát ha nem jó?
-                    case "exit" -> System.exit(0); //ide még egy plusz mentés? vagy ez nem olyan rész?
-                    default -> System.out.println("Rossz a parancsod drága"); //csinosabb hibakezelés?
+                    case "save" -> game.Save(splitted[1]);
+                    case "setRandom" -> game.setRandom(Boolean.parseBoolean(splitted[1]));
+                    case "exit" -> System.exit(0);
+                    default -> System.out.println("Rossz a parancsod drága");
                 }
-
             }
 
-            //itt valahol endgame ->> endgame gamemodeot vált és kiadja a savet, pontszámítás?
+            //itt valahol endgame ->> endgame gamemodeot vált
             while (game.mode == Mode.play) { //ugye a flaget ellenőrzik a függvények. akkor itt attól függően h kinek a turnje van, végigmegyünk a dömbökön és mindenki léphet 4et
                 if (game.activePlayer == null) {
                     game.activePlayer = game.saboteurs.get(0);
                 }
-
-                // a létrehozásnál már legyen kijelölve egy aktívjátékos ->> a játékosváltás logikája a ciklus végén
-                while (actionCounter != 0) {//4-szer léphet, a végén újra 4re tesszük a cntr-t a kövi játékosnak
-                    //beolvasunk switch -case az aktív játékos csinálja a dolgokat
+                //actionloop
+                while (actionCounter != 0) {
                     System.out.println("Várom a parancsot gazdám!");
                     Scanner in = new Scanner(System.in);
                     String input = in.nextLine();
@@ -92,25 +87,23 @@ public class Game {
                         case "leakPipe" -> game.leakPipe();
                         case "repair" -> game.repair();
                         case "changePumpDir" -> game.changePumpDir(Integer.parseInt(cmd[1]));
-                        case "changeSurface" -> {
-                            if (Objects.equals(cmd[1], "slippery")) game.changeSurface(Modifier.Slippery);
-                            else if (Objects.equals(cmd[1], "sticky")) game.changeSurface(Modifier.Sticky);
-                            else System.out.println("Valami rendes inputot adjál már meg");
-                        }
+                        case "changeSurface" -> game.changeSurface(parseModifier(cmd[1]));
                         case "addPipe" -> game.addPipe();
                         case "removePipe" -> game.removePipe(Integer.parseInt(cmd[1]));
                         case "placePump" -> game.placePump();
                         case "pickUpPump" -> game.pickUpPump();
                         case "pickUpPipe" -> game.pickUpPipe(Integer.parseInt(cmd[1]));
                         case "changeState" -> game.changeState(cmd[1]);
-
-                        //case "endTurn" -> //yupp ez az ami még nincs meg
-                        //case "list" -> //meg ezt is
+                        case "endTurn" -> game.endTurn();
+                        //case "list" -> ;
                         default -> System.out.println("Érvényes parancsot adjál mert nem leszünk jóban.");
                     }
                     if (game.mode == Mode.config) break;
+                    if(actionCounter != 0) --actionCounter;
+                    //step az összesre desert + generators
+                    game.desert.forEach(Element::Step);
+                    game.generators.forEach(Generator::Step);
 
-                    --actionCounter;
                 }
                 if (game.mode == Mode.config) break;
                 actionCounter = 4;
@@ -128,10 +121,10 @@ public class Game {
                     int idx = game.saboteurs.lastIndexOf((Saboteur) game.activePlayer);
                     ++idx;
                     if (idx < game.saboteurs.size()) {
-                        game.activePlayer = game.saboteurs.get(idx); //finito ha minden ok
-                    } else { //ha vége van a tömbnek -->> csapatváltás
+                        game.activePlayer = game.saboteurs.get(idx);
+                    } else {
                         game.plumbersTurn = true;
-                        game.activePlayer = game.plumbers.get(0);  //itt indexelős hibakezelés??
+                        game.activePlayer = game.plumbers.get(0);
                     }
                 }
 
@@ -160,7 +153,7 @@ public class Game {
             this.mode = Mode.play;
         }
         else {
-            System.out.println("Rossz mod"); //hibakezelés így?
+            System.out.println("Rossz mod");
         }
     }
 
@@ -472,5 +465,10 @@ public class Game {
         if(mode == Mode.config || !plumbersTurn) return;
         Plumber p = (Plumber)activePlayer;
         p.PickUpPipe(num);
+    }
+
+    public void endTurn(){
+        if(mode == Mode.config) return;
+        actionCounter = 0;
     }
 }
