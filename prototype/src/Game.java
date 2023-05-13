@@ -91,6 +91,7 @@ public class Game {
             //itt valahol endgame ->> endgame gamemodeot vált
             while (game.mode == Mode.play) { //ugye a flaget ellenőrzik a függvények. akkor itt attól függően h kinek a turnje van, végigmegyünk a dömbökön és mindenki léphet 4et
                 if (game.activePlayer == null) {
+                    System.out.println(game.saboteurs.get(0).getID+" játékos következik.\n");
                     game.activePlayer = game.saboteurs.get(0);
                 }
                 //actionloop
@@ -133,22 +134,25 @@ public class Game {
                     int idx = game.plumbers.lastIndexOf((Plumber) game.activePlayer);
                     ++idx;
                     if (idx < game.plumbers.size()) {
+                        System.out.println("Kör vége, a(z) "+game.plumbers.get(idx).getID+" játékos következik.\n");
                         game.activePlayer = game.plumbers.get(idx); //finito ha minden ok
                     } else { //ha vége van a tömbnek -->> csapatváltás
                         game.plumbersTurn = false;
+                        System.out.println("Kör vége, a(z) "+game.saboteurs.get(0).getID+" játékos következik.\n");
                         game.activePlayer = game.saboteurs.get(0);  //itt indexelős hibakezelés??
                     }
-                } else { //ua csak másik tömbökkel
+                } else { //ugyan az csak másik tömbökkel
                     int idx = game.saboteurs.lastIndexOf((Saboteur) game.activePlayer);
                     ++idx;
                     if (idx < game.saboteurs.size()) {
+                        System.out.println("Kör vége, a(z) "+game.saboteurs.get(idx).getID+" játékos következik.\n");
                         game.activePlayer = game.saboteurs.get(idx);
                     } else {
                         game.plumbersTurn = true;
+                        System.out.println("Kör vége, a(z) "+game.plumbers.get(0).getID+" játékos következik.\n");
                         game.activePlayer = game.plumbers.get(0);
                     }
                 }
-
 
             }
 
@@ -164,17 +168,24 @@ public class Game {
         game.Save("output.txt");*/
     }
 
-    public void changeState(Mode mode){ this.mode = mode; }
+    public void changeState(Mode mode){ 
+        if (mode == Mode.play){
+            System.out.println("Konfiguráció vége, kezdődhet a játék.\n");
+        }
+        this.mode = mode; }
 
     public void changeState(String str){
         if(Objects.equals(str, "config")) {
             this.mode = Mode.config;
+            System.out.println("Konfigurációs módra váltottál.\n");
         }
         else if(Objects.equals(str, "play")) {
             this.mode = Mode.play;
+            System.out.println("Játék módra váltottál.\n");
         }
         else {
             System.out.println("Rossz mod");
+            System.out.println("Ilyen mód nem létezik, kérlek válassz a play/config módok közül.\n");
         }
     }
 
@@ -452,7 +463,7 @@ public class Game {
         if(mode == Mode.config) return;
         if(mod == Modifier.Slippery){
             if(plumbersTurn) {
-                System.out.println("A felület nem változott meg, mert szerelővl próbáltuk csúszóssá tenni a felületet.\n");
+                System.out.println("A felület nem változott meg, mert szerelővel próbáltuk csúszóssá tenni a felületet.\n");
                 return;
             }
             Saboteur s = (Saboteur)activePlayer;
@@ -488,13 +499,21 @@ public class Game {
     }
 
     public void pickUpPump(){
-        if(mode == Mode.config || !plumbersTurn) return;
+        if(mode == Mode.config || !plumbersTurn) {
+            if(!plumbersTurn)
+                System.out.println("Nem sikerült pumpát felvennünk, mert nem szerelővel próbálkoztunk.\n");
+            return;
+        }
         Plumber p = (Plumber)activePlayer;
         p.PickupPump();
     }
 
     public void pickUpPipe(int num){
-        if(mode == Mode.config || !plumbersTurn) return;
+        if(mode == Mode.config || !plumbersTurn) {
+            if(!plumbersTurn)
+                System.out.println("A(z) "+num+" csövet nem sikerült felvenni, mert nem szerelővel próbálkoztunk.\n");
+            return;
+        }
         Plumber p = (Plumber)activePlayer;
         p.PickUpPipe(num);
     }

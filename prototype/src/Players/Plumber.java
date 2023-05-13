@@ -22,6 +22,7 @@ public class Plumber extends Player {
         elem.Repair();
         System.out.println("A(z) "+elem.getID()+ " elem újra funkcionál.\n");
     }
+
     public void PlaceDown(){
         if(pump != null) {
             elem.Split(pump);
@@ -31,17 +32,39 @@ public class Plumber extends Player {
     }
 
     public void PickUpPipe(int dir) {
+        if (dir < 0 || dir > neighbour.size()){
+             System.out.println("A cső felvétele sikertelen volt, mert a megadott irány érvénytelen.\n");
+             return;
+        }
+        if (pipe != null){
+            System.out.println("A cső felvétele sikertelen volt, mert már van nálunk cső.\n");
+             return;
+        }
+        if (pipe.players.size() != 0){
+            System.out.println("A cső felvétele sikertelen volt, mert állnak rajta.\n");
+             return;
+        }
         Pipe p = (Pipe)elem.GetNeighbor(dir);
         boolean successful = elem.GetPipe(p);
         if(successful) this.pipe = p;
+        System.out.println("A(z) "+this.pipe.getID()+" cső a szerelő kezébe került.\n");
     }
 
     /**
      * Felvesz egy pumpát
      */
     public void PickupPump(){
-        if(pump != null) return;
-        pump = elem.GetPump();
+        if(pump != null) {
+            System.out.println("A pumpa felvétele sikertelen volt, mert már van nálunk pumpa.\n");
+            return;
+        }else{
+            pump = elem.GetPump();
+            if (pump == null) {
+                System.out.println("A pumpa felvétele sikertelen volt, mert üres a generátor.\n");
+                return;
+            }
+            System.out.println("Felvettük a generátorból a(z) "+pump.getID()+" pumpát!\n");
+        }
     }
 
     /**
