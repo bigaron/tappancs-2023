@@ -97,8 +97,8 @@ public class Game {
                     case "placePump" -> game.placePump();
                     case "pickUpPump" -> game.pickUpPump();
                     case "pickUpPipe" -> game.pickUpPipe(Integer.parseInt(cmd[1]));
-                    case "endTurn" -> //yupp ez az ami még nincs meg
-                    case "list" -> //meg ezt is
+                    //case "endTurn" -> //yupp ez az ami még nincs meg
+                    //case "list" -> //meg ezt is
                     default -> System.out.println("Érvényes parancsot adjál mert nem leszünk jóban.");
                 }
 
@@ -132,7 +132,7 @@ public class Game {
 
 
         //innentől ami volt, csak nem töröltem ki
-        game.generate("D:/Negyedik_felev/Projlab/prot/tappancs-2023/prototype/src/testmap.txt"); //TODO ne égessük bele a path-t
+        game.generate("testmap.txt");
         game.activePlayer = game.saboteurs.get(0);
         game.changeState(Mode.play);
         game.Move(0);
@@ -330,7 +330,7 @@ public class Game {
         if(mode == Mode.play) return;
         try{
             Scanner scn;
-            File src = new File(path);
+            File src = new File(new File("prototype", "src"), path);
             scn = new Scanner(src);
             String line = scn.nextLine();
             int n = Integer.parseInt(line);
