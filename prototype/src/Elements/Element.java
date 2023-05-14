@@ -19,9 +19,9 @@ public abstract class Element implements Steppable{
         ID = "";
     }
 
-    public boolean AcceptPlayer(Player p){
+    public int AcceptPlayer(Player p){
         players.add(p);
-        return true;
+        return 1;
     }
     /**
      * We remove the player from the list of players standing on this element

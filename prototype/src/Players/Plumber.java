@@ -32,18 +32,18 @@ public class Plumber extends Player {
     }
 
     public void PickUpPipe(int dir) {
-        if (dir < 0 || dir > neighbour.size()){
+        /*if (dir < 0 || dir > elem.neighbours.size()){
              System.out.println("A cső felvétele sikertelen volt, mert a megadott irány érvénytelen.\n");
              return;
-        }
+        }*/
         if (pipe != null){
             System.out.println("A cső felvétele sikertelen volt, mert már van nálunk cső.\n");
              return;
         }
-        if (pipe.players.size() != 0){
+        /*if (elem.players.size() != 0){
             System.out.println("A cső felvétele sikertelen volt, mert állnak rajta.\n");
              return;
-        }
+        }*/
         Pipe p = (Pipe)elem.GetNeighbor(dir);
         boolean successful = elem.GetPipe(p);
         if(successful) this.pipe = p;

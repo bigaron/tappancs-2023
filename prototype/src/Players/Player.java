@@ -19,12 +19,12 @@ public class Player {
         //dir érbvénytelen?
         String id1 = elem.getID();
         Element neighbour = elem.GetNeighbor(dir);
-        boolean successful = neighbour.AcceptPlayer(this);
-        if(successful) {
+        int successful = neighbour.AcceptPlayer(this);
+        if(successful == 1) {
             boolean result = elem.RemovePlayer(this);
             if(!result) {
                 //ragadós és nem tudott lelépni
-                System.out.println("A játékos nem léphet" + dir + "irányba, mert a cső amin állt, ragacsos volt.\n");
+                System.out.println("A játékos nem léphet " + dir + " irányba, mert a cső amin állt, ragacsos volt.\n");
                 neighbour.RemovePlayer(this);
             } else {
                 String id2 = neighbour.getID();
@@ -34,9 +34,10 @@ public class Player {
                         "A(z) " + id1 + " elemről sikeresen lelépett.\n" +
                         "A(z) " + id2 + " elemre lépett.\n");
             }
-        }else{
-            System.out.println("A játékos nem léphet" + dir + "irányba, mert a csövön, amire lépni akart, már állnak.\n");
-
+        }else if(successful == -1){
+            System.out.println("A játékos nem léphet " + dir + " irányba, mert a csövön, amire lépni akart, már állnak.\n");
+        } else if(successful == 0) {
+            System.out.println("A játékos nem léphet " + dir + " irányba, mert a cső csúszós, a játékos a(z) " + elem.getID() + " elemre került\n");
         }
         //cső csúszós?
     }
@@ -87,7 +88,8 @@ public class Player {
 
     public void Slipped(Node n) {
         n.AcceptPlayer(this);
-        //elem = n;
+        elem.RemovePlayer(this);
+        elem = n;
     }
     
     /**

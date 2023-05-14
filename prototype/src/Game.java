@@ -53,7 +53,7 @@ public class Game {
     public static boolean successfulCmd = false;
     public static void main(String[] args){
         Game game = new Game();
-        //TODO slippery, slipped, slippery-re lépés úgy szar ahogy van
+        //TODO slippery, slipped, slippery-re lépés úgy szar ahogy van -> acceptPlayer returnt átírtam intre h lehessen kezelni külön a csúszósat és azt h állnak rajta SOLVED
         //TODO test7-ben nincs kiemente az endTurn-nek és nincs kimenete a leakPipe-nak illetve a pipe1 nem szabotálótott
         //TODO test8 hasonló problémák
         //TODO test9 sticky modified state nem jó
@@ -91,7 +91,7 @@ public class Game {
             //itt valahol endgame ->> endgame gamemodeot vált
             while (game.mode == Mode.play) { //ugye a flaget ellenőrzik a függvények. akkor itt attól függően h kinek a turnje van, végigmegyünk a dömbökön és mindenki léphet 4et
                 if (game.activePlayer == null) {
-                    System.out.println(game.saboteurs.get(0).getID+" játékos következik.\n");
+                    System.out.println(game.saboteurs.get(0).getID() + " játékos következik.\n");
                     game.activePlayer = game.saboteurs.get(0);
                 }
                 //actionloop
@@ -134,22 +134,22 @@ public class Game {
                     int idx = game.plumbers.lastIndexOf((Plumber) game.activePlayer);
                     ++idx;
                     if (idx < game.plumbers.size()) {
-                        System.out.println("Kör vége, a(z) "+game.plumbers.get(idx).getID+" játékos következik.\n");
+                        System.out.println("Kör vége, a(z) "+game.plumbers.get(idx).getID() +" játékos következik.\n");
                         game.activePlayer = game.plumbers.get(idx); //finito ha minden ok
                     } else { //ha vége van a tömbnek -->> csapatváltás
                         game.plumbersTurn = false;
-                        System.out.println("Kör vége, a(z) "+game.saboteurs.get(0).getID+" játékos következik.\n");
+                        System.out.println("Kör vége, a(z) "+game.saboteurs.get(0).getID() +" játékos következik.\n");
                         game.activePlayer = game.saboteurs.get(0);  //itt indexelős hibakezelés??
                     }
                 } else { //ugyan az csak másik tömbökkel
                     int idx = game.saboteurs.lastIndexOf((Saboteur) game.activePlayer);
                     ++idx;
                     if (idx < game.saboteurs.size()) {
-                        System.out.println("Kör vége, a(z) "+game.saboteurs.get(idx).getID+" játékos következik.\n");
+                        System.out.println("Kör vége, a(z) "+game.saboteurs.get(idx).getID() +" játékos következik.\n");
                         game.activePlayer = game.saboteurs.get(idx);
                     } else {
                         game.plumbersTurn = true;
-                        System.out.println("Kör vége, a(z) "+game.plumbers.get(0).getID+" játékos következik.\n");
+                        System.out.println("Kör vége, a(z) "+game.plumbers.get(0).getID() +" játékos következik.\n");
                         game.activePlayer = game.plumbers.get(0);
                     }
                 }

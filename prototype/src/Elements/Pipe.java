@@ -14,7 +14,7 @@ import prototype.src.Modifier;
  * A csövet reprezentáló osztály, az elem leszármazottja.
  */
 public class Pipe extends Element{
-    private List<Node> neighbours;
+    public List<Node> neighbours;
     private Modifier state;
     private boolean detached;
     private int sabotageable;
@@ -48,11 +48,11 @@ public class Pipe extends Element{
      * TODO: random ertek itt is SOLVED?
      */
     @Override
-    public boolean AcceptPlayer(Player p){
-        if(players.size() != 0 || detached) return false;
+    public int AcceptPlayer(Player p){
+        if(players.size() != 0 || detached) return -1; //ha állnak rajta vagy le van csatlakoztatva
         if(state != Modifier.Slippery) {
             players.add(p);
-            return true;
+            return 1; //ha sikerült elfogadni
         }
         if(state == Modifier.Slippery) {
             if(Game.random) {
@@ -74,7 +74,7 @@ public class Pipe extends Element{
             }
         }
 
-        return true;
+        return 0; // 0 ha slippery
     }
 
     /**

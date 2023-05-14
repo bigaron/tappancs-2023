@@ -88,7 +88,7 @@ public class Generator implements Steppable{
     public Pump GeneratePump() {
         Pump result = new Pump();
         Game.desert.add(Cistern.counter + Source.counter + Pump.counter - 1, result);
-        pumps.add((Pump)result);
+        pumps.add(result);
         return result;
     }
 
@@ -114,8 +114,12 @@ public class Generator implements Steppable{
                 writer.write("generator+" + ID + "\n");
             } else {
                 writer.write("generator+" + ID);
-                for(Pump pump : pumps) {
-                    writer.write("+" + pump.getID());
+                for(int i = 0; i < pumps.size(); ++i) {
+                    if(i == 0) {
+                        writer.write("+" + pumps.get(i).getID());
+                    } else {
+                        writer.write("," + pumps.get(i).getID());
+                    }
                 }
                 if(pumps.size() == 0) {
                     writer.write("+null");
