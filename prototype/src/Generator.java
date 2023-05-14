@@ -70,7 +70,7 @@ public class Generator implements Steppable{
      */
     public Pump RequestPump(){
         if(pumps.size() != 0) {
-            return pumps.get(0);
+            return pumps.remove(pumps.size()-1);
         }
         return null;
     }
@@ -85,11 +85,11 @@ public class Generator implements Steppable{
      * Generál egy új pumpát.
      * @return az új pumpa
      */
-    public Pump GeneratePump() {
+    public void GeneratePump() {
         Pump result = new Pump();
         Game.desert.add(Cistern.counter + Source.counter + Pump.counter - 1, result);
         pumps.add(result);
-        return pumps.get(0);
+        //nem ad vissza semmit
     }
 
     /**
@@ -103,6 +103,7 @@ public class Generator implements Steppable{
         result.SetNeighbor(cistern);
         return result;
     }
+
 
     public void AddPump(Pump pump){
         pumps.add(pump);

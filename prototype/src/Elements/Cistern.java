@@ -35,7 +35,7 @@ public class Cistern extends Node{
      */
     @Override
     public Pump GetPump(){
-       return generator.GeneratePump();
+       return generator.RequestPump();
     }
 
     /**

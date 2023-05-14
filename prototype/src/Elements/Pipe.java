@@ -14,7 +14,7 @@ import prototype.src.Modifier;
  * A csövet reprezentáló osztály, az elem leszármazottja.
  */
 public class Pipe extends Element{
-    public List<Node> neighbours;
+    public Node[] neighbours = {null,null};
     private Modifier state;
     private boolean detached;
     private int sabotageable;
@@ -26,9 +26,6 @@ public class Pipe extends Element{
     }
 
     public Pipe(){
-        neighbours = new ArrayList<>();
-        neighbours.add(null);
-        neighbours.add(null);
         sabotageable = 0;
         modifiedState = 0;
         state = Modifier.Plain;
@@ -37,9 +34,16 @@ public class Pipe extends Element{
 
     @Override
     public void SetNeighbor(Element elem){
-        if(neighbours.get(0) == null) neighbours.set(0, (Node)elem);
-        else neighbours.set(1, (Node)elem);
-    }  
+        if(neighbours[0] == null) neighbours[0] = (Node)elem;
+        else neighbours[1] = (Node)elem;
+    }
+
+    public int getNeighbourSize(){
+       if(neighbours[0] != null && neighbours[1] != null) return 2;
+       if(neighbours[0] != null && neighbours[1] == null) return 1;
+       if(neighbours[0] == null && neighbours[1] != null) return 1;
+       return 0;
+    }
 
     /**
      * A játékos rálép a csőre.
@@ -56,20 +60,20 @@ public class Pipe extends Element{
         }
         if(state == Modifier.Slippery) {
             if(Game.random) {
-                if(neighbours.size() == 2) {
+                if(neighbours[0] != null && neighbours[1] != null ){
                     Random random = new Random();
-                    p.Slipped(neighbours.get(random.nextInt(2)));
+                    p.Slipped(neighbours[random.nextInt(2)]);
                 } else {
-                    if(neighbours.get(0) != null) {
-                        p.Slipped(neighbours.get(0));
+                    if(neighbours[0] != null) {
+                        p.Slipped(neighbours[0]);
                     } else {
-                        p.Slipped(neighbours.get(1));
+                        p.Slipped(neighbours[1]);
                     }
                 }
             } else {
-                if(neighbours.get(0) != null) p.Slipped(neighbours.get(0));
+                if(neighbours[0] != null) p.Slipped(neighbours[0]);
                 else {
-                    p.Slipped(neighbours.get(1));
+                    p.Slipped(neighbours[1]);
                 }
             }
         }
@@ -89,10 +93,16 @@ public class Pipe extends Element{
             return;
         }
         if(elem != GetNeighbor(0)){
-            GetNeighbor(0).ForwardWater(this);
-            return;
+            Node result = (Node) GetNeighbor(0);
+            if(result != null) {
+                result.ForwardWater(this);
+                return;
+            }
         }
-        GetNeighbor(1).ForwardWater(this);
+        Node result = (Node) GetNeighbor(1);
+        if(result != null) {
+            result.ForwardWater(this);
+        }
     }
 
     /**
@@ -101,7 +111,9 @@ public class Pipe extends Element{
      * @return a kért szomszéd, vagy null, ha az nem letezik
      */
     @Override
-    public Element GetNeighbor(int dir){return dir > neighbours.size() ? null : neighbours.get(dir); }
+    public Element GetNeighbor(int dir){
+        return dir > getNeighbourSize() ? null : neighbours[dir];
+    }
     
     /**
      * Egy pumpa beszúrása egy cső közepébe a cső kettévágásával.
@@ -109,10 +121,10 @@ public class Pipe extends Element{
      */
     @Override
     public void Split(Pump newPump){
-        Pump pump1 = (Pump) neighbours.get(0);
+        Pump pump1 = (Pump) neighbours[0];
         Pipe newPipe = new Pipe();
-        neighbours.get(0).RemoveNeighbor(this); 
-        this.RemoveNeighbor(neighbours.get(0));
+        neighbours[0].RemoveNeighbor(this);
+        this.RemoveNeighbor(neighbours[0]);
         newPump.SetNeighbor(this);
         this.SetNeighbor(newPump);
         newPipe.SetNeighbor(newPump);
@@ -135,7 +147,7 @@ public class Pipe extends Element{
             System.out.println("A(z) " +getID()+ " cső lecsatolása sikeretelen volt, mert állnak a csövön.\n");
             return -1; //ha állnak
         }
-        if(neighbours.size() == 1) return 1; //ha csak 1 szomszéd
+        if(getNeighbourSize() == 1) return 1; //ha csak 1 szomszéd
         return 2;
     }
 
@@ -201,7 +213,11 @@ public class Pipe extends Element{
     */
     @Override
     public void RemoveNeighbor(Element elem) {
-        neighbours.remove((Node) elem);
+        if(neighbours[0] == elem){
+            neighbours[0] = null;
+        }else {
+            neighbours[1] = null;
+        }
     }
 
     @Override
@@ -217,14 +233,14 @@ public class Pipe extends Element{
                 if(players.size() == 0) {
                     writer.write("+null");
                 }
-                if(neighbours.get(0) != null && neighbours.get(1) != null) {
-                    writer.write("+" + neighbours.get(0).getID() + ",");
-                    writer.write(neighbours.get(1).getID() + "\n");
-                } else if(neighbours.get(0) != null && neighbours.get(1) == null) {
-                    writer.write("+" + neighbours.get(0).getID() + ",");
+                if(neighbours[0] != null && neighbours[1] != null) {
+                    writer.write("+" + neighbours[0].getID() + ",");
+                    writer.write(neighbours[1].getID() + "\n");
+                } else if(neighbours[0] != null && neighbours[1] == null) {
+                    writer.write("+" + neighbours[0].getID() + ",");
                     writer.write("null\n");
-                } else if(neighbours.get(0) == null && neighbours.get(1) != null) {
-                    writer.write("+null," + neighbours.get(1).getID() + "\n");
+                } else if(neighbours[0] == null && neighbours[1] != null) {
+                    writer.write("+null," + neighbours[1].getID() + "\n");
                 } else {
                     writer.write("+null,null\n");
                 }

@@ -42,6 +42,7 @@ public abstract class Node extends Element {
     public void AttachPipe(Pipe pipe){
         pipe.SetNeighbor(this);
         SetNeighbor(pipe);
+        pipe.SetDetached(false);
     }
 
     @Override

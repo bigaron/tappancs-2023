@@ -55,15 +55,13 @@ public class Game {
         Game game = new Game();
         //TODO cmd első betűje lowercase
         //TODO slippery, slipped, slippery-re lépés úgy szar ahogy van -> acceptPlayer returnt átírtam intre h lehessen kezelni külön a csúszósat és azt h állnak rajta SOLVED
-        //TODO test10 a cső lecsatolása sikertelen volt mert nem node-on állunk, 2 pumpa és 1 cső keletkezett 2 cső és 1 pumpa helyett --> a removepipe függvényben vmi nagy kaki van --> a kiírás fasza de mentésnél exception mert kiírásnál túlindexelés aneigbor miatt
-        //TODO test12 savenél exception ua 10
-        //TODO test13 2 cső 1 pumpa helyett lesz 3 pumpa 1 cső, --> most 2 cső, 2 pumpa van, generatePump fv???
-        //TODO test14 removepipeban valamiért nem veszi a kezébe :((((
-        //TODO test15 pickUpPipe nincs kimenet, nem kerül a szabotőr kezébe a cuccos --> nekem most nem tetszik neki mert hogy nem szerelővel próbálkoztunk lol
-        //TODO test16 cső 2-t ír 1 helyett és állnak helyett azt írja sikertelenségre h nem szerelővel prbálkoztunk
-        //TODO test17 placePump exception
+        //TODO test14 ha lehet nálunk egyzserre cső is meg pump is akkor fasza, ha nem akkor változtatni kell
 
-        //TODO test19 pumpák nem romlanak el --> nekem 7 pontot adott hozzá
+        //TODO test15 rossz teszt
+        //TODO test16 rossz teszt
+
+        //TODO test17 placePump exception
+        //TODO test19 pumpák nem romlanak el --> nekem 7 pontot adott hozzá ?
         //TODO test25 removepipe-addpipe semmi
         //TODO test27 4 lesz a sabotageable érték mert ugye rögtön utána hívódik a step --> am jó
         game.generate("testmap.txt"); //így elég a tesztben(play módban) kiadott parancsokat beírni

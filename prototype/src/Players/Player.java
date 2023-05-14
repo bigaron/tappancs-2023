@@ -59,6 +59,7 @@ public class Player {
         int result = elem.TakeoffPipe((Pipe) e); //e a pipe amit leszedünk
         if(result == 1) {
             this.pipe = (Pipe) e; //kezébeveszi de miért nem????
+            this.pipe.SetDetached(true);
             System.out.println("A(z) "+ pipe.getID()+" cső lecsatolása sikeres volt, a(z) " +pipe.getID()+ " cső egyik vége a kezünkbe került.\n");
         }
         //if result == 0 -> kiírás a többi fv-ben megvan, itt nem csinálunk semmit.
