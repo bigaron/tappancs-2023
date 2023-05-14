@@ -76,6 +76,7 @@ public class Pump extends Node{
      * @param pipe a lecsatolandó cső
      * @return művelet sikeressége.
      */
+    /* Nem kell mert Node-ba elég
     @Override
     public int TakeoffPipe(Pipe pipe){ 
         int ret = pipe.TakeoffPipe(pipe);
@@ -91,6 +92,7 @@ public class Pump extends Node{
         }
         return 1;
     }
+    */
     /**
      * A kimeneti cső beállítása.
      * @param pipe a beállítandó cső

@@ -53,20 +53,19 @@ public class Game {
     public static boolean successfulCmd = false;
     public static void main(String[] args){
         Game game = new Game();
+        //TODO cmd első betűje lowercase
         //TODO slippery, slipped, slippery-re lépés úgy szar ahogy van -> acceptPlayer returnt átírtam intre h lehessen kezelni külön a csúszósat és azt h állnak rajta SOLVED
-        //TODO test7-ben nincs kiemente az endTurn-nek és nincs kimenete a leakPipe-nak illetve a pipe1 nem szabotálótott
-        //TODO test8 hasonló problémák
-        //TODO test9 sticky modified state nem jó
-        //TODO test10 a cső lecsatolása sikertelen volt mert nem node-on állunk, 2 pumpa és 1 cső keletkezett 2 cső és 1 pumpa helyett
-        //TODO test11 removePipe 2 után nem ír ki semmit
-        //TODO test12 removePipe 2 nem ír ki semmit, generator save "+" rossz, nem kerül a kezünkbe a cső
-        //TODO test13 pickUpPump-ra semmi kimenet, 2 cső 1 pumpa helyett lesz 3 pumpa 1 cső, plumber kezében ott lesz egy pumpa habár nem a legrégebbi
-        //TODO test14 hivatkozik rosszra
-        //TODO test15 pickUpPipe nincs kimenet, nem kerül a szabotőr kezébe a cuccos
-        //TODO test19 pumpák nem romlanak el
-        //TODO test20 jónak tűnik
-        //TODO test22 modified state still nem jó
-        //TODO
+        //TODO test10 a cső lecsatolása sikertelen volt mert nem node-on állunk, 2 pumpa és 1 cső keletkezett 2 cső és 1 pumpa helyett --> a removepipe függvényben vmi nagy kaki van --> a kiírás fasza de mentésnél exception mert kiírásnál túlindexelés aneigbor miatt
+        //TODO test12 savenél exception ua 10
+        //TODO test13 2 cső 1 pumpa helyett lesz 3 pumpa 1 cső, --> most 2 cső, 2 pumpa van, generatePump fv???
+        //TODO test14 removepipeban valamiért nem veszi a kezébe :((((
+        //TODO test15 pickUpPipe nincs kimenet, nem kerül a szabotőr kezébe a cuccos --> nekem most nem tetszik neki mert hogy nem szerelővel próbálkoztunk lol
+        //TODO test16 cső 2-t ír 1 helyett és állnak helyett azt írja sikertelenségre h nem szerelővel prbálkoztunk
+        //TODO test17 placePump exception
+
+        //TODO test19 pumpák nem romlanak el --> nekem 7 pontot adott hozzá
+        //TODO test25 removepipe-addpipe semmi
+        //TODO test27 4 lesz a sabotageable érték mert ugye rögtön utána hívódik a step --> am jó
         game.generate("testmap.txt"); //így elég a tesztben(play módban) kiadott parancsokat beírni
         game.changeState(Mode.play);
 
@@ -101,8 +100,10 @@ public class Game {
                     String input = in.nextLine();
                     String[] cmd = input.split(" ");
 
+
                     switch (cmd[0]) { //ezeknél hibakezelés ugye van a meghívott függvényekben?
                         case "move" -> game.Move(Integer.parseInt(cmd[1]));
+                        case "Move" -> game.Move(Integer.parseInt(cmd[1]));
                         case "leakPipe" -> game.leakPipe();
                         case "repair" -> game.repair();
                         case "changePumpDir" -> game.changePumpDir(Integer.parseInt(cmd[1]));
@@ -446,7 +447,7 @@ public class Game {
         activePlayer.Move(direction);
     }
     public void leakPipe(){
-        if(mode == Mode.config || plumbersTurn || findSabo(activePlayer.getID()) == -1) return;
+        if(mode == Mode.config ) return; //lyukaszthat plumber is
         activePlayer.SabotagePipe();
     }
     public void repair(){
@@ -482,10 +483,11 @@ public class Game {
     }
      
     public void removePipe(int number){
-        if(mode == Mode.config || !plumbersTurn) return;
-        Plumber p = (Plumber)activePlayer;
+        if(mode == Mode.config ) return;
+        //Plumber p = (Plumber)activePlayer;
         
-        p.RemovePipe(number);
+        //p.RemovePipe(number);
+        activePlayer.RemovePipe(number);
     }
 
     public void placePump(){

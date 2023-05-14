@@ -89,7 +89,7 @@ public class Generator implements Steppable{
         Pump result = new Pump();
         Game.desert.add(Cistern.counter + Source.counter + Pump.counter - 1, result);
         pumps.add(result);
-        return result;
+        return pumps.get(0);
     }
 
     /**

@@ -131,8 +131,11 @@ public class Pipe extends Element{
 
     @Override
     public int TakeoffPipe(Pipe pipe){
-        if(players.size() > 0) return -1;
-        if(neighbours.size() == 1) return 1;
+        if(players.size() > 0) {
+            System.out.println("A(z) " +getID()+ " cső lecsatolása sikeretelen volt, mert állnak a csövön.\n");
+            return -1; //ha állnak
+        }
+        if(neighbours.size() == 1) return 1; //ha csak 1 szomszéd
         return 2;
     }
 
@@ -154,7 +157,7 @@ public class Pipe extends Element{
     public void ChangeSurface(Modifier m){
         if(state == Modifier.Plain) {
             SetSurface(m);
-            System.out.println("A felület megvltozott" + m + "típusúvá.\n");
+            System.out.println("A felület megváltozott " + m + " típusúvá.\n");
         }else{
             System.out.println(" A felület nem változott meg, mert a felület nem plain\n");
         }
@@ -171,6 +174,11 @@ public class Pipe extends Element{
     public boolean RemovePlayer(Player p){
         if(state == Modifier.Sticky) return false;
         return super.RemovePlayer(p);
+    }
+
+    public void Repair(){
+        working = true;
+        sabotageable = 5;
     }
 
     private void DecreaseTime(int target){
@@ -193,7 +201,7 @@ public class Pipe extends Element{
     */
     @Override
     public void RemoveNeighbor(Element elem) {
-        neighbours.remove(elem);
+        neighbours.remove((Node) elem);
     }
 
     @Override
