@@ -32,22 +32,19 @@ public class Plumber extends Player {
     }
 
     public void PickUpPipe(int dir) {
-        /*if (dir < 0 || dir > elem.neighbours.size()){
-             System.out.println("A cső felvétele sikertelen volt, mert a megadott irány érvénytelen.\n");
-             return;
-        }*/
         if (pipe != null){
             System.out.println("A cső felvétele sikertelen volt, mert már van nálunk cső.\n");
              return;
+        } else if(pump != null) {
+            System.out.println("A cső felvétele sikertelen volt, mert már van nálunk pumpa.\n");
+            return;
         }
-        /*if (elem.players.size() != 0){
-            System.out.println("A cső felvétele sikertelen volt, mert állnak rajta.\n");
-             return;
-        }*/
         Pipe p = (Pipe)elem.GetNeighbor(dir);
         boolean successful = elem.GetPipe(p);
-        if(successful) this.pipe = p;
-        System.out.println("A(z) "+this.pipe.getID()+" cső a szerelő kezébe került.\n");
+        if(successful) {
+            this.pipe = p;
+            System.out.println("A(z) "+this.pipe.getID()+" cső a szerelő kezébe került.\n");
+        }
     }
 
     /**
@@ -57,7 +54,12 @@ public class Plumber extends Player {
         if(pump != null) {
             System.out.println("A pumpa felvétele sikertelen volt, mert már van nálunk pumpa.\n");
             return;
-        }else{
+        } else if(pipe != null) {
+            System.out.println("Nem sikerült pumpát felvennünk, mert volt már nálunk cső.\n");
+            return;
+        }
+
+        else{
             pump = elem.GetPump();
             if (pump == null) {
                 System.out.println("A pumpa felvétele sikertelen volt, mert üres a generátor.\n");

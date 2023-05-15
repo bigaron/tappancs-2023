@@ -50,20 +50,11 @@ public class Game {
     }
     public static int globalActionCounter = 0; //a random értékekhez determinizációjához kell kell
     public static int actionCounter = 4; //induljunk négyről és dekrementáljunk
-    public static boolean successfulCmd = false;
+    public static boolean successfulCmd = true;
     public static void main(String[] args){
         Game game = new Game();
         //TODO cmd első betűje lowercase
-        //TODO slippery, slipped, slippery-re lépés úgy szar ahogy van -> acceptPlayer returnt átírtam intre h lehessen kezelni külön a csúszósat és azt h állnak rajta SOLVED
-        //TODO test14 ha lehet nálunk egyzserre cső is meg pump is akkor fasza, ha nem akkor változtatni kell
 
-        //TODO test15 rossz teszt
-        //TODO test16 rossz teszt
-
-        //TODO test17 placePump exception
-        //TODO test19 pumpák nem romlanak el --> nekem 7 pontot adott hozzá ?
-        //TODO test25 removepipe-addpipe semmi
-        //TODO test27 4 lesz a sabotageable érték mert ugye rögtön utána hívódik a step --> am jó
         game.generate("testmap.txt"); //így elég a tesztben(play módban) kiadott parancsokat beírni
         game.changeState(Mode.play);
 
@@ -117,17 +108,22 @@ public class Game {
                             if(cmd.length == 2) game.List(cmd[1]);
                             else game.List("");
                         }
-                        default -> System.out.println("Érvényes parancsot adjál mert nem leszünk jóban.");
+                        default -> {
+                            System.out.println("Érvényes parancsot adjál mert nem leszünk jóban.");
+                            successfulCmd = false;
+                        }
                     }
                     if (game.mode == Mode.config) break;
-                    if(actionCounter != 0)  {
+                    if(actionCounter != 0 && successfulCmd)  {
                         --actionCounter;
                         ++globalActionCounter;
+                    } if(successfulCmd){
+                        //step az összesre desert + generators
+                        game.desert.forEach(Element::Step);
+                        game.generators.forEach(Generator::Step);
+                    }else {
+                        successfulCmd = true;
                     }
-                    //step az összesre desert + generators
-                    game.desert.forEach(Element::Step);
-                    game.generators.forEach(Generator::Step);
-
                 }
                 if (game.mode == Mode.config) break;
                 actionCounter = 4;
@@ -478,9 +474,8 @@ public class Game {
     }
 
     public void addPipe(){
-        if(mode == Mode.config || !plumbersTurn) return;
-        Plumber p = (Plumber) activePlayer;
-        p.AddPipe();
+        if(mode == Mode.config) return;
+        activePlayer.AddPipe();
     }
      
     public void removePipe(int number){

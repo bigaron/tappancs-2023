@@ -70,7 +70,7 @@ public class Generator implements Steppable{
      */
     public Pump RequestPump(){
         if(pumps.size() != 0) {
-            return pumps.remove(pumps.size()-1);
+            return pumps.remove(0);
         }
         return null;
     }

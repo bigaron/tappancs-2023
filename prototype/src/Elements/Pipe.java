@@ -121,16 +121,18 @@ public class Pipe extends Element{
      */
     @Override
     public void Split(Pump newPump){
-        Pump pump1 = (Pump) neighbours[0];
+        newPump.ChangeElementMode(false);
+        Node node = (Node) neighbours[0];
         Pipe newPipe = new Pipe();
+        Game.desert.add( Cistern.counter + Source.counter + Pump.counter + Pipe.counter - 1, newPipe);
         neighbours[0].RemoveNeighbor(this);
         this.RemoveNeighbor(neighbours[0]);
         newPump.SetNeighbor(this);
         this.SetNeighbor(newPump);
         newPipe.SetNeighbor(newPump);
         newPump.SetNeighbor(newPipe);     
-        newPipe.SetNeighbor(pump1);   
-        pump1.SetNeighbor(newPipe);
+        newPipe.SetNeighbor(node);
+        node.SetNeighbor(newPipe);
         System.out.println("A(z) " + newPump.getID()+ " lerakása sikeres volt.\n");
     }
 

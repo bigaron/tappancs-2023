@@ -56,7 +56,7 @@ public class Pump extends Node{
             Random random = new Random();
             if(random.nextInt() % 15 == 0) working = false;
         } else {
-            if(Game.globalActionCounter == 7) {
+            if(Game.globalActionCounter >= 7) {
                 working = false;
             }
         }
@@ -68,7 +68,7 @@ public class Pump extends Node{
      */
     @Override
     public void ChangeElementMode(boolean mode){
-        buffer = mode;
+        working = mode;
     }
 
     /**
@@ -83,6 +83,7 @@ public class Pump extends Node{
         if(ret == 1) return 0;
         if(ret == 2){
             pipe.RemoveNeighbor(this);
+            pipe.SetDetached(true);
             if(pipe == output) super.ChangeElementMode(false); 
             RemoveNeighbor(pipe);
         }
