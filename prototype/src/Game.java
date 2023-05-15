@@ -421,7 +421,8 @@ public class Game {
 
     public void reset(){
         activePlayer = saboteurs.get(0);
-        
+        actionCounter = 4;
+        globalActionCounter = 0;
         plumbersTurn = false;
     }
 
