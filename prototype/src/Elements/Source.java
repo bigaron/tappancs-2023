@@ -13,6 +13,8 @@ public class Source extends Node{
     public Source(){
         ID = "source" + ++counter;
     }
+    public static void resetCounter(){counter = 0;}
+
     /**
      * A Steppable interface függvényét valósítja meg, ez "indítja" a víz folyását.
      */

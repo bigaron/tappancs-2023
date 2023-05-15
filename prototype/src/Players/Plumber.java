@@ -18,6 +18,8 @@ public class Plumber extends Player {
         ID = "plumber" + counter;
     }
 
+    public static void resetCounter(){counter = 0;}
+
     public void RepairElement(){
         elem.Repair();
         System.out.println("A(z) "+elem.getID()+ " elem újra funkcionál.\n");

@@ -18,6 +18,8 @@ public class Pump extends Node{
     public Pump(){
         ID = "pump" + ++counter;
     }
+    public static void resetCounter(){counter = 0;}
+
     /**
      * Megváltoztatja a pumpa folyásirányát.
      * @param outgoingPipe a kimeneti cső

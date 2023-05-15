@@ -71,6 +71,7 @@ public class Game {
                 switch (splitted[0]) {
                     case "changeState" -> game.changeState(splitted[1]);
                     case "generate" -> {
+                        game.resetCounters();
                         game.generate(splitted[1]);
                         game.reset();
                     }
@@ -213,6 +214,16 @@ public class Game {
         game.Move(0);
         game.changeState(Mode.config);
         game.Save("output.txt");*/
+    }
+
+    public void resetCounters(){
+        Cistern.resetCounter();
+        Pipe.resetCounter();
+        Pump.resetCounter();
+        Source.resetCounter();
+        Plumber.resetCounter();
+        Saboteur.resetCounter();
+        Generator.resetCounter();
     }
 
     public void changeState(Mode mode){ 
@@ -410,7 +421,7 @@ public class Game {
 
     public void reset(){
         activePlayer = saboteurs.get(0);
-        pPoints = sPoints = 0;
+        
         plumbersTurn = false;
     }
 

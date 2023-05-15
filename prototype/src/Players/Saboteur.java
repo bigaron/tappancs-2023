@@ -15,6 +15,7 @@ public class Saboteur extends Player{
         ++counter;
         ID = "saboteur" + counter;
     }
+    public static void resetCounter(){counter = 0;}
 
     public void Save(FileWriter writer, boolean state) {
         try {

@@ -31,6 +31,7 @@ public class Pipe extends Element{
         state = Modifier.Plain;
         ID = "pipe" + ++counter;
     }
+    public static void resetCounter(){counter = 0;}
 
     @Override
     public void SetNeighbor(Element elem){

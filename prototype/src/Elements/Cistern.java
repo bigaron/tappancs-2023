@@ -18,6 +18,7 @@ public class Cistern extends Node{
     public Cistern(){
         ID = "cistern" + ++counter;
     }
+    public static void resetCounter(){counter = 0;}
 
     /**
      * A víz továbbítását végző függvény. A víz útja itt ér véget, már nem hív tovább semmit.

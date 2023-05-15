@@ -21,6 +21,7 @@ public class Generator implements Steppable{
         ++counter;
         ID = "generator" + counter;
     }
+    public static void resetCounter(){counter = 0;}
 
     public String getID() {
         return ID;
