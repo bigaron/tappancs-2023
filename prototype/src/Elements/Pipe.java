@@ -278,4 +278,27 @@ public class Pipe extends Element{
         }
         return true;
     }
+
+    @Override
+    public void list(){
+        System.out.println("\nPipe");
+        System.out.println("id: " + getID());
+        System.out.println("working: " + working);
+        System.out.print("players: [");
+        for(Player p: players) {
+            if(p != null)System.out.print(p.getID() + " , ");
+            else System.out.print("null,");
+        }
+        System.out.println("]");
+        System.out.print("neighbours: [");
+        for(Node p: neighbours){
+            if(p != null)System.out.print(p.getID() + " , ");
+            else System.out.print("null,");
+        }
+        System.out.println("]");
+        System.out.println("state: " + state);
+        System.out.println("detached: " + detached);
+        System.out.println("sabotageable: " + sabotageable);
+        System.out.println("modifiedState: " + modifiedState);
+    }
 }

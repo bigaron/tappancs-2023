@@ -113,7 +113,10 @@ public class Game {
                         case "pickUpPipe" -> game.pickUpPipe(Integer.parseInt(cmd[1]));
                         case "changeState" -> game.changeState(cmd[1]);
                         case "endTurn" -> game.endTurn();
-                        //case "list" -> ;
+                        case "list" -> {
+                            if(cmd.length == 2) game.List(cmd[1]);
+                            else game.List("");
+                        }
                         default -> System.out.println("Érvényes parancsot adjál mert nem leszünk jóban.");
                     }
                     if (game.mode == Mode.config) break;
@@ -522,5 +525,37 @@ public class Game {
         if(mode == Mode.config) return;
         actionCounter = 0;
         globalActionCounter++;
+    }
+
+    public void List(String flag){
+        if(flag.equals("surround")){
+            activePlayer.list();
+            return;
+        }
+
+        if(flag.equals("")){
+            for(Element elem: desert) elem.list();
+            for(Saboteur s: saboteurs) s.list();
+            for(Plumber p: plumbers) p.list();
+            for(Generator g: generators) g.list();
+            return;
+        }
+
+        if(findElem(flag) != - 1){
+            desert.get(findElem(flag)).list();
+            return;
+        }
+        if(findGen(flag) != - 1){
+            generators.get(findGen(flag)).list();
+            return;
+        }
+        if(findPlumb(flag) != - 1){
+            plumbers.get(findPlumb(flag)).list();
+            return;
+        }
+        if(findSabo(flag) != - 1){
+            saboteurs.get(findSabo(flag)).list();
+            return;
+        }
     }
 }

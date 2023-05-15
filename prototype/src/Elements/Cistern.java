@@ -81,4 +81,25 @@ public class Cistern extends Node{
         ID = parsed[1];
         working = Boolean.parseBoolean(parsed[2]);    
     }
+
+    @Override
+    public void list(){
+        System.out.println("\nCistern");
+        System.out.println("id: " + getID());
+        System.out.println("working: " + working);
+        System.out.print("players: [");
+        for(Player p: players) {
+            if(p != null)System.out.print(p.getID() + " , ");
+            else System.out.print("null,");
+        }
+        System.out.println("]");
+        System.out.print("neighbours: [");
+        for(Pipe p: neighbours){
+            if(p != null)System.out.print(p.getID() + " , ");
+            else System.out.print("null,");
+        }
+        System.out.println("]");
+        if(generator == null) System.out.println("generator: null");
+        else System.out.println("generator: " + generator.getID());
+    }
 }

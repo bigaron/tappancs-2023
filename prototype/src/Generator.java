@@ -136,4 +136,17 @@ public class Generator implements Steppable{
         if(!parsed[0].equals("generator")) return;
         ID = parsed[1];
     }
+
+    public void list(){
+        System.out.println("\nGenerator");
+        System.out.println("id: " + getID());
+        if(cistern == null) System.out.println("cistern: null" );
+        else System.out.println("cistern: " + cistern.getID());
+        System.out.print("pipes: [" );
+        for(Pump p: pumps){
+           if(p != null) System.out.print(p.getID() + ",");
+           else System.out.print("null,");
+        }
+        System.out.println("]" );
+    }
 }

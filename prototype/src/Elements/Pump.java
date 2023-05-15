@@ -150,4 +150,25 @@ public class Pump extends Node{
         working = Boolean.parseBoolean(parsed[2]);
         buffer = Boolean.parseBoolean(parsed[3]);
     }
+
+    @Override
+    public void list(){
+        System.out.println("\nPump");
+        System.out.println("id: " + getID());
+        System.out.println("working: " + working);
+        System.out.print("players: [");
+        for(Player p: players) {
+            if(p != null)System.out.print(p.getID() + " , ");
+            else System.out.print("null,");
+        }
+        System.out.println("]");
+        System.out.print("neighbours: [");
+        for(Pipe p: neighbours){
+            if(p != null)System.out.print(p.getID() + " , ");
+            else System.out.print("null,");
+        }
+        System.out.println("]");
+        System.out.println("buffer: " + buffer);
+        System.out.println("output: " + output.getID());
+    }
 }

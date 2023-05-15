@@ -101,4 +101,5 @@ public class Player {
     public void SetPipe(Pipe pipe) {
         this.pipe = pipe;
     }
+    public void list(){}
 }

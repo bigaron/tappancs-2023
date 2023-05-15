@@ -60,4 +60,5 @@ public abstract class Element implements Steppable{
     public abstract void RemoveNeighbor(Element elem);
     public void ChangeSurface(Modifier m){ System.out.println("A felület nem változott meg, mert nem csövön állunk\n");}
     public String getID(){ return ID; }
+    public abstract void list();
 }

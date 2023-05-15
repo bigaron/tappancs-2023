@@ -41,4 +41,13 @@ public class Saboteur extends Player{
         if(parsed[0] != "plumber") return;
         ID = parsed[1];
     }
+
+    @Override
+    public void list(){
+        System.out.println("\nSaboteur");
+        System.out.println("id: " + getID());
+        System.out.println("elem: " + elem.getID());
+        if(pipe != null)System.out.println("pipe: " + pipe.getID());
+        else System.out.println("pipe: null");
+    }
 }
