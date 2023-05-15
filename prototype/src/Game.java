@@ -56,10 +56,6 @@ public class Game {
     public static boolean successfulCmd = true;
     public static void main(String[] args){
         Game game = new Game();
-        //TODO cmd első betűje lowercase
-
-        game.generate("testmap.txt"); //így elég a tesztben(play módban) kiadott parancsokat beírni
-        game.changeState(Mode.play);
 
         while(true) {
             while (game.mode == Mode.config) {
