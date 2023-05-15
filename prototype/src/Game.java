@@ -9,6 +9,9 @@ import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.util.Objects;
 import java.util.Scanner;
+
+import javax.swing.UIDefaults.ActiveValue;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -67,7 +70,10 @@ public class Game {
 
                 switch (splitted[0]) {
                     case "changeState" -> game.changeState(splitted[1]);
-                    case "generate" -> game.generate(splitted[1]);
+                    case "generate" -> {
+                        game.generate(splitted[1]);
+                        game.reset();
+                    }
                     case "save" -> game.Save(splitted[1]);
                     case "setRandom" -> game.setRandom(Boolean.parseBoolean(splitted[1]));
                     case "exit" -> System.exit(0);
@@ -91,22 +97,65 @@ public class Game {
 
 
                     switch (cmd[0]) { //ezeknél hibakezelés ugye van a meghívott függvényekben?
-                        case "move" -> game.Move(Integer.parseInt(cmd[1]));
-                        case "Move" -> game.Move(Integer.parseInt(cmd[1]));
+                        case "move" -> {
+                            if(cmd.length == 1) {
+                                successfulCmd = false;
+                                continue; 
+                            }
+                            game.Move(Integer.parseInt(cmd[1]));
+                        }
+                        case "Move" -> {
+                            if(cmd.length == 1) {
+                                successfulCmd = false;
+                                continue; 
+                            }
+                            game.Move(Integer.parseInt(cmd[1]));
+                        }
                         case "leakPipe" -> game.leakPipe();
                         case "repair" -> game.repair();
-                        case "changePumpDir" -> game.changePumpDir(Integer.parseInt(cmd[1]));
-                        case "changeSurface" -> game.changeSurface(parseModifier(cmd[1]));
+                        case "changePumpDir" -> {
+                            if(cmd.length == 1) {
+                                successfulCmd = false;
+                                continue; 
+                            } 
+                            game.changePumpDir(Integer.parseInt(cmd[1]));
+                        }
+                        case "changeSurface" ->{
+                            if(cmd.length == 1) {
+                                successfulCmd = false;
+                                continue; 
+                            } 
+                            game.changeSurface(parseModifier(cmd[1]));
+                        }
                         case "addPipe" -> game.addPipe();
-                        case "removePipe" -> game.removePipe(Integer.parseInt(cmd[1]));
+                        case "removePipe" -> {
+                            if(cmd.length == 1) {
+                                successfulCmd = false;
+                                continue; 
+                            }
+                            game.removePipe(Integer.parseInt(cmd[1]));
+                        }
                         case "placePump" -> game.placePump();
                         case "pickUpPump" -> game.pickUpPump();
-                        case "pickUpPipe" -> game.pickUpPipe(Integer.parseInt(cmd[1]));
-                        case "changeState" -> game.changeState(cmd[1]);
+                        case "pickUpPipe" -> {
+                            if(cmd.length == 1) {
+                                successfulCmd = false;
+                                continue; 
+                            }
+                            game.pickUpPipe(Integer.parseInt(cmd[1]));
+                        }
+                        case "changeState" -> {
+                            if(cmd.length == 1) {
+                                successfulCmd = false;
+                                continue; 
+                            } 
+                            game.changeState(cmd[1]);
+                        }
                         case "endTurn" -> game.endTurn();
                         case "list" -> {
                             if(cmd.length == 2) game.List(cmd[1]);
                             else game.List("");
+                            successfulCmd = false;
                         }
                         default -> {
                             System.out.println("Érvényes parancsot adjál mert nem leszünk jóban.");
@@ -359,9 +408,21 @@ public class Game {
         }
     }
 
+    public void reset(){
+        activePlayer = saboteurs.get(0);
+        pPoints = sPoints = 0;
+        plumbersTurn = false;
+    }
+
     public void generate(String path){
         if(mode == Mode.play) return;
         try{
+            generators.clear();
+            saboteurs.clear();
+            desert.clear();
+            plumbers.clear();
+
+
             Scanner scn;
             File src = new File(new File("prototype", "src"), path);
             scn = new Scanner(src);

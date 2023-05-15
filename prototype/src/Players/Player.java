@@ -19,6 +19,7 @@ public class Player {
         //dir érvénytelen?
         String id1 = elem.getID();
         Element neighbour = elem.GetNeighbor(dir);
+        if(neighbour == null) return;
         int successful = neighbour.AcceptPlayer(this);
         if(successful == 1) {
             boolean result = elem.RemovePlayer(this);
