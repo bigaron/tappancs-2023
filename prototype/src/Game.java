@@ -3,19 +3,20 @@ import prototype.src.Elements.*;
 import prototype.src.Players.Player;
 import prototype.src.Players.Plumber;
 import prototype.src.Players.Saboteur;
+import prototype.src.View.AppWindow;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.util.Objects;
 import java.util.Scanner;
 
-import javax.swing.UIDefaults.ActiveValue;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
-enum Mode{
+enum Mode {
     config, play
 }
 
@@ -55,7 +56,8 @@ public class Game {
     public static int actionCounter = 4; //induljunk négyről és dekrementáljunk
     public static boolean successfulCmd = true;
     public static void main(String[] args){
-        Game game = new Game();
+        //OLD MAIN
+        /*Game game = new Game();
 
         while(true) {
             while (game.mode == Mode.config) {
@@ -200,9 +202,9 @@ public class Game {
 
             }
 
-        }
+        }*/
 
-
+        //OLD OLD MAIN
         //innentől ami volt, csak nem töröltem ki
         /*game.generate("testmap.txt");
         game.activePlayer = game.saboteurs.get(0);
@@ -210,6 +212,10 @@ public class Game {
         game.Move(0);
         game.changeState(Mode.config);
         game.Save("output.txt");*/
+
+        //ACTUAL MAIN
+        AppWindow app = new AppWindow();
+        app.setVisible(true);
     }
 
     public void resetCounters(){
