@@ -16,10 +16,10 @@ public class AppWindow extends JFrame {
         menu = new MenuView(this);
         add(menu);
 
+        setSize(menu.getWIDTH(), menu.getHEIGHT());
         setLocationRelativeTo(null);
         setResizable(false);
 
-        setSize(menu.getWIDTH(), menu.getHEIGHT());
     }
 
     public void UpdateView(MyJPanel requester, MyJPanel requested) {
