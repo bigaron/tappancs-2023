@@ -6,8 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GameView extends MyJPanel {
 
@@ -20,6 +18,12 @@ public class GameView extends MyJPanel {
 
     public GameView(AppWindow original) {
         setLayout(new BorderLayout());
+
+        Canvas canvas = new Canvas();
+
+        JScrollPane canvasPane = new JScrollPane(canvas);
+        canvasPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        canvasPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         infoInventoryPanel.setLayout(new GridLayout(2, 1));
         inputPanel.setLayout(new GridLayout(1, 1));
@@ -75,6 +79,7 @@ public class GameView extends MyJPanel {
 
         add(inputPanel, BorderLayout.PAGE_END);
         add(infoInventoryPanel, BorderLayout.LINE_END);
+        add(canvasPane, BorderLayout.CENTER);
 
         game = new Game();
 
