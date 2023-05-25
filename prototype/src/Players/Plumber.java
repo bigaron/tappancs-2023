@@ -32,7 +32,7 @@ public class Plumber extends Player {
             System.out.println("A pumpa lerakása sikertelen volt mert nincs nálunk pumpa.\n");
 
     }
-
+    public Pump getPump(){return pump;}
     public void PickUpPipe(int dir) {
         if (pipe != null){
             System.out.println("A cső felvétele sikertelen volt, mert már van nálunk cső.\n");

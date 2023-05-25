@@ -150,4 +150,6 @@ public class Generator implements Steppable{
         }
         System.out.println("]" );
     }
+
+    public int getPumpNum(){ return pumps.size(); }
 }

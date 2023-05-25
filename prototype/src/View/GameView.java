@@ -1,62 +1,130 @@
 package prototype.src.View;
 
 import prototype.src.*;
+import prototype.src.Elements.*;
+import prototype.src.Players.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GameView extends MyJPanel {
-
-
+    private final int MAXNEIGHBOUR = 4;
+    private JLabel elementNameLbl = new JLabel(), neigborsLbl = new JLabel("Neighbours: "), workingLbl = new JLabel(), outputLbl = new JLabel();
+    private JLabel generatorLbl = new JLabel(), neighbour0Lbl = new JLabel(),  neighbour1Lbl = new JLabel(),  neighbour2Lbl = new JLabel(),  neighbour3Lbl = new JLabel();
+    private JLabel playerLbl = new JLabel(), playerInvPipeLbl = new JLabel(), playerInvPumpLbl = new JLabel(), generatorPumpLbl = new JLabel();
+    private JLabel stateLbl = new JLabel(), detachedLbl = new JLabel(), sabotageableLbl = new JLabel(), modifiedStateLbl = new JLabel(), bufferLbl = new JLabel();
     private JTextField console = new JTextField();
     private JPanel infoInventoryPanel = new JPanel(), inputPanel = new JPanel();
+    private JPanel infoPanel = new JPanel(), inventoryPanel = new JPanel();
     private ArrayList<String> commands = new ArrayList<>();
     private int commandPtr = 0;
     private Game game;
 
+    private void setNeighbourLbls( final Element myEl){
+        neighbour0Lbl.setText("");
+        neighbour1Lbl.setText("");
+        neighbour2Lbl.setText("");
+        neighbour3Lbl.setText("");
+
+        String neighbours[] = new String[4];
+        int ptr = 0;
+        for(int i = 0; i < MAXNEIGHBOUR; ++i) 
+            if(myEl.GetNeighbor(i) != null) neighbours[ptr++] = myEl.GetNeighbor(i).getID();
+        int n = 0;
+        if(neighbours[0] != null) neighbour0Lbl.setText(n++ + ". " + neighbours[0]);
+        if(neighbours[1] != null) neighbour1Lbl.setText(n++ + ". " + neighbours[1]);
+        if(neighbours[2] != null) neighbour2Lbl.setText(n++ + ". " + neighbours[2]);
+        if(neighbours[3] != null) neighbour3Lbl.setText(n++ + ". " + neighbours[3]);
+        if(!neighbour0Lbl.getText().equals("")) infoPanel.add(neighbour0Lbl);
+        if(!neighbour1Lbl.getText().equals("")) infoPanel.add(neighbour1Lbl);
+        if(!neighbour2Lbl.getText().equals("")) infoPanel.add(neighbour2Lbl);
+        if(!neighbour3Lbl.getText().equals("")) infoPanel.add(neighbour3Lbl);
+    }
+
+    private void updateShownElement(){
+        infoPanel.removeAll();
+        inventoryPanel.removeAll();
+        String ID = game.activePlayer.getElement().getID(); 
+        elementNameLbl.setText("Element name: " + ID);
+        infoPanel.add(elementNameLbl);
+        if(ID.contains("cistern")){
+            Cistern myEl = (Cistern)game.activePlayer.getElement(); 
+            generatorLbl.setText("generator: " + myEl.getGeneratorID());
+            if(!myEl.getGeneratorID().equals("")) generatorPumpLbl.setText("No. pumps: " + myEl.getGeneratorPumps());
+            setNeighbourLbls(myEl);
+        }else if(ID.contains("source")){
+            infoPanel.add(neigborsLbl);
+            Source myEl = (Source)game.activePlayer.getElement();
+            setNeighbourLbls(myEl);
+        }else if(ID.contains("pipe")){
+            Pipe myEl = (Pipe)game.activePlayer.getElement();
+            workingLbl.setText("Working: " + Boolean.toString(myEl.getWork()));
+            stateLbl.setText("State: " + myEl.getState());
+            detachedLbl.setText("Detached: " + Boolean.toString(myEl.getDetached()));
+            sabotageableLbl.setText("Sabotageable: " + myEl.getSabotageable());
+            modifiedStateLbl.setText("Modified state: " + myEl.getModified());
+
+            infoPanel.add(workingLbl);
+            infoPanel.add(stateLbl);
+            infoPanel.add(sabotageableLbl);
+            infoPanel.add(modifiedStateLbl);
+            infoPanel.add(neigborsLbl);
+            setNeighbourLbls(myEl);
+        }else if(ID.contains("pump")){
+            Pump myEl = (Pump)game.activePlayer.getElement();
+            workingLbl.setText("Working: " + Boolean.toString(myEl.getWork()));
+            bufferLbl.setText("Buffer: " + Boolean.toString(myEl.getBuffer()));
+            outputLbl.setText("output: " + myEl.getOutput().getID());
+
+            infoPanel.add(workingLbl);
+            infoPanel.add(bufferLbl);
+            infoPanel.add(outputLbl);
+            infoPanel.add(neigborsLbl);
+            setNeighbourLbls(myEl);
+        }
+
+        playerLbl.setText(game.activePlayer.getID());
+        inventoryPanel.add(playerLbl);
+        if(game.activePlayer.getID().contains("saboteur")){
+            Saboteur myPl = (Saboteur) game.activePlayer;
+            Pipe p = myPl.getPipe();
+            if(p != null) playerInvPipeLbl.setText("Pipe: " + myPl.getPipe().getID());
+            else playerInvPipeLbl.setText("Pipe: null");
+            inventoryPanel.add(playerInvPipeLbl);
+        }else{
+            Plumber myPl = (Plumber) game.activePlayer;
+            Pipe p = myPl.getPipe();
+            Pump pa = myPl.getPump();
+            if(p != null) playerInvPipeLbl.setText("Pipe: " + myPl.getPipe().getID());
+            else playerInvPipeLbl.setText("Pipe: null");
+            if(pa != null) playerInvPumpLbl.setText("Pump: " + myPl.getPump().getID());
+            else playerInvPumpLbl.setText("Pump: null");
+            inventoryPanel.add(playerInvPipeLbl);
+            inventoryPanel.add(playerInvPumpLbl);
+        }
+
+        validate();
+        repaint();
+    }
+
     public GameView(AppWindow original) {
         setLayout(new BorderLayout());
-
+        game = new Game();
+        
         infoInventoryPanel.setLayout(new GridLayout(2, 1));
         inputPanel.setLayout(new GridLayout(1, 1));
 
         infoInventoryPanel.setPreferredSize(new Dimension(175, 250));
 
-        JPanel infoPanel = new JPanel();
-        JPanel inventoryPanel = new JPanel();
+        infoPanel = new JPanel();
+        inventoryPanel = new JPanel();
 
-        infoPanel.setLayout(new GridLayout(8, 1));
-        inventoryPanel.setLayout(new GridLayout(2, 1));
+        infoPanel.setLayout(new GridLayout(10, 1));
+        inventoryPanel.setLayout(new GridLayout(5, 1));
 
-        JLabel elementNameLabel = new JLabel("Element name: pump1");
-        JLabel neighborsLabel = new JLabel("Neighbors:");
-        JLabel neighbor1Label = new JLabel("-");
-        JLabel neighbor2Label = new JLabel("-");
-        JLabel neighbor3Label = new JLabel("-");
-        JLabel neighbor4Label = new JLabel("-");
-        JLabel workingLabel = new JLabel("working: true");
-        JLabel outputLabel = new JLabel("output: pipe1");
-
-        infoPanel.add(elementNameLabel);
-        infoPanel.add(neighborsLabel);
-        infoPanel.add(neighbor1Label);
-        infoPanel.add(neighbor2Label);
-        infoPanel.add(neighbor3Label);
-        infoPanel.add(neighbor4Label);
-        infoPanel.add(workingLabel);
-        infoPanel.add(outputLabel);
-
-        JLabel inventoryPipeLabel = new JLabel("pipe: -");
-        inventoryPipeLabel.setPreferredSize(new Dimension(50, 50));
-        JLabel inventoryPumpLabel = new JLabel("pump: -");
-        inventoryPumpLabel.setPreferredSize(new Dimension(50, 50));
-
-        inventoryPanel.add(inventoryPipeLabel);
-        inventoryPanel.add(inventoryPumpLabel);
+        updateShownElement();
         
         infoPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         inventoryPanel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -76,7 +144,6 @@ public class GameView extends MyJPanel {
         add(inputPanel, BorderLayout.PAGE_END);
         add(infoInventoryPanel, BorderLayout.LINE_END);
 
-        game = new Game();
 
         originalWindow = original;
         WIDTH = 1200;
@@ -91,6 +158,7 @@ public class GameView extends MyJPanel {
                 commandPtr = commands.size() - 1;
                 console.setText("");
                 game.parseInput(commands.get(commandPtr));
+                updateShownElement();
             }else if(e.getKeyCode() == KeyEvent.VK_UP){
                 if(!commands.get(commands.size() - 1).equals("")) {
                     commands.add("");

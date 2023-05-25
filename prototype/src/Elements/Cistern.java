@@ -6,6 +6,7 @@ import prototype.src.Players.Player;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.GenericSignatureFormatError;
 
 /**
  * A ciszternát reprezentáló osztály.
@@ -103,4 +104,7 @@ public class Cistern extends Node{
         if(generator == null) System.out.println("generator: null");
         else System.out.println("generator: " + generator.getID());
     }
+
+    public String getGeneratorID(){if(generator != null) return generator.getID(); else return "";}
+    public int getGeneratorPumps(){if(generator != null) return generator.getPumpNum(); else return 0;}
 }

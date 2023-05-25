@@ -154,6 +154,9 @@ public class Pump extends Node{
         buffer = Boolean.parseBoolean(parsed[3]);
     }
 
+    public boolean getBuffer(){return buffer;}
+    public Pipe getOutput(){return output;}
+
     @Override
     public void list(){
         System.out.println("\nPump");

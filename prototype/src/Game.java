@@ -36,6 +36,7 @@ public class Game {
         mode = Mode.play;
         plumbersTurn = false;
         generate("testmap.txt");
+        activePlayer = saboteurs.get(0);
     }
 
     public static void increasePoints(int team) {

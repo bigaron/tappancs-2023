@@ -112,8 +112,8 @@ public class Pipe extends Element{
      * @return a kért szomszéd, vagy null, ha az nem letezik
      */
     @Override
-    public Element GetNeighbor(int dir){
-        return dir > getNeighbourSize() ? null : neighbours[dir];
+    public Element GetNeighbor(int dir){ 
+        return dir > getNeighbourSize() - 1 ? null : neighbours[dir];
     }
     
     /**
@@ -281,7 +281,9 @@ public class Pipe extends Element{
         }
         return true;
     }
-
+    public boolean getDetached(){ return detached; } 
+    public int getSabotageable(){return sabotageable;}
+    public int getModified(){ return modifiedState; }
     @Override
     public void list(){
         System.out.println("\nPipe");

@@ -76,6 +76,8 @@ public class Player {
             System.out.println("A cső lehelyezése sikertelen, mert nincs a kezünkben cső.\n");
     }
 
+    public Pipe getPipe(){return pipe;}
+
     public void SetElem(Element elem) {
         this.elem = elem;
     }
@@ -104,4 +106,5 @@ public class Player {
         this.pipe = pipe;
     }
     public void list(){}
+    public Element getElement(){return elem;}
 }
