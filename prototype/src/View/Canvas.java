@@ -17,6 +17,9 @@ public class Canvas extends MyJPanel {
 
         playerViews.add(new SaboteurView(null));      //for testing
         playerViews.add(new PlumberView(null));      //for testing
+        elementViews.add(new SourceView(null));      //for testing
+        elementViews.add(new CisternView(null));      //for testing
+        elementViews.add(new PumpView(null));      //for testing
 
         setPreferredSize(new Dimension(20000, 20000));
         setBackground (Color.cyan);
