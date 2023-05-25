@@ -3,10 +3,6 @@ import prototype.src.Elements.*;
 import prototype.src.Players.Player;
 import prototype.src.Players.Plumber;
 import prototype.src.Players.Saboteur;
-import prototype.src.View.AppWindow;
-
-import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
