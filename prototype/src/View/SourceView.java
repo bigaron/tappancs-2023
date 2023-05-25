@@ -26,7 +26,7 @@ public class SourceView extends ElementView {
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.green);
+        g.setColor(new Color(142, 166, 4));
         g.fillOval(x, y, sourcePixelDiameter, sourcePixelDiameter);
 
     }

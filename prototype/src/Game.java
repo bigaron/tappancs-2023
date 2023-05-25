@@ -268,12 +268,12 @@ public class Game {
             }
             pickUpPipe(Integer.parseInt(cmd[1]));
         }
-        case "changeState" -> {
-            if(cmd.length == 1) {
-                successfulCmd = false;
-            } 
-            changeState(cmd[1]);
-        }
+        // case "changeState" -> {
+        //     if(cmd.length == 1) {
+        //         successfulCmd = false;
+        //     } 
+        //     changeState(cmd[1]);
+        // }
         case "endTurn" -> endTurn();
         // case "list" -> {
         //     if(cmd.length == 2) List(cmd[1]);

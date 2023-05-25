@@ -15,6 +15,7 @@ public class GameView extends MyJPanel {
     private JLabel generatorLbl = new JLabel(), neighbour0Lbl = new JLabel(),  neighbour1Lbl = new JLabel(),  neighbour2Lbl = new JLabel(),  neighbour3Lbl = new JLabel();
     private JLabel playerLbl = new JLabel(), playerInvPipeLbl = new JLabel(), playerInvPumpLbl = new JLabel(), generatorPumpLbl = new JLabel();
     private JLabel stateLbl = new JLabel(), detachedLbl = new JLabel(), sabotageableLbl = new JLabel(), modifiedStateLbl = new JLabel(), bufferLbl = new JLabel();
+    private JLabel turnsLeftLbl = new JLabel(), saboteurScrLbl = new JLabel(), plumberScrLbl = new JLabel();
     private JTextField console = new JTextField();
     private JPanel infoInventoryPanel = new JPanel(), inputPanel = new JPanel();
     private JPanel infoPanel = new JPanel(), inventoryPanel = new JPanel();
@@ -112,7 +113,6 @@ public class GameView extends MyJPanel {
     public GameView(AppWindow original) {
         setLayout(new BorderLayout());
         game = new Game();
-        
 
         Canvas canvas = new Canvas();
 

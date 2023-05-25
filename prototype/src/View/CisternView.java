@@ -36,7 +36,7 @@ public class CisternView extends ElementView {
         yVertices[2] = y + 2 * cisternPixelSize;
         yVertices[3] = y + cisternPixelSize;
 
-        g.setColor(Color.red);
+        g.setColor(new Color(174, 140, 163));
         g.fillPolygon(xVertices, yVertices, 4);
     }
 

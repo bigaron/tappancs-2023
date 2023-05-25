@@ -22,7 +22,7 @@ public class Canvas extends MyJPanel {
         elementViews.add(new PumpView(null));      //for testing
 
         setPreferredSize(new Dimension(20000, 20000));
-        setBackground (Color.cyan);
+        setBackground (new Color(220, 197, 142));
         setLayout(new GridLayout(1, 1));
 
     }
