@@ -10,6 +10,11 @@ public abstract class MyJPanel extends JPanel {
     protected int HEIGHT;
     protected AppWindow originalWindow;
 
+    public MyJPanel(){
+        super();
+        setOpaque(true);
+    }
+
     int getWIDTH() {
         return WIDTH;
     }

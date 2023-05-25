@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class MenuView extends MyJPanel {
     private AppWindow originalWindow;
-
+    
     public MenuView(AppWindow original) {
         WIDTH = 250;
         HEIGHT = 300;
@@ -19,8 +19,19 @@ public class MenuView extends MyJPanel {
         JPanel exitPanel = new JPanel();
 
         JLabel nameLabel = new JLabel("Drukmákori háború");
+        nameLabel.setForeground(new Color(142, 165, 220));
         JButton startButton = new JButton("Play");
         JButton exitButton = new JButton("Exit");
+
+        startButton.setBorderPainted(false);
+        startButton.setFocusPainted(false);
+        startButton.setBackground(new Color(220, 197, 142));
+        startButton.setForeground(new Color(142, 165, 220));
+
+        exitButton.setBorderPainted(false);
+        exitButton.setFocusPainted(false);
+        exitButton.setBackground(new Color(220, 197, 142));
+        exitButton.setForeground(new Color(142, 165, 220));
 
         namePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0,5));
         startPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0,5));
@@ -36,7 +47,6 @@ public class MenuView extends MyJPanel {
         add(namePanel);
         add(startPanel);
         add(exitPanel);
-
     }
 
     /**
@@ -56,6 +66,7 @@ public class MenuView extends MyJPanel {
     private class ExitButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
+            
             //if there's something to do before exiting we can change this
             System.exit(0);
         }
