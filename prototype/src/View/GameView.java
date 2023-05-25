@@ -1,17 +1,27 @@
 package prototype.src.View;
 
+import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GameView extends MyJPanel {
 
+
+    private JTextField console = new JTextField();
+    private JPanel infoInventoryPanel = new JPanel(), inputPanel = new JPanel();
+    private ArrayList<String> commands = new ArrayList<>();
+    private int commandPtr = 0;
+
+
     public GameView(AppWindow original) {
         setLayout(new BorderLayout());
-        JPanel infoInventoryPanel = new JPanel();
-        JPanel inputPanel = new JPanel();
 
         infoInventoryPanel.setLayout(new GridLayout(2, 1));
-        inputPanel.setLayout(new GridLayout(2, 1));
+        inputPanel.setLayout(new GridLayout(1, 1));
 
         infoInventoryPanel.setPreferredSize(new Dimension(175, 250));
 
@@ -46,18 +56,21 @@ public class GameView extends MyJPanel {
 
         inventoryPanel.add(inventoryPipeLabel);
         inventoryPanel.add(inventoryPumpLabel);
+        
+        infoPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        inventoryPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         infoInventoryPanel.add(infoPanel);
         infoInventoryPanel.add(inventoryPanel);
 
-        JTextField currentInput = new JTextField();
-        JTextField latestInput = new JTextField();
+        console.setBackground(Color.black);
+        console.setForeground(Color.white);
+        console.setCaretColor(Color.white);
+        console.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        currentInput.setPreferredSize(new Dimension(590, 15));
-        latestInput.setPreferredSize(new Dimension(590, 15));
+        console.addKeyListener(new EnterKeyListener());
 
-        inputPanel.add(latestInput);
-        inputPanel.add(currentInput);
+        inputPanel.add(console);
 
         add(inputPanel, BorderLayout.PAGE_END);
         add(infoInventoryPanel, BorderLayout.LINE_END);
@@ -65,6 +78,43 @@ public class GameView extends MyJPanel {
         originalWindow = original;
         WIDTH = 1200;
         HEIGHT = 800;
+    }
+
+    private class EnterKeyListener implements KeyListener {
+        @Override
+        public void keyPressed(KeyEvent e){
+            if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                commands.add(console.getText());
+                commandPtr = commands.size() - 1;
+                console.setText("");
+            }else if(e.getKeyCode() == KeyEvent.VK_UP){
+                if(!commands.get(commands.size() - 1).equals("")) {
+                    commands.add("");
+                    commandPtr = commands.size() - 1;
+                }
+                if(commandPtr != 0) commandPtr--; 
+                console.setText(commands.get(commandPtr));
+            }else if(e.getKeyCode() == KeyEvent.VK_DOWN){
+                if(commandPtr == commands.size() - 1) return;
+                commandPtr++;
+                if(commands.get(commandPtr).equals("")) {
+                    commands.remove(commandPtr);
+                    commandPtr--;
+                    console.setText("");
+                    return;
+                }
+                
+                console.setText(commands.get(commandPtr));
+            }
+        }
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+        }
     }
 
     public void initGame() {
