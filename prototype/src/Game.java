@@ -33,8 +33,9 @@ public class Game {
     public static boolean random = false;
 
     public Game(){
-        mode = Mode.config;
+        mode = Mode.play;
         plumbersTurn = false;
+        generate("testmap.txt");
     }
 
     public static void increasePoints(int team) {
@@ -55,9 +56,10 @@ public class Game {
     public static int globalActionCounter = 0; //a random értékekhez determinizációjához kell kell
     public static int actionCounter = 4; //induljunk négyről és dekrementáljunk
     public static boolean successfulCmd = true;
+    /* 
     public static void main(String[] args){
         //OLD MAIN
-        /*Game game = new Game();
+        Game game = new Game();
 
         while(true) {
             while (game.mode == Mode.config) {
@@ -202,7 +204,7 @@ public class Game {
 
             }
 
-        }*/
+        }
 
         //OLD OLD MAIN
         //innentől ami volt, csak nem töröltem ki
@@ -211,11 +213,118 @@ public class Game {
         game.changeState(Mode.play);
         game.Move(0);
         game.changeState(Mode.config);
-        game.Save("output.txt");*/
+        game.Save("output.txt");
 
         //ACTUAL MAIN
-        AppWindow app = new AppWindow();
+        AppWindow app = new AppWindow(); 
         app.setVisible(true);
+    }
+    */
+    public void parseInput(String input){
+        if (activePlayer == null) {
+            System.out.println(saboteurs.get(0).getID() + " játékos következik.\n");
+            activePlayer = saboteurs.get(0);
+        }
+
+        //actionloop
+        String[] cmd = input.split(" ");
+
+        switch (cmd[0]) { //ezeknél hibakezelés ugye van a meghívott függvényekben?
+        case "move" -> {
+            if(cmd.length == 1) {
+                successfulCmd = false;
+            }
+            Move(Integer.parseInt(cmd[1]));
+        }
+        case "Move" -> {
+            if(cmd.length == 1) {
+                successfulCmd = false;
+            }
+            Move(Integer.parseInt(cmd[1]));
+        }
+        case "leakPipe" -> leakPipe();
+        case "repair" -> repair();
+        case "changePumpDir" -> {
+            if(cmd.length == 1) {
+                successfulCmd = false;
+            } 
+            changePumpDir(Integer.parseInt(cmd[1]));
+        }
+        case "changeSurface" ->{
+            if(cmd.length == 1) {
+                successfulCmd = false;
+            } 
+            changeSurface(parseModifier(cmd[1]));
+        }
+        case "addPipe" -> addPipe();
+        case "removePipe" -> {
+            if(cmd.length == 1) {
+                successfulCmd = false; 
+            }
+            removePipe(Integer.parseInt(cmd[1]));
+        }
+        case "placePump" -> placePump();
+        case "pickUpPump" -> pickUpPump();
+        case "pickUpPipe" -> {
+            if(cmd.length == 1) {
+                successfulCmd = false;
+            }
+            pickUpPipe(Integer.parseInt(cmd[1]));
+        }
+        case "changeState" -> {
+            if(cmd.length == 1) {
+                successfulCmd = false;
+            } 
+            changeState(cmd[1]);
+        }
+        case "endTurn" -> endTurn();
+        // case "list" -> {
+        //     if(cmd.length == 2) List(cmd[1]);
+        //     else List("");
+        //     successfulCmd = false;
+        // }
+        default -> {
+            System.out.println("Érvényes parancsot adjál mert nem leszünk jóban.");
+            successfulCmd = false;
+        }
+        }
+        if(actionCounter != 0 && successfulCmd)  {
+            --actionCounter;
+            ++globalActionCounter;
+        } if(successfulCmd){
+            //step az összesre desert + generators
+            desert.forEach(Element::Step);
+            generators.forEach(Generator::Step);
+        }else {
+            successfulCmd = true;
+        }
+        if(actionCounter == 0){
+            actionCounter = 4;
+            //kövi játékosra léptetünk.
+            if (plumbersTurn) {
+                int idx = plumbers.lastIndexOf((Plumber) activePlayer);
+                ++idx;
+                if (idx < plumbers.size()) {
+                    System.out.println("Kör vége, a(z) "+ plumbers.get(idx).getID() +" játékos következik.\n");
+                    activePlayer = plumbers.get(idx); //finito ha minden ok
+                } else { //ha vége van a tömbnek -->> csapatváltás
+                    plumbersTurn = false;
+                    System.out.println("Kör vége, a(z) "+ saboteurs.get(0).getID() +" játékos következik.\n");
+                    activePlayer = saboteurs.get(0);  //itt indexelős hibakezelés??
+                }
+            } else { //ugyan az csak másik tömbökkel
+                int idx = saboteurs.lastIndexOf((Saboteur) activePlayer);
+                ++idx;
+                if (idx < saboteurs.size()) {
+                    System.out.println("Kör vége, a(z) "+ saboteurs.get(idx).getID() +" játékos következik.\n");
+                    activePlayer = saboteurs.get(idx);
+                } else {
+                    plumbersTurn = true;
+                    System.out.println("Kör vége, a(z) "+ plumbers.get(0).getID() +" játékos következik.\n");
+                    activePlayer =  plumbers.get(0);
+                }
+            }   
+        }
     }
 
     public void resetCounters(){
@@ -429,7 +538,6 @@ public class Game {
     }
 
     public void generate(String path){
-        if(mode == Mode.play) return;
         try{
             generators.clear();
             saboteurs.clear();

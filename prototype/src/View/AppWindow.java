@@ -30,4 +30,9 @@ public class AppWindow extends JFrame {
         validate();
         repaint();
     }
+
+    public static void main(String args[]){
+        AppWindow w = new AppWindow();
+        w.setVisible(true);
+    }
 }

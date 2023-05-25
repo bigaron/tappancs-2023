@@ -1,5 +1,6 @@
 package prototype.src.View;
 
+import prototype.src.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +16,7 @@ public class GameView extends MyJPanel {
     private JPanel infoInventoryPanel = new JPanel(), inputPanel = new JPanel();
     private ArrayList<String> commands = new ArrayList<>();
     private int commandPtr = 0;
-
+    private Game game;
 
     public GameView(AppWindow original) {
         setLayout(new BorderLayout());
@@ -75,6 +76,8 @@ public class GameView extends MyJPanel {
         add(inputPanel, BorderLayout.PAGE_END);
         add(infoInventoryPanel, BorderLayout.LINE_END);
 
+        game = new Game();
+
         originalWindow = original;
         WIDTH = 1200;
         HEIGHT = 800;
@@ -87,6 +90,7 @@ public class GameView extends MyJPanel {
                 commands.add(console.getText());
                 commandPtr = commands.size() - 1;
                 console.setText("");
+                game.parseInput(commands.get(commandPtr));
             }else if(e.getKeyCode() == KeyEvent.VK_UP){
                 if(!commands.get(commands.size() - 1).equals("")) {
                     commands.add("");
