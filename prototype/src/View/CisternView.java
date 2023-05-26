@@ -1,13 +1,14 @@
 package prototype.src.View;
 
 import prototype.src.Elements.Cistern;
+import prototype.src.Elements.Pipe;
 
 import java.awt.*;
 
 public class CisternView extends ElementView {
 
-    int xVertices[] = new int[4];
-    int yVertices[] = new int[4];
+    int[] xVertices = new int[4];
+    int[] yVertices = new int[4];
     int cisternPixelSize = 120;
     public CisternView(Cistern referencedCistern) {
         referencedElement = referencedCistern;
@@ -43,5 +44,11 @@ public class CisternView extends ElementView {
     @Override
     public void update() {
         //TODO
+    }
+
+    @Override
+    public void calculateCoords(int x, int y) {
+        Cistern cistern = (Cistern) referencedElement;
+        int neighborCount = cistern.getNeighborSize();
     }
 }

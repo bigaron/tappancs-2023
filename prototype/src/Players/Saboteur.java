@@ -1,5 +1,7 @@
 package prototype.src.Players;
 
+import prototype.src.View.SaboteurView;
+
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -10,12 +12,22 @@ import static prototype.src.Modifier.Slippery;
  */
 public class Saboteur extends Player{
     private static int counter = 0;
+    private SaboteurView view;
 
     public Saboteur() {
         ++counter;
         ID = "saboteur" + counter;
+        view = null;
     }
     public static void resetCounter(){counter = 0;}
+
+    public SaboteurView getView() {
+        return view;
+    }
+
+    public void setView(SaboteurView view) {
+        this.view = view;
+    }
 
     public void Save(FileWriter writer, boolean state) {
         try {

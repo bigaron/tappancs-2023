@@ -2,6 +2,7 @@ package prototype.src.Players;
 
 import prototype.src.IO;
 import prototype.src.Elements.*;
+import prototype.src.View.PlumberView;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,10 +13,20 @@ import java.io.IOException;
 public class Plumber extends Player {
     private static int counter = 0;
     private Pump pump;
+    private PlumberView view;
 
     public Plumber() {
         ++counter;
         ID = "plumber" + counter;
+        view = null;
+    }
+
+    public PlumberView getView() {
+        return view;
+    }
+
+    public void setView(PlumberView view) {
+        this.view = view;
     }
 
     public static void resetCounter(){counter = 0;}

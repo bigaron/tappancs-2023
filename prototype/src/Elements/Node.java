@@ -10,6 +10,10 @@ import prototype.src.Players.*;
 public abstract class Node extends Element {
     public List<Pipe> neighbours = new ArrayList<Pipe>();
 
+    public int getNeighborSize() {
+        return neighbours.size();
+    }
+
     /**
      * A játékos rálép a Node-ra.
      * @param p a rálépő játékos

@@ -47,22 +47,35 @@ public class Canvas extends MyJPanel {
         int i = 0;
 
         for(Plumber plumber : plumbers) {
-            playerViews.add(new PlumberView(plumber));
+            PlumberView view = new PlumberView(plumber);
+            playerViews.add(view);
+            plumber.setView(view);
         }
         for(Saboteur saboteur : saboteurs) {
-            playerViews.add(new SaboteurView(saboteur));
+            SaboteurView view = new SaboteurView(saboteur);
+            playerViews.add(view);
+            saboteur.setView(view);
         }
         for(; i < Cistern.counter; ++i) {
-            elementViews.add(new CisternView((Cistern)elements.get(i)));
+            CisternView view = new CisternView((Cistern) elements.get(i));
+            elementViews.add(view);
+            ((Cistern) elements.get(i)).setView(view);
         }
         for(; i < Cistern.counter + Source.counter; ++i) {
-            elementViews.add(new SourceView((Source) elements.get(i)));
+            SourceView view = new SourceView((Source) elements.get(i));
+            elementViews.add(view);
+            ((Source) elements.get(i)).setView(view);
         }
         for(; i < Cistern.counter + Source.counter + Pump.counter; ++i) {
-            elementViews.add(new PumpView((Pump) elements.get(i)));
+            PumpView view = new PumpView((Pump) elements.get(i));
+            elementViews.add(view);
+            ((Pump) elements.get(i)).setView(view);
+            //elementViews.add(new PumpView((Pump) elements.get(i)));
         }
         for(; i < Cistern.counter + Source.counter + Pump.counter + Pipe.counter; ++i) {
-            elementViews.add(new PipeView((Pipe) elements.get(i)));
+            PipeView view = new PipeView((Pipe) elements.get(i));
+            elementViews.add(view);
+            ((Pipe) elements.get(i)).setView(view);
         }
 
         //Tudjuk, hogy a 0. elem ciszterna megadjuk az egyetlen ciszterna pozícióját
