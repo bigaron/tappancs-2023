@@ -1,5 +1,6 @@
 package prototype.src.View;
 
+import prototype.src.Players.Plumber;
 import prototype.src.Players.Saboteur;
 
 import javax.imageio.ImageIO;
@@ -9,12 +10,12 @@ import java.io.IOException;
 
 public class PlumberView extends PlayerView {
 
-    public PlumberView(Saboteur saboteurReference) {
-        referencedPlayer = saboteurReference;
+    public PlumberView(Plumber plumberReference) {
+        referencedPlayer = plumberReference;
         x = 400;    //TODO update necessary
         y = 400;
         try {
-            File path = new File(new File("prototype", "src"), "engineer1.png");
+            File path = new File(new File(new File("prototype", "src"), "images"), "engineer1.png");
             image = ImageIO.read(path);
 
         } catch (IOException e) {

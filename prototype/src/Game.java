@@ -18,7 +18,7 @@ enum Mode {
 
 public class Game {
     public static ArrayList<Element> desert = new ArrayList<>();
-    public ArrayList<Saboteur> saboteurs = new ArrayList<>();
+    private ArrayList<Saboteur> saboteurs = new ArrayList<>();
     private ArrayList<Plumber> plumbers = new ArrayList<>();
     private ArrayList<Generator> generators = new ArrayList<>();
     public Player activePlayer;
@@ -27,6 +27,22 @@ public class Game {
     public static int pPoints = 0;
     private Mode mode;
     public static boolean random = false;
+
+    public static ArrayList<Element> getDesert() {
+        return desert;
+    }
+
+    public ArrayList<Saboteur> getSaboteurs() {
+        return saboteurs;
+    }
+
+    public ArrayList<Plumber> getPlumbers() {
+        return plumbers;
+    }
+
+    public ArrayList<Generator> getGenerators() {
+        return generators;
+    }
 
     public Game(){
         mode = Mode.play;

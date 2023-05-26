@@ -127,11 +127,13 @@ public class GameView extends MyJPanel {
         setLayout(new BorderLayout());
         game = new Game();
 
-        Canvas canvas = new Canvas();
+        Canvas canvas = new Canvas(/*this*/);
+        canvas.initGame(game);
 
         JScrollPane canvasPane = new JScrollPane(canvas);
         canvasPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         canvasPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
 
         infoInventoryPanel.setLayout(new GridLayout(2, 1));
         inputPanel.setLayout(new GridLayout(1, 1));

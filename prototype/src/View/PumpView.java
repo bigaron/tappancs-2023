@@ -14,14 +14,14 @@ public class PumpView extends ElementView {
 
     public PumpView(Pump referencedPump) {
         referencedElement = referencedPump;
-        x = 300;
-        y = 100;
+        x = 200;
+        y = 200;
 
         try {
-            File path = new File(new File("prototype", "src"), "pump_working.png");
+            File path = new File(new File(new File("prototype", "src"), "images"), "pump_working.png");
             image = ImageIO.read(path);
 
-            File path2 = new File(new File("prototype", "src"), "pump_notworking.png");
+            File path2 = new File(new File(new File("prototype", "src"), "images"), "pump_notworking.png");
             notWorkingPumpImage = ImageIO.read(path2);
 
 
@@ -32,16 +32,12 @@ public class PumpView extends ElementView {
 
     @Override
     public void draw(Graphics g) {
-        /*
-        if(referencedElement.getWorking()) {
+
+        if(referencedElement.getWork()) {
             g.drawImage(image, x, y, null);
         } else {
             g.drawImage(notWorkingPumpImage, x, y, null);
         }
-
-         */
-        g.drawImage(image, x, y, null);     //for testing only
-        g.drawImage(notWorkingPumpImage, x+100, y, null);     //for testing only
     }
 
     @Override

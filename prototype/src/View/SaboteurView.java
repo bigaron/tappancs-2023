@@ -14,7 +14,7 @@ public class SaboteurView extends PlayerView {
         x = 200;    //TODO update necessary
         y = 200;
         try {
-            File path = new File(new File("prototype", "src"), "gru2.png");
+            File path = new File(new File(new File("prototype", "src"), "images"), "gru2.png");
             image = ImageIO.read(path);
 
         } catch (IOException e) {
