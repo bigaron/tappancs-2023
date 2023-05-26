@@ -1,5 +1,7 @@
 package prototype.src.View;
 
+import prototype.src.Elements.Cistern;
+import prototype.src.Elements.Pipe;
 import prototype.src.Elements.Source;
 
 import javax.imageio.ImageIO;
@@ -34,5 +36,23 @@ public class SourceView extends ElementView {
     @Override
     public void update() {
         //TODO
+    }
+
+    @Override
+    public void calculateCoords(int x, int y) {
+        if(visited) return;
+
+        visited = true;
+        this.x = x;
+        this.y = y;
+        Source source = (Source) referencedElement;
+        int neighborCount = source.getNeighborSize();
+        for(int i = 0; i < neighborCount; ++i) {
+            Pipe pipe = (Pipe)source.GetNeighbor(i);
+            PipeView pipeView = pipe.getView();
+            double fi = 2 * Math.PI / neighborCount;
+            pipeView.calculateCoords((int)(x + Math.cos(fi) * basicPipeDistance), (int)(y + Math.cos(fi) * basicPipeDistance));
+        }
+        visited = false;
     }
 }

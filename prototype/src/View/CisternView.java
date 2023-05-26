@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class CisternView extends ElementView {
 
+
     int[] xVertices = new int[4];
     int[] yVertices = new int[4];
     int cisternPixelSize = 120;
@@ -48,7 +49,19 @@ public class CisternView extends ElementView {
 
     @Override
     public void calculateCoords(int x, int y) {
+        if(visited) return;
+
+        visited = true;
+        this.x = x;
+        this.y = y;
         Cistern cistern = (Cistern) referencedElement;
         int neighborCount = cistern.getNeighborSize();
+        for(int i = 0; i < neighborCount; ++i) {
+            Pipe pipe = (Pipe)cistern.GetNeighbor(i);
+            PipeView pipeView = pipe.getView();
+            double fi = 2 * Math.PI / neighborCount;
+            pipeView.calculateCoords((int)(x + Math.cos(fi) * basicPipeDistance), (int)(y + Math.cos(fi) * basicPipeDistance));
+        }
+        visited = false;
     }
 }

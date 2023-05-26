@@ -7,6 +7,8 @@ public abstract class ObjectView {
     protected BufferedImage image;
     protected int x;
     protected int y;
+    protected boolean visited = false;
+    protected int basicPipeDistance = 40;
 
     public ObjectView() {
         x = 0; y = 0;

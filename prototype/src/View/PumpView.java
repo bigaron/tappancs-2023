@@ -1,5 +1,7 @@
 package prototype.src.View;
 
+import prototype.src.Elements.Cistern;
+import prototype.src.Elements.Pipe;
 import prototype.src.Elements.Pump;
 
 import javax.imageio.ImageIO;
@@ -48,5 +50,23 @@ public class PumpView extends ElementView {
     @Override
     public void rotate() {
         //TODO
+    }
+
+    @Override
+    public void calculateCoords(int x, int y) {
+        if(visited) return;
+
+        visited = true;
+        this.x = x;
+        this.y = y;
+        Pump pump = (Pump) referencedElement;
+        int neighborCount = pump.getNeighborSize();
+        for(int i = 0; i < neighborCount; ++i) {
+            Pipe pipe = (Pipe)pump.GetNeighbor(i);
+            PipeView pipeView = pipe.getView();
+            double fi = 2 * Math.PI / neighborCount;
+            pipeView.calculateCoords((int)(x + Math.cos(fi) * basicPipeDistance), (int)(y + Math.cos(fi) * basicPipeDistance));
+        }
+        visited = false;
     }
 }
