@@ -3,6 +3,7 @@ package prototype.src.Elements;
 import prototype.src.Game;
 import prototype.src.Generator;
 import prototype.src.Players.Player;
+import prototype.src.View.CisternView;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,16 +16,25 @@ import java.lang.reflect.GenericSignatureFormatError;
 public class Cistern extends Node{
     private Generator generator;
     public static int counter = 0;
+    private CisternView view;
 
     public Cistern(){
         ID = "cistern" + ++counter;
+        view = null;
     }
     public static void resetCounter(){counter = 0;}
+
+    public CisternView getView() {
+        return view;
+    }
+
+    public void setView(CisternView view) {
+        this.view = view;
+    }
 
     /**
      * A víz továbbítását végző függvény. A víz útja itt ér véget, már nem hív tovább semmit.
      * @param elem
-     * TODO: pontadas a szereloknek SOLVED
      */
    @Override
    public void ForwardWater(Element elem){

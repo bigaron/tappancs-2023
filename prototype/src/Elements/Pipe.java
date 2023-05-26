@@ -10,6 +10,8 @@ import prototype.src.Elements.*;
 import prototype.src.Game;
 import prototype.src.Players.*;
 import prototype.src.Modifier;
+import prototype.src.View.PipeView;
+
 /**
  * A csövet reprezentáló osztály, az elem leszármazottja.
  */
@@ -20,12 +22,22 @@ public class Pipe extends Element{
     private int sabotageable;
     private int modifiedState;
     public static int counter = 0;
+    private PipeView view;
 
     public Modifier getState() {
         return state;
     }
 
+    public void setView(PipeView view) {
+        this.view = view;
+    }
+
+    public PipeView getView() {
+        return view;
+    }
+
     public Pipe(){
+        view = null;
         sabotageable = 0;
         modifiedState = 0;
         state = Modifier.Plain;

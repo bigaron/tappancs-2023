@@ -1,6 +1,7 @@
 package prototype.src.Elements;
 
 import prototype.src.Players.Player;
+import prototype.src.View.SourceView;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,8 +11,19 @@ import java.io.IOException;
  */
 public class Source extends Node{
     public static int counter = 0;
+    private SourceView view;
+
+    public void setView(SourceView view) {
+        this.view = view;
+    }
+
+    public SourceView getView() {
+        return view;
+    }
+
     public Source(){
         ID = "source" + ++counter;
+        view = null;
     }
     public static void resetCounter(){counter = 0;}
 

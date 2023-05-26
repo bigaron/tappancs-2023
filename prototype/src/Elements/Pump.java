@@ -2,6 +2,7 @@ package prototype.src.Elements;
 
 import prototype.src.*;
 import prototype.src.Players.Player;
+import prototype.src.View.PumpView;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,6 +15,15 @@ public class Pump extends Node{
     private Pipe output;
     private boolean buffer;
     public static int counter = 0;
+    private PumpView view;
+
+    public PumpView getView() {
+        return view;
+    }
+
+    public void setView(PumpView view) {
+        this.view = view;
+    }
 
     public Pump(){
         ID = "pump" + ++counter;
