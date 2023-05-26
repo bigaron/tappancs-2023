@@ -29,7 +29,9 @@ public abstract class ObjectView {
         this.y = y;
     }
 
+    public abstract void calculateCoords(int x, int y);
+
     public abstract void draw(Graphics g);
     public abstract void update();
-    public void rotate() { }
+    public void rotate() { };
 }

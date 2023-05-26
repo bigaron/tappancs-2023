@@ -133,6 +133,8 @@ public class GameView extends MyJPanel {
         JScrollPane canvasPane = new JScrollPane(canvas);
         canvasPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         canvasPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        /*canvasPane.getVerticalScrollBar().setValue(10000);
+        canvasPane.getHorizontalScrollBar().setValue(10000);*/ //így ez miért csak a horizontalt állítja? xd
 
 
         infoInventoryPanel.setLayout(new GridLayout(2, 1));
