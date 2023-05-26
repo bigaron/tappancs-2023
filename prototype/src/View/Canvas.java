@@ -78,7 +78,7 @@ public class Canvas extends MyJPanel {
             ((Pipe) elements.get(i)).setView(view);
         }
 
-        //Tudjuk, hogy a 0. elem ciszterna megadjuk az egyetlen ciszterna pozícióját
+        /*//Tudjuk, hogy a 0. elem ciszterna megadjuk az egyetlen ciszterna pozícióját
         elementViews.get(0).setX(100);
         elementViews.get(0).setY(340);
 
@@ -91,7 +91,17 @@ public class Canvas extends MyJPanel {
         elementViews.get(2).setY(340);
 
         elementViews.get(3).setX(560);
-        elementViews.get(3).setY(340);
+        elementViews.get(3).setY(340);*/
+    }
+
+    public void update() {
+        elementViews.get(0).calculateCoords(100, 100);
+        for(ElementView elementView : elementViews) {
+            elementView.setVisited(false);
+        }
+        for(PlayerView playerView : playerViews) {
+            playerView.calculateCoords(0 ,0);
+        }
     }
 
 }

@@ -11,15 +11,15 @@ import java.io.IOException;
  */
 public class Source extends Node{
     public static int counter = 0;
-    private SourceView view;
+    //private SourceView view;
 
-    public void setView(SourceView view) {
+    /*public void setView(SourceView view) {
         this.view = view;
     }
 
     public SourceView getView() {
         return view;
-    }
+    }*/
 
     public Source(){
         ID = "source" + ++counter;

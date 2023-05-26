@@ -21,6 +21,7 @@ public class GameView extends MyJPanel {
     private JPanel headerPanel = new JPanel(), headerTurnsPanel = new JPanel(), headerScorePanel = new JPanel();
     private JComboBox<String> neighboursJCB = new JComboBox<>();
     private ArrayList<String> commands = new ArrayList<>(), neighboursArr = new ArrayList<>();
+    private Canvas canvas;
     private int commandPtr = 0;
     private Game game;
 
@@ -125,8 +126,9 @@ public class GameView extends MyJPanel {
         setLayout(new BorderLayout());
         game = new Game();
 
-        Canvas canvas = new Canvas(/*this*/);
+        canvas = new Canvas(/*this*/);
         canvas.initGame(game);
+        canvas.update();
 
         JScrollPane canvasPane = new JScrollPane(canvas);
         canvasPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -187,6 +189,7 @@ public class GameView extends MyJPanel {
                 console.setText("");
                 game.parseInput(commands.get(commandPtr));
                 updateShownElement();
+                canvas.update();
             }else if(e.getKeyCode() == KeyEvent.VK_UP){
                 if(!commands.get(commands.size() - 1).equals("")) {
                     commands.add("");

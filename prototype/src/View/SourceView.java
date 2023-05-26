@@ -49,10 +49,9 @@ public class SourceView extends ElementView {
         int neighborCount = source.getNeighborSize();
         for(int i = 0; i < neighborCount; ++i) {
             Pipe pipe = (Pipe)source.GetNeighbor(i);
-            PipeView pipeView = pipe.getView();
+            PipeView pipeView = (PipeView) pipe.getView();
             double fi = 2 * Math.PI / neighborCount;
-            pipeView.calculateCoords((int)(x + Math.cos(fi) * basicPipeDistance), (int)(y + Math.cos(fi) * basicPipeDistance));
+            pipeView.calculateCoords((int)(x + Math.cos(fi) * basicPipeDistance), (int)(y + Math.sin(fi) * basicPipeDistance));
         }
-        visited = false;
     }
 }

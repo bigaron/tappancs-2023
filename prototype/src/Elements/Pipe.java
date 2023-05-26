@@ -22,19 +22,19 @@ public class Pipe extends Element{
     private int sabotageable;
     private int modifiedState;
     public static int counter = 0;
-    private PipeView view;
+    //private PipeView view;
 
     public Modifier getState() {
         return state;
     }
 
-    public void setView(PipeView view) {
+    /*public void setView(PipeView view) {
         this.view = view;
-    }
+    }*/
 
-    public PipeView getView() {
+    /*public PipeView getView() {
         return view;
-    }
+    }*/
 
     public Pipe(){
         view = null;

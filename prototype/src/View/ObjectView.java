@@ -8,7 +8,7 @@ public abstract class ObjectView {
     protected int x;
     protected int y;
     protected boolean visited = false;
-    protected int basicPipeDistance = 40;
+    protected int basicPipeDistance = 250;
 
     public ObjectView() {
         x = 0; y = 0;
@@ -31,7 +31,11 @@ public abstract class ObjectView {
         this.y = y;
     }
 
-   // public abstract void calculateCoords(int x, int y);
+    public void setVisited(boolean visited) {
+        this.visited = visited;
+    }
+
+    public abstract void calculateCoords(int x, int y);
 
     public abstract void draw(Graphics g);
     public abstract void update();

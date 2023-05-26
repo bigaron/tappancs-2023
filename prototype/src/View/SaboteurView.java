@@ -1,5 +1,6 @@
 package prototype.src.View;
 
+import prototype.src.Elements.Element;
 import prototype.src.Players.Saboteur;
 
 import javax.imageio.ImageIO;
@@ -28,5 +29,13 @@ public class SaboteurView extends PlayerView {
 
     public void update() {
         //TODO  we have to update x y coordinates according to the referencedPlayer object
+    }
+
+    @Override
+    public void calculateCoords(int x, int y) {
+        Element elem = referencedPlayer.getElement();
+        ElementView elementView = elem.getView();
+        setX(elementView.getX());
+        setY(elementView.getY() - 5);
     }
 }

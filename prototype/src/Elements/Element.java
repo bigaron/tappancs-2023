@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import prototype.src.Players.*;
 import prototype.src.*;
+import prototype.src.View.ElementView;
 
 /**
  * A pumpa, cső, ciszterna és forrás ősosztálya.
@@ -13,10 +14,20 @@ public abstract class Element implements Steppable{
     protected List<Player> players = new ArrayList<Player>();
     protected boolean working;
     protected String ID;
+    protected ElementView view;
 
     public Element(){
+        view = null;
         working = true;
         ID = "";
+    }
+
+    public ElementView getView() {
+        return view;
+    }
+
+    public void setView(ElementView view) {
+        this.view = view;
     }
 
     public int AcceptPlayer(Player p){
