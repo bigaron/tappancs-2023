@@ -64,7 +64,7 @@ public class PumpView extends ElementView {
         for(int i = 0; i < neighborCount; ++i) {
             Pipe pipe = (Pipe)pump.GetNeighbor(i);
             PipeView pipeView = (PipeView) pipe.getView();
-            double fi = 2 * Math.PI / neighborCount;
+            double fi = 2 * i * Math.PI / neighborCount;
             pipeView.calculateCoords((int)(x + Math.cos(fi) * basicPipeDistance), (int)(y + Math.sin(fi) * basicPipeDistance));
         }
     }

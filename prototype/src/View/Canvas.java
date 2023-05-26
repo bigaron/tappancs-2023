@@ -95,7 +95,7 @@ public class Canvas extends MyJPanel {
     }
 
     public void update() {
-        elementViews.get(0).calculateCoords(100, 100);
+        elementViews.get(0).calculateCoords(250, 350);
         for(ElementView elementView : elementViews) {
             elementView.setVisited(false);
         }
