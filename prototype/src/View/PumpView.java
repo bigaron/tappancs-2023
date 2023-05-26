@@ -6,6 +6,8 @@ import prototype.src.Elements.Pump;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +15,7 @@ import java.io.IOException;
 public class PumpView extends ElementView {
 
     BufferedImage notWorkingPumpImage;
-
+    private AffineTransform at = new AffineTransform();
     public PumpView(Pump referencedPump) {
         referencedElement = referencedPump;
         x = 200;
@@ -52,6 +54,19 @@ public class PumpView extends ElementView {
         //TODO
     }
 
+    public void rotator(double fi){
+        double cos = Math.abs(Math.cos(fi)), sin = Math.abs(Math.sin(fi));
+        int w = (int) Math.floor(image.getWidth() * cos + image.getHeight() * sin);
+        int h = (int) Math.floor(image.getHeight() * cos + image.getWidth() * sin);
+        BufferedImage rotatedIm = new BufferedImage(w, h, image.getType());
+        at.translate(w/2, h/2);
+        at.rotate(fi, 0,0);
+        at.translate(-image.getWidth() / 2, -image.getHeight() / 2);
+        AffineTransformOp rotateOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+        rotateOp.filter(image, rotatedIm);
+        image = rotatedIm;
+    }
+
     @Override
     public void calculateCoords(int x, int y) {
         if(visited) return;
@@ -65,7 +80,8 @@ public class PumpView extends ElementView {
             Pipe pipe = (Pipe)pump.GetNeighbor(i);
             PipeView pipeView = (PipeView) pipe.getView();
             double fi = 2 * i * Math.PI / neighborCount;
-            pipeView.calculateCoords((int)(x + Math.cos(fi) * basicPipeDistance), (int)(y + Math.sin(fi) * basicPipeDistance));
+            if(pipe.getID().equals(pump.getOutput().getID())) rotator(fi);
+            pipeView.calculateCoords((int)(x + Math.cos(fi) * basicPipeDistance), (int)(y - Math.sin(fi) * basicPipeDistance));
         }
     }
 }
