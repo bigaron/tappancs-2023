@@ -10,9 +10,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class GameView extends MyJPanel {
-    private final int MAXNEIGHBOUR = 4;
     private JLabel elementNameLbl = new JLabel(), neigborsLbl = new JLabel("Neighbours: "), workingLbl = new JLabel(), outputLbl = new JLabel();
-    private JLabel generatorLbl = new JLabel(), neighbour0Lbl = new JLabel(),  neighbour1Lbl = new JLabel(),  neighbour2Lbl = new JLabel(),  neighbour3Lbl = new JLabel();
+    private JLabel generatorLbl = new JLabel();
     private JLabel playerLbl = new JLabel(), playerInvPipeLbl = new JLabel(), playerInvPumpLbl = new JLabel(), generatorPumpLbl = new JLabel();
     private JLabel stateLbl = new JLabel(), detachedLbl = new JLabel(), sabotageableLbl = new JLabel(), modifiedStateLbl = new JLabel(), bufferLbl = new JLabel();
     private JLabel turnsLeftLbl = new JLabel(), saboteurScrLbl = new JLabel(), plumberScrLbl = new JLabel(), dotLbl = new JLabel(" : ");
@@ -20,29 +19,25 @@ public class GameView extends MyJPanel {
     private JPanel infoInventoryPanel = new JPanel(), inputPanel = new JPanel();
     private JPanel infoPanel = new JPanel(), inventoryPanel = new JPanel();
     private JPanel headerPanel = new JPanel(), headerTurnsPanel = new JPanel(), headerScorePanel = new JPanel();
-    private ArrayList<String> commands = new ArrayList<>();
+    private JComboBox<String> neighboursJCB = new JComboBox<>();
+    private ArrayList<String> commands = new ArrayList<>(), neighboursArr = new ArrayList<>();
     private int commandPtr = 0;
     private Game game;
 
     private void setNeighbourLbls( final Element myEl){
-        neighbour0Lbl.setText("");
-        neighbour1Lbl.setText("");
-        neighbour2Lbl.setText("");
-        neighbour3Lbl.setText("");
-
-        String neighbours[] = new String[4];
-        int ptr = 0;
-        for(int i = 0; i < MAXNEIGHBOUR; ++i) 
-            if(myEl.GetNeighbor(i) != null) neighbours[ptr++] = myEl.GetNeighbor(i).getID();
-        int n = 0;
-        if(neighbours[0] != null) neighbour0Lbl.setText(n++ + ". " + neighbours[0]);
-        if(neighbours[1] != null) neighbour1Lbl.setText(n++ + ". " + neighbours[1]);
-        if(neighbours[2] != null) neighbour2Lbl.setText(n++ + ". " + neighbours[2]);
-        if(neighbours[3] != null) neighbour3Lbl.setText(n++ + ". " + neighbours[3]);
-        if(!neighbour0Lbl.getText().equals("")) infoPanel.add(neighbour0Lbl);
-        if(!neighbour1Lbl.getText().equals("")) infoPanel.add(neighbour1Lbl);
-        if(!neighbour2Lbl.getText().equals("")) infoPanel.add(neighbour2Lbl);
-        if(!neighbour3Lbl.getText().equals("")) infoPanel.add(neighbour3Lbl);
+        neighboursJCB.removeAllItems();
+        neighboursArr.clear();
+        int nPtr = 0;
+        if(myEl.getID().contains("pipe")){
+            for(int i = 0; i < 2; ++i) if(myEl.GetNeighbor(i) != null) neighboursArr.add(nPtr++ + ". " + myEl.GetNeighbor(i).getID());
+        }else{
+            int i = 0;
+            Node el = (Node)myEl;
+            while(nPtr != el.getNeighborSize()){
+                if(el.GetNeighbor(i) != null) neighboursArr.add(nPtr++ + ". " + el.GetNeighbor(i).getID());
+                i++;
+            }
+        }
     }
 
     private void updateShownElement(){
@@ -107,6 +102,9 @@ public class GameView extends MyJPanel {
             inventoryPanel.add(playerInvPumpLbl);
         }
 
+        for(String s: neighboursArr) neighboursJCB.addItem(s);
+
+        infoPanel.add(neighboursJCB);
         turnsLeftLbl.setText(Integer.toString(Game.actionCounter));
         saboteurScrLbl.setText(Integer.toString(Game.sPoints));
         plumberScrLbl.setText(Integer.toString(Game.pPoints));
