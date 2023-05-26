@@ -23,8 +23,8 @@ public class Game {
     private ArrayList<Generator> generators = new ArrayList<>();
     public Player activePlayer;
     private boolean plumbersTurn;
-    private static int sPoints = 0;
-    private static int pPoints = 0;
+    public static int sPoints = 0;
+    public static int pPoints = 0;
     private Mode mode;
     public static boolean random = false;
 

@@ -15,10 +15,11 @@ public class GameView extends MyJPanel {
     private JLabel generatorLbl = new JLabel(), neighbour0Lbl = new JLabel(),  neighbour1Lbl = new JLabel(),  neighbour2Lbl = new JLabel(),  neighbour3Lbl = new JLabel();
     private JLabel playerLbl = new JLabel(), playerInvPipeLbl = new JLabel(), playerInvPumpLbl = new JLabel(), generatorPumpLbl = new JLabel();
     private JLabel stateLbl = new JLabel(), detachedLbl = new JLabel(), sabotageableLbl = new JLabel(), modifiedStateLbl = new JLabel(), bufferLbl = new JLabel();
-    private JLabel turnsLeftLbl = new JLabel(), saboteurScrLbl = new JLabel(), plumberScrLbl = new JLabel();
+    private JLabel turnsLeftLbl = new JLabel(), saboteurScrLbl = new JLabel(), plumberScrLbl = new JLabel(), dotLbl = new JLabel(" : ");
     private JTextField console = new JTextField();
     private JPanel infoInventoryPanel = new JPanel(), inputPanel = new JPanel();
     private JPanel infoPanel = new JPanel(), inventoryPanel = new JPanel();
+    private JPanel headerPanel = new JPanel(), headerTurnsPanel = new JPanel(), headerScorePanel = new JPanel();
     private ArrayList<String> commands = new ArrayList<>();
     private int commandPtr = 0;
     private Game game;
@@ -106,6 +107,18 @@ public class GameView extends MyJPanel {
             inventoryPanel.add(playerInvPumpLbl);
         }
 
+        turnsLeftLbl.setText(Integer.toString(Game.actionCounter));
+        saboteurScrLbl.setText(Integer.toString(Game.sPoints));
+        plumberScrLbl.setText(Integer.toString(Game.pPoints));
+
+        headerTurnsPanel.add(turnsLeftLbl);
+        headerScorePanel.add(plumberScrLbl);
+        headerScorePanel.add(dotLbl);
+        headerScorePanel.add(saboteurScrLbl);
+
+        headerPanel.add(headerTurnsPanel, BorderLayout.LINE_START);
+        headerPanel.add(headerScorePanel, BorderLayout.CENTER);
+
         validate();
         repaint();
     }
@@ -131,6 +144,11 @@ public class GameView extends MyJPanel {
         infoPanel.setLayout(new GridLayout(10, 1));
         inventoryPanel.setLayout(new GridLayout(5, 1));
 
+        headerPanel.setLayout(new BorderLayout());
+
+        plumberScrLbl.setForeground(Color.blue);
+        saboteurScrLbl.setForeground(Color.red);
+
         updateShownElement();
         
         infoPanel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -151,7 +169,7 @@ public class GameView extends MyJPanel {
         add(inputPanel, BorderLayout.PAGE_END);
         add(infoInventoryPanel, BorderLayout.LINE_END);
         add(canvasPane, BorderLayout.CENTER);
-
+        add(headerPanel, BorderLayout.PAGE_START);
 
         originalWindow = original;
         WIDTH = 1200;
