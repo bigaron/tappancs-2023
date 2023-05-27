@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import prototype.src.Elements.*;
-import prototype.src.View.Canvas;
-import prototype.src.View.PipeView;
-import prototype.src.View.PumpView;
+import prototype.src.View.*;
 
 /**
  * A generátort reprezentáló osztály.
@@ -103,8 +101,10 @@ public class Generator implements Steppable{
      */
     public Pipe GeneratePipe() {
         Pipe result = new Pipe();
-        Game.desert.add( Cistern.counter + Source.counter + Pump.counter + Pipe.counter - 1, result);
-        Canvas.elementViews.add(Cistern.counter + Source.counter + Pump.counter + Pipe.counter - 1, new PipeView(result));
+        Game.desert.add( Cistern.counter + Source.counter + Pump.counter + Pipe.counter - 1 - pumps.size(), result);
+        PipeView view = new PipeView(result);
+        Canvas.elementViews.add(CisternView.counter + SourceView.counter + PumpView.counter + PipeView.counter - 1, view);
+        result.setView(view);
         cistern.SetNeighbor(result);
         result.SetNeighbor(cistern);
         return result;

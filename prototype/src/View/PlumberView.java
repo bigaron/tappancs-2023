@@ -36,7 +36,6 @@ public class PlumberView extends PlayerView {
 
     @Override
     public void calculateCoords(int x, int y) {
-        //Plumber plumber = (Plumber) referencedPlayer;
         Element elem = referencedPlayer.getElement();
         ElementView elementView = elem.getView();
         setX(elementView.getX());

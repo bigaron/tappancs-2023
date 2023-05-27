@@ -100,6 +100,7 @@ public class Canvas extends MyJPanel {
         for(ElementView elementView : elementViews) {
             elementView.setVisited(false);
         }
+        RecalculatePipePoints();
         for(PlayerView playerView : playerViews) {
             playerView.calculateCoords(0 ,0);
         }
