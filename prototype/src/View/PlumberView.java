@@ -38,7 +38,7 @@ public class PlumberView extends PlayerView {
     public void calculateCoords(int x, int y) {
         Element elem = referencedPlayer.getElement();
         ElementView elementView = elem.getView();
-        setX(elementView.getX());
-        setY(elementView.getY() - 5);
+        setX(elementView.getX() - elementView.getWidth() / 2);
+        setY(elementView.getY() - elementView.getHeight() / 2 - image.getHeight());
     }
 }

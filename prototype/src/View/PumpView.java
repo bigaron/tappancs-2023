@@ -94,8 +94,8 @@ public class PumpView extends ElementView {
         if(visited) return;
 
         visited = true;
-        this.x = x;
-        this.y = y;
+        this.x = x - image.getWidth() / 2;
+        this.y = y - image.getWidth() / 2;
         Pump pump = (Pump) referencedElement;
         int neighborCount = pump.getNeighborSize();
         for(int i = 0; i < neighborCount; ++i) {

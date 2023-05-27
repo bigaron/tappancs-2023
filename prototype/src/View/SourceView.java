@@ -68,8 +68,8 @@ public class SourceView extends ElementView {
         if(visited) return;
 
         visited = true;
-        this.x = x;
-        this.y = y;
+        this.x = x - sourcePixelDiameter / 2;
+        this.y = y - sourcePixelDiameter / 2;
         Source source = (Source) referencedElement;
         int neighborCount = source.getNeighborSize();
         for(int i = 0; i < neighborCount; ++i) {
