@@ -193,6 +193,10 @@ public class GameView extends MyJPanel {
                 console.setText("");
                 game.parseInput(commands.get(commandPtr));
                 updateShownElement();
+                if(commands.get(commands.size() - 1).equals("placePump")) {
+                    int test = 5;
+                }
+
                 canvas.update();
             }else if(e.getKeyCode() == KeyEvent.VK_UP){
                 if(!commands.get(commands.size() - 1).equals("")) {

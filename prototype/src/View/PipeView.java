@@ -18,21 +18,25 @@ public class PipeView extends ElementView {
         Pipe pipe = (Pipe)referencedElement;
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(3));
+        g2.setColor(Color.black);
         if(pipe.getNeighbourSize() == 2){
             ElementView neighborZeroElementView = pipe.neighbours[0].getView();
             ElementView neighborOneElementView = pipe.neighbours[1].getView();
             int[] zeroXY = neighborZeroElementView.AttachCoords(pipe);
             int[] firstXY = neighborOneElementView.AttachCoords(pipe);
-            g.drawLine(zeroXY[0], zeroXY[1], firstXY[0], firstXY[1]);
+            if(!pipe.getWork()) g.setColor(Color.red);
+            g2.drawLine(zeroXY[0], zeroXY[1], firstXY[0], firstXY[1]);
         } else if (pipe.getNeighbourSize() == 1) {
             if(pipe.neighbours[0] != null) {
                 ElementView neighborZeroElementView = pipe.neighbours[0].getView();
                 int[] zeroXY = neighborZeroElementView.AttachCoords(pipe);
-                g.drawLine(zeroXY[0], zeroXY[1], x, y);
+                if(!pipe.getWork()) g.setColor(Color.red);
+                g2.drawLine(zeroXY[0], zeroXY[1], x, y);
             } else {
                 ElementView neighborOneElementView = pipe.neighbours[1].getView();
                 int[] firstXY = neighborOneElementView.AttachCoords(pipe);
-                g.drawLine(firstXY[0], firstXY[1], x, y);
+                if(!pipe.getWork()) g.setColor(Color.red);
+                g2.drawLine(firstXY[0], firstXY[1], x, y);
             }
         }
     }
