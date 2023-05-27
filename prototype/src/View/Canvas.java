@@ -11,8 +11,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Canvas extends MyJPanel {
-    ArrayList<ElementView> elementViews;
-    ArrayList<PlayerView> playerViews;
+    public static ArrayList<ElementView> elementViews;
+    public static ArrayList<PlayerView> playerViews;
     //GameView gameView;
 
     public Canvas(/*GameView view*/) {
@@ -31,6 +31,7 @@ public class Canvas extends MyJPanel {
     public void paint(Graphics g) {
         super.paint(g);
 
+        //RecalculatePipePoints();
         for (ElementView elementView : elementViews) {
             elementView.draw(g);
         }
@@ -101,6 +102,12 @@ public class Canvas extends MyJPanel {
         }
         for(PlayerView playerView : playerViews) {
             playerView.calculateCoords(0 ,0);
+        }
+    }
+
+    public void RecalculatePipePoints() {
+        for(int i = CisternView.counter + SourceView.counter + PumpView.counter; i < CisternView.counter + SourceView.counter + PumpView.counter + PipeView.counter; ++i) {
+            elementViews.get(i).update();
         }
     }
 

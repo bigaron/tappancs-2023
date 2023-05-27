@@ -10,8 +10,10 @@ import java.io.File;
 import java.io.IOException;
 
 public class PlumberView extends PlayerView {
+    public static int counter = 0;
 
     public PlumberView(Plumber plumberReference) {
+        ++counter;
         referencedPlayer = plumberReference;
         x = 400;    //TODO update necessary
         y = 400;

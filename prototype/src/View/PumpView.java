@@ -14,9 +14,11 @@ import java.io.IOException;
 
 public class PumpView extends ElementView {
 
+    public static int counter = 0;
     BufferedImage notWorkingPumpImage;
     private AffineTransform at = new AffineTransform();
     public PumpView(Pump referencedPump) {
+        ++counter;
         referencedElement = referencedPump;
         x = 200;
         y = 200;
@@ -32,6 +34,24 @@ public class PumpView extends ElementView {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getWidth() {
+        return image.getWidth();
+    }
+
+    public int getHeight() {
+        return image.getHeight();
+    }
+
+    @Override
+    public int getX() {
+        return x + image.getWidth() / 2;
+    }
+
+    @Override
+    public int getY() {
+        return y + image.getHeight() / 2;
     }
 
     @Override
@@ -82,6 +102,19 @@ public class PumpView extends ElementView {
             double fi = 2 * i * Math.PI / neighborCount;
             if(pipe.getID().equals(pump.getOutput().getID())) rotator(fi);
             pipeView.calculateCoords((int)(x + Math.cos(fi) * basicPipeDistance), (int)(y - Math.sin(fi) * basicPipeDistance));
+
         }
+    }
+
+   public int[] AttachCoords(Pipe pipe) {
+        int[] attachPointXY = new int[2];
+        Pump pump = (Pump) referencedElement;
+        int pipeIdx = pump.neighbours.indexOf(pipe);
+        int pumpNeighborSize = pump.getNeighborSize();
+        double fi = 2 * pipeIdx * Math.PI / pumpNeighborSize;
+        attachPointXY[0] = (int)(x + image.getWidth() / 2 + (image.getWidth() / 2) * Math.cos(fi));
+        attachPointXY[1] = (int)(y + image.getHeight() / 2 - (image.getWidth() / 2) * Math.sin(fi));
+
+        return attachPointXY;
     }
 }

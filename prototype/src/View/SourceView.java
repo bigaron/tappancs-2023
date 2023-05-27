@@ -2,6 +2,7 @@ package prototype.src.View;
 
 import prototype.src.Elements.Cistern;
 import prototype.src.Elements.Pipe;
+import prototype.src.Elements.Pump;
 import prototype.src.Elements.Source;
 
 import javax.imageio.ImageIO;
@@ -10,10 +11,34 @@ import java.io.File;
 import java.io.IOException;
 
 public class SourceView extends ElementView {
+    public static int counter = 0;
 
     int sourcePixelDiameter = 120;
 
+    public int getSourcePixelDiameter() {
+        return sourcePixelDiameter;
+    }
+
+    public int getWidth() {
+        return sourcePixelDiameter;
+    }
+
+    public int getHeight() {
+        return sourcePixelDiameter;
+    }
+
+    @Override
+    public int getX() {
+        return x + sourcePixelDiameter / 2;
+    }
+
+    @Override
+    public int getY() {
+        return y + sourcePixelDiameter / 2;
+    }
+
     public SourceView(Source referencedSource) {
+        ++counter;
         referencedElement = referencedSource;
         x = 200;    //TODO update necessary
         y = 200;
@@ -53,5 +78,17 @@ public class SourceView extends ElementView {
             double fi = 2 * i * Math.PI / neighborCount;
             pipeView.calculateCoords((int)(x + Math.cos(fi) * basicPipeDistance), (int)(y - Math.sin(fi) * basicPipeDistance));
         }
+    }
+
+    public int[] AttachCoords(Pipe pipe) {
+        int[] attachPointXY = new int[2];
+        Source source = (Source) referencedElement;
+        int pipeIdx = source.neighbours.indexOf(pipe);
+        int pumpNeighborSize = source.getNeighborSize();
+        double fi = 2 * pipeIdx * Math.PI / pumpNeighborSize;
+        attachPointXY[0] = (int)(x + sourcePixelDiameter / 2 + (sourcePixelDiameter / 2) * Math.cos(fi));
+        attachPointXY[1] = (int)(y + sourcePixelDiameter / 2 - (sourcePixelDiameter / 2) * Math.sin(fi));
+
+        return attachPointXY;
     }
 }

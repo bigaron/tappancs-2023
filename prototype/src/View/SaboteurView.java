@@ -9,8 +9,10 @@ import java.io.File;
 import java.io.IOException;
 
 public class SaboteurView extends PlayerView {
+    public static int counter = 0;
 
     public SaboteurView(Saboteur saboteurReference) {
+        ++counter;
         referencedPlayer = saboteurReference;
         x = 200;    //TODO update necessary
         y = 200;
@@ -35,7 +37,7 @@ public class SaboteurView extends PlayerView {
     public void calculateCoords(int x, int y) {
         Element elem = referencedPlayer.getElement();
         ElementView elementView = elem.getView();
-        setX(elementView.getX());
-        setY(elementView.getY() - 5);
+        setX(elementView.getX() - elementView.getWidth() / 2);
+        setY(elementView.getY() - elementView.getHeight() / 2 - image.getHeight());
     }
 }
