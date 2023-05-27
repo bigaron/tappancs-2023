@@ -16,6 +16,8 @@ public class PipeView extends ElementView {
     @Override
     public void draw(Graphics g) {
         Pipe pipe = (Pipe)referencedElement;
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(3));
         if(pipe.getNeighbourSize() == 2){
             ElementView neighborZeroElementView = pipe.neighbours[0].getView();
             ElementView neighborOneElementView = pipe.neighbours[1].getView();

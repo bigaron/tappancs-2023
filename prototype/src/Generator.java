@@ -101,7 +101,7 @@ public class Generator implements Steppable{
      */
     public Pipe GeneratePipe() {
         Pipe result = new Pipe();
-        Game.desert.add( Cistern.counter + Source.counter + Pump.counter + Pipe.counter - 1 - pumps.size(), result);
+        Game.desert.add( Cistern.counter + Source.counter + Pump.counter + Pipe.counter - 1 - Pump.counter + PumpView.counter, result);
         PipeView view = new PipeView(result);
         Canvas.elementViews.add(CisternView.counter + SourceView.counter + PumpView.counter + PipeView.counter - 1, view);
         result.setView(view);

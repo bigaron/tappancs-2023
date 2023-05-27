@@ -10,7 +10,7 @@ import prototype.src.Elements.*;
 import prototype.src.Game;
 import prototype.src.Players.*;
 import prototype.src.Modifier;
-import prototype.src.View.PipeView;
+import prototype.src.View.*;
 
 /**
  * A csövet reprezentáló osztály, az elem leszármazottja.
@@ -137,7 +137,11 @@ public class Pipe extends Element{
         newPump.ChangeElementMode(false);
         Node node = (Node) neighbours[0];
         Pipe newPipe = new Pipe();
-        Game.desert.add( Cistern.counter + Source.counter + Pump.counter + Pipe.counter - 1, newPipe);
+        PipeView pipeView = new PipeView(newPipe);
+        newPipe.setView(pipeView);
+        Canvas.elementViews.add(CisternView.counter + SourceView.counter + PumpView.counter + PipeView.counter - 1, pipeView);
+        Game.desert.add( Cistern.counter + Source.counter + Pump.counter + Pipe.counter - 1 - Pump.counter + PumpView.counter, newPipe);
+        int idx = node.getIdxOfElement(this);
         neighbours[0].RemoveNeighbor(this);
         this.RemoveNeighbor(neighbours[0]);
         newPump.SetNeighbor(this);
@@ -146,6 +150,11 @@ public class Pipe extends Element{
         newPump.SetNeighbor(newPipe);     
         newPipe.SetNeighbor(node);
         node.SetNeighbor(newPipe);
+        node.SetNeighborIdx(newPipe, idx);
+        PumpView view = new PumpView(newPump);
+        newPump.setView(view);
+        Canvas.elementViews.add(CisternView.counter + SourceView.counter + PumpView.counter - 1, view);
+        Game.desert.add(Cistern.counter + Source.counter + PumpView.counter - 1, newPump);
         System.out.println("A(z) " + newPump.getID()+ " lerakása sikeres volt.\n");
     }
 

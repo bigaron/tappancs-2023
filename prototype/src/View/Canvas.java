@@ -31,10 +31,21 @@ public class Canvas extends MyJPanel {
     public void paint(Graphics g) {
         super.paint(g);
 
-        //RecalculatePipePoints();
-        for (ElementView elementView : elementViews) {
-            elementView.draw(g);
+
+        //draw pipes first in order to draw them in the background
+        for(int i = CisternView.counter + SourceView.counter + PumpView.counter; i < CisternView.counter + SourceView.counter + PumpView.counter + PipeView.counter; ++i) {
+            elementViews.get(i).draw(g);
         }
+
+        //draw other objects
+        for(int i = 0; i < CisternView.counter + SourceView.counter + PumpView.counter; ++i) {
+            elementViews.get(i).draw(g);
+        }
+
+
+        /*for (ElementView elementView : elementViews) {
+            elementView.draw(g);
+        }*/
 
         for(PlayerView playerView : playerViews) {
             playerView.draw(g);

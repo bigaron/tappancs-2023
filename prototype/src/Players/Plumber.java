@@ -39,6 +39,7 @@ public class Plumber extends Player {
     public void PlaceDown(){
         if(pump != null) {
             elem.Split(pump);
+            pump = null;
         }else
             System.out.println("A pumpa lerakása sikertelen volt mert nincs nálunk pumpa.\n");
 

@@ -78,6 +78,12 @@ public abstract class Node extends Element {
         neighbours.add((Pipe)elem);
     }
 
+    public void SetNeighborIdx(Element elem, int idx) { neighbours.add(idx, (Pipe) elem); }
+
+    public int getIdxOfElement(Pipe pipe) {
+        return neighbours.indexOf(pipe);
+    }
+
     /**
      * Returns true if the paramater ID is already in the neighbours list, false otherwise
      */

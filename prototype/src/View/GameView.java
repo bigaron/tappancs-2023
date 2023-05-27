@@ -74,7 +74,11 @@ public class GameView extends MyJPanel {
             Pump myEl = (Pump)game.activePlayer.getElement();
             workingLbl.setText("Working: " + Boolean.toString(myEl.getWork()));
             bufferLbl.setText("Buffer: " + Boolean.toString(myEl.getBuffer()));
-            outputLbl.setText("output: " + myEl.getOutput().getID());
+            if(myEl.getOutput() != null) {
+                outputLbl.setText("output: " + myEl.getOutput().getID());
+            } else {
+                outputLbl.setText("output: null");
+            }
 
             infoPanel.add(workingLbl);
             infoPanel.add(bufferLbl);

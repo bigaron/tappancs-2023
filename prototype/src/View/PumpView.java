@@ -59,7 +59,7 @@ public class PumpView extends ElementView {
     public void draw(Graphics g) {
 
         if(referencedElement.getWork()) {
-            g.drawImage(imageToDraw, x, y, null);
+            g.drawImage(image, x, y, null);
             //g.drawImage(image, x -200, y, null);
         } else {
             g.drawImage(notWorkingPumpImage, x, y, null);
@@ -86,7 +86,7 @@ public class PumpView extends ElementView {
         at.translate(-image.getWidth() / 2, -image.getHeight() / 2);
         AffineTransformOp rotateOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
         rotateOp.filter(image, rotatedIm);
-        imageToDraw = rotatedIm;
+        image = rotatedIm;
     }
 
     @Override
@@ -102,7 +102,7 @@ public class PumpView extends ElementView {
             Pipe pipe = (Pipe)pump.GetNeighbor(i);
             PipeView pipeView = (PipeView) pipe.getView();
             double fi = 2 * i * Math.PI / neighborCount;
-            if(pipe.getID().equals(pump.getOutput().getID()))
+            if(pump.getOutput() != null && pipe.getID().equals(pump.getOutput().getID()))
                 rotator(fi);
             pipeView.calculateCoords((int)(x + Math.cos(fi) * basicPipeDistance), (int)(y - Math.sin(fi) * basicPipeDistance));
 

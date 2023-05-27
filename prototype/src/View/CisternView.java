@@ -96,8 +96,11 @@ public class CisternView extends ElementView {
         int pipeIdx = cistern.neighbours.indexOf(pipe);
         int pumpNeighborSize = cistern.getNeighborSize();
         double fi = 2 * pipeIdx * Math.PI / pumpNeighborSize;
-        attachPointXY[0] = (int)(x + cisternPixelSize / 2 + (cisternPixelSize / 2) * Math.cos(fi));
-        attachPointXY[1] = (int)(y + cisternPixelSize / 2 - (cisternPixelSize / 2) * Math.sin(fi));
+        /*attachPointXY[0] = (int)(x + cisternPixelSize / 2 + (cisternPixelSize / 2) * Math.cos(fi));
+        attachPointXY[1] = (int)(y + cisternPixelSize / 2 - (cisternPixelSize / 2) * Math.sin(fi));*/
+
+        attachPointXY[0] = getX();
+        attachPointXY[1] = getY();
 
         return attachPointXY;
     }
