@@ -1,5 +1,6 @@
 package prototype.src.View;
 
+import prototype.src.Modifier;
 import prototype.src.Elements.Element;
 import prototype.src.Elements.Pipe;
 
@@ -18,7 +19,13 @@ public class PipeView extends ElementView {
         Pipe pipe = (Pipe)referencedElement;
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(3));
-        g2.setColor(Color.black);
+        Color pipeC = Color.BLACK;
+
+        if(!pipe.getWork()) pipeC = Color.red;
+        if(pipe.getState() == Modifier.Slippery) pipeC = Color.blue;
+        else if(pipe.getState() == Modifier.Sticky) pipeC = Color.green;
+
+        g2.setColor(pipeC);
         if(pipe.getNeighbourSize() == 2){
             ElementView neighborZeroElementView = pipe.neighbours[0].getView();
             ElementView neighborOneElementView = pipe.neighbours[1].getView();
