@@ -6,8 +6,7 @@ import prototype.src.Elements.Pump;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
+import java.awt.image.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +16,14 @@ public class PumpView extends ElementView {
     public static int counter = 0;
     BufferedImage notWorkingPumpImage;
     BufferedImage imageToDraw;
-    private AffineTransform at = new AffineTransform();
+
+    private BufferedImage deepCopy(BufferedImage src){
+        ColorModel cm = src.getColorModel();
+        boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
+        WritableRaster raster = src.copyData(null);
+        return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
+    }
+
     public PumpView(Pump referencedPump) {
         ++counter;
         referencedElement = referencedPump;
@@ -27,6 +33,7 @@ public class PumpView extends ElementView {
         try {
             File path = new File(new File(new File("prototype", "src"), "images"), "pump_working.png");
             image = ImageIO.read(path);
+            imageToDraw = deepCopy(image);
 
             File path2 = new File(new File(new File("prototype", "src"), "images"), "pump_notworking.png");
             notWorkingPumpImage = ImageIO.read(path2);
@@ -73,31 +80,13 @@ public class PumpView extends ElementView {
         //TODO
     }
 
-    private BufferedImage getBaseImg(){
-        try {
-            File path = new File(new File(new File("prototype", "src"), "images"), "pump_working.png");
-            image = ImageIO.read(path);
-            return image;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public void rotator(double fi){
-        image = getBaseImg();
-        if(image == null) return;
-        double cos = Math.abs(Math.cos(fi)), sin = Math.abs(Math.sin(fi));
-        int w = (int) Math.floor(image.getWidth() * cos + image.getHeight() * sin);
-        int h = (int) Math.floor(image.getHeight() * cos + image.getWidth() * sin);
-        BufferedImage rotatedIm = new BufferedImage(w, h, image.getType());
-        at.translate(w/2, h/2);
-        at.rotate(fi, 0,0);
-        at.translate(-w / 2, -h / 2);
-        AffineTransformOp rotateOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-        rotateOp.filter(image, rotatedIm);
-        image = rotatedIm;
+    public BufferedImage rot(BufferedImage img, double fi){
+        int w = img.getWidth(), h = img.getHeight();
+        BufferedImage nImg = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
+        Graphics2D g2d = nImg.createGraphics();
+        g2d.rotate(fi, w/2, h/2);
+        g2d.drawImage(img, null, 0, 0);
+        return nImg;
     }
 
     @Override
@@ -113,9 +102,15 @@ public class PumpView extends ElementView {
             Pipe pipe = (Pipe)pump.GetNeighbor(i);
             PipeView pipeView = (PipeView) pipe.getView();
             double fi = 2 * i * Math.PI / neighborCount;
+            int dir = 1;
             if(pump.getOutput() != null && pipe.getID().equals(pump.getOutput().getID())){
                 if(!pump.getOutChanged()) continue;
-                rotator(fi);
+                image = deepCopy(imageToDraw);
+                if(Double.compare(fi, 3*Math.PI / 2) == 0 || Double.compare(fi, Math.PI / 2) == 0){
+                    dir = -1;
+                }
+                image = rot(image, dir * fi);
+                dir = 1;
             }
             pipeView.calculateCoords((int)(x + Math.cos(fi) * basicPipeDistance), (int)(y - Math.sin(fi) * basicPipeDistance));
         }
