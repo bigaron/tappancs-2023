@@ -53,12 +53,12 @@ public abstract class Node extends Element {
     public int TakeoffPipe(Pipe pipe){
         int ret = pipe.TakeoffPipe(pipe);
         if(ret == -1) return  0; //ha állnak
-        if(ret == 1) return 0; //ha csak 1 szomszéd
+        if(ret == 1) return 1; //ha csak 1 szomszéd
         if(ret == 2) {
             pipe.RemoveNeighbor(this);
             RemoveNeighbor(pipe);
         }
-        return 1;
+        return 2;
     }
     
     /**

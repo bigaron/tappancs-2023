@@ -4,6 +4,7 @@ import prototype.src.Elements.Cistern;
 import prototype.src.Elements.Pipe;
 import prototype.src.Elements.Pump;
 import prototype.src.Elements.Source;
+import prototype.src.Elements.Element;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

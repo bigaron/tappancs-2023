@@ -3,6 +3,7 @@ package prototype.src.View;
 import prototype.src.Elements.Cistern;
 import prototype.src.Elements.Pipe;
 import prototype.src.Elements.Pump;
+import prototype.src.Elements.*;
 
 import java.awt.*;
 

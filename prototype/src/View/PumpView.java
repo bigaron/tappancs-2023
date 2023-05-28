@@ -3,6 +3,7 @@ package prototype.src.View;
 import prototype.src.Elements.Cistern;
 import prototype.src.Elements.Pipe;
 import prototype.src.Elements.Pump;
+import prototype.src.Elements.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -41,7 +42,7 @@ public class PumpView extends ElementView {
             e.printStackTrace();
         }
     }
-
+    
     public int getWidth() {
         return image.getWidth();
     }
