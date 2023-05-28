@@ -312,7 +312,7 @@ public class Game {
             successfulCmd = true;
         }
         if(actionCounter == 0){
-            actionCounter = 10;
+            actionCounter = 4;
             //kövi játékosra léptetünk.
             if (plumbersTurn) {
                 int idx = plumbers.lastIndexOf((Plumber) activePlayer);

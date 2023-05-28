@@ -20,18 +20,32 @@ public class PipeView extends ElementView {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(3));
         Color pipeC = Color.BLACK;
+        boolean gradient = false;
+        GradientPaint gp;
 
         if(!pipe.getWork()) pipeC = Color.red;
         if(pipe.getState() == Modifier.Slippery) pipeC = Color.blue;
         else if(pipe.getState() == Modifier.Sticky) pipeC = Color.green;
 
-        g2.setColor(pipeC);
+        if(!pipe.getWork() && pipe.getState() == Modifier.Slippery){
+            gradient = true;
+        }else if(!pipe.getWork() && pipe.getState() == Modifier.Sticky){
+            gradient = true;
+        }
+
+        if(!gradient) g2.setColor(pipeC);
         if(pipe.getNeighbourSize() == 2){
             ElementView neighborZeroElementView = pipe.neighbours[0].getView();
             ElementView neighborOneElementView = pipe.neighbours[1].getView();
             int[] zeroXY = neighborZeroElementView.AttachCoords(pipe);
             int[] firstXY = neighborOneElementView.AttachCoords(pipe);
             if(!pipe.getWork()) g.setColor(Color.red);
+            
+            if(gradient){
+                gp = new GradientPaint(zeroXY[0], zeroXY[1], Color.red, firstXY[0], firstXY[1], pipeC);
+                g2.setPaint(gp);
+            }
+
             g2.drawLine(zeroXY[0], zeroXY[1], firstXY[0], firstXY[1]);
         } else if (pipe.getNeighbourSize() == 1) {
             if(pipe.neighbours[0] != null) {
