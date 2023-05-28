@@ -28,8 +28,8 @@ public class Canvas extends MyJPanel {
     }
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
 
         //draw pipes first in order to draw them in the background
@@ -107,6 +107,7 @@ public class Canvas extends MyJPanel {
     }
 
     public void update() {
+        repaint();
         elementViews.get(0).calculateCoords(250, 350);
         for(ElementView elementView : elementViews) {
             elementView.setVisited(false);

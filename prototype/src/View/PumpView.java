@@ -23,15 +23,13 @@ public class PumpView extends ElementView {
         referencedElement = referencedPump;
         x = 200;
         y = 200;
-
+        
         try {
             File path = new File(new File(new File("prototype", "src"), "images"), "pump_working.png");
             image = ImageIO.read(path);
 
             File path2 = new File(new File(new File("prototype", "src"), "images"), "pump_notworking.png");
             notWorkingPumpImage = ImageIO.read(path2);
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,7 +55,6 @@ public class PumpView extends ElementView {
 
     @Override
     public void draw(Graphics g) {
-
         if(referencedElement.getWork()) {
             g.drawImage(image, x, y, null);
             //g.drawImage(image, x -200, y, null);
@@ -76,14 +73,28 @@ public class PumpView extends ElementView {
         //TODO
     }
 
+    private BufferedImage getBaseImg(){
+        try {
+            File path = new File(new File(new File("prototype", "src"), "images"), "pump_working.png");
+            image = ImageIO.read(path);
+            return image;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public void rotator(double fi){
+        image = getBaseImg();
+        if(image == null) return;
         double cos = Math.abs(Math.cos(fi)), sin = Math.abs(Math.sin(fi));
         int w = (int) Math.floor(image.getWidth() * cos + image.getHeight() * sin);
         int h = (int) Math.floor(image.getHeight() * cos + image.getWidth() * sin);
         BufferedImage rotatedIm = new BufferedImage(w, h, image.getType());
         at.translate(w/2, h/2);
         at.rotate(fi, 0,0);
-        at.translate(-image.getWidth() / 2, -image.getHeight() / 2);
+        at.translate(-w / 2, -h / 2);
         AffineTransformOp rotateOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
         rotateOp.filter(image, rotatedIm);
         image = rotatedIm;
@@ -102,10 +113,11 @@ public class PumpView extends ElementView {
             Pipe pipe = (Pipe)pump.GetNeighbor(i);
             PipeView pipeView = (PipeView) pipe.getView();
             double fi = 2 * i * Math.PI / neighborCount;
-            if(pump.getOutput() != null && pipe.getID().equals(pump.getOutput().getID()))
+            if(pump.getOutput() != null && pipe.getID().equals(pump.getOutput().getID())){
+                if(!pump.getOutChanged()) continue;
                 rotator(fi);
+            }
             pipeView.calculateCoords((int)(x + Math.cos(fi) * basicPipeDistance), (int)(y - Math.sin(fi) * basicPipeDistance));
-
         }
     }
 

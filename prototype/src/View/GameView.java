@@ -189,6 +189,7 @@ public class GameView extends MyJPanel {
         public void keyPressed(KeyEvent e){
             if(e.getKeyCode() == KeyEvent.VK_ENTER){
                 commands.add(console.getText());
+                commands.removeIf(s -> s.equals(""));
                 commandPtr = commands.size() - 1;
                 console.setText("");
                 game.parseInput(commands.get(commandPtr));

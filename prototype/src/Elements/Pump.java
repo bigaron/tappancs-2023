@@ -14,6 +14,7 @@ import java.util.Random;
 public class Pump extends Node{
     private Pipe output;
     private boolean buffer;
+    private boolean outChange = true;
     public static int counter = 0;
     //private PumpView view;
 
@@ -43,6 +44,7 @@ public class Pump extends Node{
         String id2 = output.getID();
         output = (Pipe)GetNeighbor(outgoingPipe);
         String id3 = output.getID();
+        outChange = true;
         System.out.println("A(z) " +getID()+ " pumpa kimenete megváltozott.\n" +
                             "A(z) " + id2 + " cső helyett a(z) " + id3 + " cső lett a kimenete.\n");
     }
@@ -102,11 +104,18 @@ public class Pump extends Node{
         return 1;
     }
 
+    public boolean getOutChanged(){ 
+        if(!outChange) return false;
+        outChange = false;
+        return true;
+    }
+
     /**
      * A kimeneti cső beállítása.
      * @param pipe a beállítandó cső
      */
     public void SetOutputPipe(Pipe pipe) {
+        outChange = true;
         output = pipe;
     }
 
