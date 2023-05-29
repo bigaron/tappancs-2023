@@ -69,7 +69,6 @@ public class Player {
     public void AddPipe() {
         if(this.pipe != null) {
             elem.AttachPipe(pipe);
-            elem.AttachPipe(pipe);
             System.out.println("A(z) " + pipe.getID() + " csövet sikeresen lehelyeztük.\n");
             pipe = null;
         }else
