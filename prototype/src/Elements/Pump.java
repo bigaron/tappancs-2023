@@ -41,6 +41,12 @@ public class Pump extends Node{
             System.out.println("A(z) " +getID()+ " pumpa kimenete nem változott meg, mert érvénytelen input.\n");
             return;
         }
+        if(output == null){
+            output = (Pipe)GetNeighbor(outgoingPipe);
+            System.out.println("A(z) " +getID()+ " pumpa kimenete megváltozott.\n" +
+                            "A(z) " + GetNeighbor(outgoingPipe).getID() + " cső lett a kimenete.\n");
+            return;
+        }
         String id2 = output.getID();
         output = (Pipe)GetNeighbor(outgoingPipe);
         String id3 = output.getID();
@@ -55,7 +61,7 @@ public class Pump extends Node{
      */
     @Override
     public void ForwardWater(Element elem){
-        if(buffer || !working || elem == output) return;
+        if(buffer || !working || elem == output || output == null) return;
         output.ForwardWater(elem);
     }
 

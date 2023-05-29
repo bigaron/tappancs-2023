@@ -51,6 +51,7 @@ public class GameView extends MyJPanel {
             Cistern myEl = (Cistern)game.activePlayer.getElement(); 
             generatorLbl.setText("generator: " + myEl.getGeneratorID());
             if(!myEl.getGeneratorID().equals("")) generatorPumpLbl.setText("No. pumps: " + myEl.getGeneratorPumps());
+            infoPanel.add(generatorPumpLbl);
             setNeighbourLbls(myEl);
         }else if(ID.contains("source")){
             infoPanel.add(neigborsLbl);
