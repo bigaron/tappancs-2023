@@ -107,11 +107,10 @@ public class PumpView extends ElementView {
             if(pump.getOutput() != null && pipe.getID().equals(pump.getOutput().getID())){
                 if(!pump.getOutChanged()) continue;
                 image = deepCopy(imageToDraw);
-                if(Double.compare(fi, 3*Math.PI / 2) == 0 || Double.compare(fi, Math.PI / 2) == 0){
-                    dir = -1;
-                }
-                image = rot(image, dir * fi);
-                dir = 1;
+                if(Double.compare(fi, 3*Math.PI /2) == 0 || Double.compare(fi, Math.PI / 2) == 0){
+                    image = rot(image, 2*Math.PI - fi);
+                }//else if(Double.compare(fi, 3* Math.PI/2) == 0) image = rot(image, 2*Math.PI -fi);
+                else image = rot(image, dir * fi);
             }
             pipeView.calculateCoords((int)(x + Math.cos(fi) * basicPipeDistance), (int)(y - Math.sin(fi) * basicPipeDistance));
         }

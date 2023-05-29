@@ -31,10 +31,20 @@ public class Canvas extends MyJPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-
+        ArrayList<Element> pickedUp = new ArrayList<>();
+        ArrayList<ElementView> elems = new ArrayList<>();
+        for(PlayerView playerView : playerViews) {
+            if(playerView.referencedPlayer.getPipe() != null) pickedUp.add(playerView.referencedPlayer.getPipe());
+        }
+        boolean pickedup = false;
         //draw pipes first in order to draw them in the background
         for(int i = CisternView.counter + SourceView.counter + PumpView.counter; i < CisternView.counter + SourceView.counter + PumpView.counter + PipeView.counter; ++i) {
-            elementViews.get(i).draw(g);
+            pickedup = false;
+            for(Element el: pickedUp) if(elementViews.get(i).referencedElement.getID().equals(el.getID())){
+                elems.add(elementViews.get(i));
+                pickedup = true;
+            }
+            if(!pickedup)elementViews.get(i).draw(g);
         }
 
         //draw other objects
@@ -48,6 +58,15 @@ public class Canvas extends MyJPanel {
         }*/
 
         for(PlayerView playerView : playerViews) {
+            if(playerView.referencedPlayer.getPipe() != null){
+                for(int i = 0; i < elems.size(); ++i){
+                    if(pickedUp.get(i).getID().equals(playerView.referencedPlayer.getPipe().getID())){
+                        elems.get(i).x = playerView.getX() + playerView.image.getWidth()/2;
+                        elems.get(i).y = playerView.getY() + playerView.image.getHeight() / 2;
+                        elems.get(i).draw(g);
+                    }
+                }
+            }
             playerView.draw(g);
         }
     }
