@@ -48,19 +48,18 @@ public class PipeView extends ElementView {
 
             g2.drawLine(zeroXY[0], zeroXY[1], firstXY[0], firstXY[1]);
         } else if (pipe.getNeighbourSize() == 1) {
-            int nX = x, nY = y;
-            if(pipe.getDetached()) 
+            //if(pipe.getDetached()) 
             if(pipe.neighbours[0] != null) {
                 ElementView neighborZeroElementView = pipe.neighbours[0].getView();
                 int[] zeroXY = neighborZeroElementView.AttachCoords(pipe);
                 if(!pipe.getWork()) g.setColor(Color.red);
 
-                g2.drawLine(zeroXY[0], zeroXY[1], nX, nY);
+                g2.drawLine(zeroXY[0], zeroXY[1], x, y);
             } else {
                 ElementView neighborOneElementView = pipe.neighbours[1].getView();
                 int[] firstXY = neighborOneElementView.AttachCoords(pipe);
                 if(!pipe.getWork()) g.setColor(Color.red);
-                g2.drawLine(firstXY[0], firstXY[1], nX, nY);
+                g2.drawLine(firstXY[0], firstXY[1], x, y);
             }
         }
     }
