@@ -146,9 +146,9 @@ public class Pipe extends Element{
         this.RemoveNeighbor(neighbours[0]);
         newPump.SetNeighbor(this);
         this.SetNeighbor(newPump);
-        newPipe.SetNeighbor(newPump);
-        newPump.SetNeighbor(newPipe);     
         newPipe.SetNeighbor(node);
+        newPipe.SetNeighbor(newPump);
+        newPump.SetNeighbor(newPipe);
         //node.SetNeighbor(newPipe);
         node.SetNeighborIdx(newPipe, idx);
         PumpView view = new PumpView(newPump);

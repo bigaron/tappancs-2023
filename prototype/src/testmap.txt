@@ -18,7 +18,7 @@ source+source1+saboteur1+pipe2
 pump+pump1+null+pipe2,pipe3,pipe1,pipe4+pipe1
 pump+pump2+null+pipe4+pipe4
 pipe+pipe1+plumber1+cistern1,pump1
-pipe+pipe2+null+source1,pump1
+pipe+pipe2+null+pump1,source1
 pipe+pipe3+null+pump1,null
 pipe+pipe4+null+pump2,pump1
 saboteur+saboteur1+source1+null

@@ -17,6 +17,7 @@ public class PipeView extends ElementView {
     @Override
     public void draw(Graphics g) {
         Pipe pipe = (Pipe)referencedElement;
+        if(pipe.getNeighbourSize() == 0) return;
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(3));
         Color pipeC = Color.BLACK;
