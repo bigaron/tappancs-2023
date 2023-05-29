@@ -62,6 +62,11 @@ public class Player {
             this.pipe = (Pipe) e; //kezébeveszi de miért nem????
             this.pipe.SetDetached(true);
             System.out.println("A(z) "+ pipe.getID()+" cső lecsatolása sikeres volt, a(z) " +pipe.getID()+ " cső egyik vége a kezünkbe került.\n");
+            return;
+        }
+        if(result == 2){
+            this.pipe = (Pipe) e;
+            return;
         }
         //if result == 0 -> kiírás a többi fv-ben megvan, itt nem csinálunk semmit.
     }

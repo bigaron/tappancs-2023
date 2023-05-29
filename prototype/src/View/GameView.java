@@ -173,7 +173,9 @@ public class GameView extends MyJPanel {
 
         console.addKeyListener(new EnterKeyListener());
 
+        
         inputPanel.add(console);
+        console.requestFocusInWindow();
 
         add(inputPanel, BorderLayout.PAGE_END);
         add(infoInventoryPanel, BorderLayout.LINE_END);
