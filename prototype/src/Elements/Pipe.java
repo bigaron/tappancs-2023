@@ -181,11 +181,19 @@ public class Pipe extends Element{
 
     //TODO: mit csinal ez a fuggveny?
     public void PickedUp(){
-        super.ChangeElementMode(false);
+        //super.ChangeElementMode(false);
         detached = true;
-        for(Node n : neighbours){
+        /*for(Node n : neighbours){
             n.RemoveNeighbor(this);
             this.RemoveNeighbor(n);
+        }*/
+        if(neighbours[0] != null) {
+            neighbours[0].RemoveNeighbor(this);
+            this.RemoveNeighbor(neighbours[0]);
+        }
+        if(neighbours[1] != null) {
+            neighbours[1].RemoveNeighbor(this);
+            this.RemoveNeighbor(neighbours[1]);
         }
     }
 

@@ -1,6 +1,7 @@
 package prototype.src.View;
 
 import prototype.src.Elements.Element;
+import prototype.src.Game;
 import prototype.src.Players.Plumber;
 import prototype.src.Players.Saboteur;
 
@@ -27,6 +28,10 @@ public class PlumberView extends PlayerView {
     }
 
     public void draw(Graphics g) {
+        if(Game.activePlayer == referencedPlayer) {
+            g.setColor(Color.red);
+            g.drawRect(x - 5, y - 5, image.getWidth() + 5, image.getHeight() + 5);
+        }
         g.drawImage(image, x, y, null);
     }
 

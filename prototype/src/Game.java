@@ -21,7 +21,7 @@ public class Game {
     private ArrayList<Saboteur> saboteurs = new ArrayList<>();
     private ArrayList<Plumber> plumbers = new ArrayList<>();
     private ArrayList<Generator> generators = new ArrayList<>();
-    public Player activePlayer;
+    public static Player activePlayer;
     private boolean plumbersTurn;
     public static int sPoints = 0;
     public static int pPoints = 0;
@@ -69,170 +69,7 @@ public class Game {
     public static int globalActionCounter = 0; //a random értékekhez determinizációjához kell kell
     public static int actionCounter = 4; //induljunk négyről és dekrementáljunk
     public static boolean successfulCmd = true;
-    /* 
-    public static void main(String[] args){
-        //OLD MAIN
-        Game game = new Game();
 
-        while(true) {
-            while (game.mode == Mode.config) {
-                System.out.println("Várom a parancsot gazdám!");
-                Scanner in = new Scanner(System.in);
-                String input = in.nextLine();
-                String[] splitted = input.split(" ");
-
-                switch (splitted[0]) {
-                    case "changeState" -> game.changeState(splitted[1]);
-                    case "generate" -> {
-                        game.resetCounters();
-                        game.generate(splitted[1]);
-                        game.reset();
-                    }
-                    case "save" -> game.Save(splitted[1]);
-                    case "setRandom" -> game.setRandom(Boolean.parseBoolean(splitted[1]));
-                    case "exit" -> System.exit(0);
-                    default -> System.out.println("Rossz a parancsod drága");
-                }
-
-            }
-
-            //itt valahol endgame ->> endgame gamemodeot vált
-            while (game.mode == Mode.play) { //ugye a flaget ellenőrzik a függvények. akkor itt attól függően h kinek a turnje van, végigmegyünk a dömbökön és mindenki léphet 4et
-                if (game.activePlayer == null) {
-                    System.out.println(game.saboteurs.get(0).getID() + " játékos következik.\n");
-                    game.activePlayer = game.saboteurs.get(0);
-                }
-                //actionloop
-                while (actionCounter != 0) {
-                    System.out.println("Várom a parancsot gazdám!");
-                    Scanner in = new Scanner(System.in);
-                    String input = in.nextLine();
-                    String[] cmd = input.split(" ");
-
-
-                    switch (cmd[0]) { //ezeknél hibakezelés ugye van a meghívott függvényekben?
-                        case "move" -> {
-                            if(cmd.length == 1) {
-                                successfulCmd = false;
-                                continue; 
-                            }
-                            game.Move(Integer.parseInt(cmd[1]));
-                        }
-                        case "Move" -> {
-                            if(cmd.length == 1) {
-                                successfulCmd = false;
-                                continue; 
-                            }
-                            game.Move(Integer.parseInt(cmd[1]));
-                        }
-                        case "leakPipe" -> game.leakPipe();
-                        case "repair" -> game.repair();
-                        case "changePumpDir" -> {
-                            if(cmd.length == 1) {
-                                successfulCmd = false;
-                                continue; 
-                            } 
-                            game.changePumpDir(Integer.parseInt(cmd[1]));
-                        }
-                        case "changeSurface" ->{
-                            if(cmd.length == 1) {
-                                successfulCmd = false;
-                                continue; 
-                            } 
-                            game.changeSurface(parseModifier(cmd[1]));
-                        }
-                        case "addPipe" -> game.addPipe();
-                        case "removePipe" -> {
-                            if(cmd.length == 1) {
-                                successfulCmd = false;
-                                continue; 
-                            }
-                            game.removePipe(Integer.parseInt(cmd[1]));
-                        }
-                        case "placePump" -> game.placePump();
-                        case "pickUpPump" -> game.pickUpPump();
-                        case "pickUpPipe" -> {
-                            if(cmd.length == 1) {
-                                successfulCmd = false;
-                                continue; 
-                            }
-                            game.pickUpPipe(Integer.parseInt(cmd[1]));
-                        }
-                        case "changeState" -> {
-                            if(cmd.length == 1) {
-                                successfulCmd = false;
-                                continue; 
-                            } 
-                            game.changeState(cmd[1]);
-                        }
-                        case "endTurn" -> game.endTurn();
-                        case "list" -> {
-                            if(cmd.length == 2) game.List(cmd[1]);
-                            else game.List("");
-                            successfulCmd = false;
-                        }
-                        default -> {
-                            System.out.println("Érvényes parancsot adjál mert nem leszünk jóban.");
-                            successfulCmd = false;
-                        }
-                    }
-                    if (game.mode == Mode.config) break;
-                    if(actionCounter != 0 && successfulCmd)  {
-                        --actionCounter;
-                        ++globalActionCounter;
-                    } if(successfulCmd){
-                        //step az összesre desert + generators
-                        game.desert.forEach(Element::Step);
-                        game.generators.forEach(Generator::Step);
-                    }else {
-                        successfulCmd = true;
-                    }
-                }
-                if (game.mode == Mode.config) break;
-                actionCounter = 4;
-                //kövi játékosra léptetünk.
-                if (game.plumbersTurn) {
-                    int idx = game.plumbers.lastIndexOf((Plumber) game.activePlayer);
-                    ++idx;
-                    if (idx < game.plumbers.size()) {
-                        System.out.println("Kör vége, a(z) "+game.plumbers.get(idx).getID() +" játékos következik.\n");
-                        game.activePlayer = game.plumbers.get(idx); //finito ha minden ok
-                    } else { //ha vége van a tömbnek -->> csapatváltás
-                        game.plumbersTurn = false;
-                        System.out.println("Kör vége, a(z) "+game.saboteurs.get(0).getID() +" játékos következik.\n");
-                        game.activePlayer = game.saboteurs.get(0);  //itt indexelős hibakezelés??
-                    }
-                } else { //ugyan az csak másik tömbökkel
-                    int idx = game.saboteurs.lastIndexOf((Saboteur) game.activePlayer);
-                    ++idx;
-                    if (idx < game.saboteurs.size()) {
-                        System.out.println("Kör vége, a(z) "+game.saboteurs.get(idx).getID() +" játékos következik.\n");
-                        game.activePlayer = game.saboteurs.get(idx);
-                    } else {
-                        game.plumbersTurn = true;
-                        System.out.println("Kör vége, a(z) "+game.plumbers.get(0).getID() +" játékos következik.\n");
-                        game.activePlayer = game.plumbers.get(0);
-                    }
-                }
-
-            }
-
-        }
-
-        //OLD OLD MAIN
-        //innentől ami volt, csak nem töröltem ki
-        /*game.generate("testmap.txt");
-        game.activePlayer = game.saboteurs.get(0);
-        game.changeState(Mode.play);
-        game.Move(0);
-        game.changeState(Mode.config);
-        game.Save("output.txt");
-
-        //ACTUAL MAIN
-        AppWindow app = new AppWindow(); 
-        app.setVisible(true);
-    }
-    */
     public void parseInput(String input){
         if (activePlayer == null) {
             System.out.println(saboteurs.get(0).getID() + " játékos következik.\n");
@@ -645,7 +482,7 @@ public class Game {
     }
     public void repair(){
         if(mode == Mode.config || !plumbersTurn || findPlumb(activePlayer.getID()) == -1)return;
-        if(!plumbersTurn) System.out.println("A(z) elem nem javult meg, mert az csak szerelő esetén lép érvénybe.\n"); //TODO ez itt picit furi a kimeneti nyelvhe képest de idk hogy kéne máshogy
+        if(!plumbersTurn) System.out.println("A(z) elem nem javult meg, mert az csak szerelő esetén lép érvénybe.\n");
         Plumber p = (Plumber)activePlayer;
         p.RepairElement();
     }
@@ -676,9 +513,6 @@ public class Game {
      
     public void removePipe(int number){
         if(mode == Mode.config ) return;
-        //Plumber p = (Plumber)activePlayer;
-        
-        //p.RemovePipe(number);
         activePlayer.RemovePipe(number);
     }
 

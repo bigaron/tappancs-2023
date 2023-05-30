@@ -1,6 +1,7 @@
 package prototype.src.View;
 
 import prototype.src.Elements.Element;
+import prototype.src.Game;
 import prototype.src.Players.Saboteur;
 
 import javax.imageio.ImageIO;
@@ -14,7 +15,7 @@ public class SaboteurView extends PlayerView {
     public SaboteurView(Saboteur saboteurReference) {
         ++counter;
         referencedPlayer = saboteurReference;
-        x = 200;    //TODO update necessary
+        x = 200;
         y = 200;
         try {
             File path = new File(new File(new File("prototype", "src"), "images"), "gru2.png");
@@ -26,11 +27,15 @@ public class SaboteurView extends PlayerView {
     }
 
     public void draw(Graphics g) {
+        if(Game.activePlayer == referencedPlayer) {
+            g.setColor(Color.red);
+            g.drawRect(x - 5, y - 5, image.getWidth() + 5, image.getHeight() + 5);
+        }
         g.drawImage(image, x, y, null);
     }
 
     public void update() {
-        //TODO  we have to update x y coordinates according to the referencedPlayer object
+
     }
 
     @Override
