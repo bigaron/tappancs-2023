@@ -26,7 +26,7 @@ public class Game {
     public static int sPoints = 0;
     public static int pPoints = 0;
     private Mode mode;
-    public static boolean random = false;
+    public static boolean random = true;
 
     public static ArrayList<Element> getDesert() {
         return desert;
@@ -149,7 +149,7 @@ public class Game {
             successfulCmd = true;
         }
         if(actionCounter == 0){
-            actionCounter = 100;
+            actionCounter = 4;
             //kövi játékosra léptetünk.
             if (plumbersTurn) {
                 int idx = plumbers.lastIndexOf((Plumber) activePlayer);

@@ -33,13 +33,12 @@ public class Generator implements Steppable{
      * @return a generált elem.
      */
     public void GenerateElem(){
-        Element result;
         if(Game.random) {
             Random randomGenerator = new Random();
             int randomNumber = randomGenerator.nextInt();
-            if(randomNumber % 5 == 0) {
+            if(randomNumber % 3 == 0) {
                 GeneratePump();
-            } else if(randomNumber % 6 == 0) {
+            } else if(randomNumber % 2 == 0) {
                 GeneratePipe();
             }
         } else {
@@ -60,7 +59,7 @@ public class Generator implements Steppable{
         } else {
             Random randomGenerator = new Random();
             int randomNumber = randomGenerator.nextInt();
-            if(randomNumber % 5 == 0) {
+            if(randomNumber % 3 == 0) {
                 GenerateElem();
             }
         }
